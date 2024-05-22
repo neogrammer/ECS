@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\ImGui">
+      <UniqueIdentifier>{8c7b985b-95d6-45a4-87e9-841c54763763}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS">
+      <UniqueIdentifier>{cff22868-7a7f-4280-b450-fca632595ac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\util">
+      <UniqueIdentifier>{539e04db-9b76-4a24-9d9c-31d640c28f18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\util">
+      <UniqueIdentifier>{1dd91bfb-e1e6-4445-b390-6122d5620a81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\component">
+      <UniqueIdentifier>{da44418a-1a5a-4438-b891-a1c509c41be7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\component\components">
+      <UniqueIdentifier>{59f164f7-e97c-4ab2-a959-b8609e5337c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\system">
+      <UniqueIdentifier>{0eb4d73a-6d61-486e-b668-f0bd93e69ff9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\system\systems">
+      <UniqueIdentifier>{0b1f9061-a010-4f2d-9c34-3b512eba1b96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\systems">
+      <UniqueIdentifier>{cbec1d86-ea2e-460f-81f1-602c0a0a7630}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Managers">
+      <UniqueIdentifier>{e1ef48f4-44f7-469a-b308-6a0ae74d5067}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui_demo.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui_draw.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui_widgets.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\sdks\imgui-sfml-2.6.x\imgui-SFML.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui_tables.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\util\Vec2.cpp">
+      <Filter>Source Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\Entity.cpp">
+      <Filter>Header Files\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\system\systems\MovementSystem.cpp">
+      <Filter>Source Files\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\EntityManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="UI\UI.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Entity.hpp">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Component\Component.hpp">
+      <Filter>Header Files\ECS\component</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\Vec2.hpp">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\component\components\Components.hpp">
+      <Filter>Header Files\ECS\component\components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\system\systems\MovementSystem.hpp">
+      <Filter>Header Files\ECS\system\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\system\System.hpp">
+      <Filter>Header Files\ECS\system</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\EntityManager.hpp">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
