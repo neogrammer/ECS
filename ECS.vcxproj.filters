@@ -22,9 +22,6 @@
     <Filter Include="Source Files\util">
       <UniqueIdentifier>{539e04db-9b76-4a24-9d9c-31d640c28f18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\util">
-      <UniqueIdentifier>{1dd91bfb-e1e6-4445-b390-6122d5620a81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ECS\component">
       <UniqueIdentifier>{da44418a-1a5a-4438-b891-a1c509c41be7}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,9 @@
     </Filter>
     <Filter Include="Source Files\Managers">
       <UniqueIdentifier>{e1ef48f4-44f7-469a-b308-6a0ae74d5067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\util">
+      <UniqueIdentifier>{1dd91bfb-e1e6-4445-b390-6122d5620a81}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
