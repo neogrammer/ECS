@@ -9,6 +9,12 @@
 *.user
 *.userosscache
 *.sln.docstates
+imgui.cpp
+imgui_demo.cpp
+imgui_draw.cpp
+imgui_tables.cpp
+imgui_widgets.cpp
+imgui-SFML.cpp
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
