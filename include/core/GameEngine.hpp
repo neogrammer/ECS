@@ -4,7 +4,8 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "../ECS/EntityManager.hpp"
-#include "../ECS/system/systems/MovementSystem.hpp"
+#include "../ECS/system/System.hpp"
+
 #include <memory>
 #include <utility>
 

@@ -4,6 +4,11 @@
 #include <SFML/System/Clock.hpp>
 #include "../../include/core/GameEngine.hpp"
 
+#include "../ECS/system/systems/MovementSystem.hpp"
+#include "../ECS/system/systems/RenderSystem.hpp"
+#include "../ECS/system/systems/CollisionSystem.hpp"
+#include "../ECS/system/systems/InputSystem.hpp"
+
 #include <imgui-SFML.h>
 
 // ctor, no dtor neccessary... RAII be like that sometimes
@@ -14,6 +19,10 @@ GameEngine::GameEngine()
 	m_systems.clear();
 	// 0 - Movement System
 	m_systems.emplace_back(std::make_unique<MovementSystem>());
+	m_systems.emplace_back(std::make_unique<InputSystem>());
+	m_systems.emplace_back(std::make_unique<CollisionSystem>());
+	m_systems.emplace_back(std::make_unique<RenderSystem>());
+
 }
 
 // hotpotato that shit

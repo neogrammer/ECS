@@ -87,6 +87,15 @@
     <ClCompile Include="include\core\GameEngine.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
+    <ClCompile Include="include\ECS\system\systems\CollisionSystem.cpp">
+      <Filter>Source Files\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\system\systems\InputSystem.cpp">
+      <Filter>Source Files\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\system\systems\RenderSystem.cpp">
+      <Filter>Source Files\systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UI\UI.hpp">
@@ -115,6 +124,15 @@
     </ClInclude>
     <ClInclude Include="include\core\GameEngine.hpp">
       <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\system\systems\CollisionSystem.hpp">
+      <Filter>Header Files\ECS\system\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\system\systems\InputSystem.hpp">
+      <Filter>Header Files\ECS\system\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\system\systems\RenderSystem.hpp">
+      <Filter>Header Files\ECS\system\systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
