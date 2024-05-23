@@ -3,10 +3,32 @@
 #include <vector>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "../ECS/EntityManager.hpp"
+#include "../ECS/system/systems/MovementSystem.hpp"
+#include <memory>
+#include <utility>
+
+struct GameProperties
+{
+	static constexpr double FPS = 0.016666667;
+	static constexpr int SCRW = 1024;
+	static constexpr int SCRH = 576;
+};
 
 class GameEngine
 {
+	EntityManager m_entityManager;
+	std::vector<std::unique_ptr<System> > m_systems{};
+
+	// handle the entirety of the game with these four functions
+	void handleWindowEvents(std::vector<sf::Event>& l_evts);
+	void propogateInput(std::vector<sf::Event>& l_evts);
+	void update(double l_dt);
+	void render(sf::RenderWindow& l_wnd);
+
 public:
+	sf::RenderWindow wnd;
+
 	// cuz im an explicit mofukka
 	explicit GameEngine();
 	~GameEngine() = default;
@@ -19,11 +41,7 @@ public:
 	//  One function to rule them all
 	void mainLoop();
 
-	// handle the entirety of the game with these four functions
-	void handleWindowEvents(std::vector<sf::Event>& l_evts);
-	void propogateInput(std::vector<sf::Event>& l_evts);
-	void update(double l_dt);
-	void render(sf::RenderWindow& l_wnd);
+
 
 };
 

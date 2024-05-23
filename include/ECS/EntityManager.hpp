@@ -17,7 +17,7 @@ class EntityManager
 	static size_t m_totalEntities;
 public:
 	EntityManager();
-	void update();
+	void update(double l_dt);
 	std::shared_ptr<Entity> addEntity(const std::string& tag);
 	EntityVec& getEntities();
 	EntityVec& getEntities(const std::string& tag);

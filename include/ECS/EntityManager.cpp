@@ -18,7 +18,7 @@ EntityVec& EntityManager::getEntities()
 	return m_entities;
 }
 
-void EntityManager::update()
+void EntityManager::update(double l_dt)
 {
 	for (auto e : m_toAdd)
 	{
@@ -28,7 +28,7 @@ void EntityManager::update()
 	for (std::reverse_iterator ritr = m_entities.rbegin(); ritr != m_entities.rend(); ritr++)
 	{
 		// if e is dead, remove it from m_entities
-		if ((*ritr)->m_dead)
+		if (!((*ritr)->m_alive))
 		{
 			m_entityMap.erase((ritr+1).base()->get()->m_tag);
 			m_entities.erase(++ritr.base());

@@ -11,13 +11,17 @@ class Entity
 
 	size_t m_id{ 0 };
 	std::string m_tag{ "default" };
-	bool m_dead{ false };	
+	bool m_alive{ true };	
 
 public:
 	std::shared_ptr<CTransform> cTransform{};
+	//std::shared_ptr<CName> cName{};
+	//std::shared_ptr<CShape> cShape{};
+	//std::shared_ptr<CBBox> cBBox{};
+
 	
 	Entity(const std::string& l_tag, size_t l_id);
-
+	const std::string& tag();
 	void destroy();
 };
 #endif

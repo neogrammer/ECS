@@ -8,3 +8,8 @@ MovementSystem::MovementSystem()
 MovementSystem::~MovementSystem()
 {
 }
+
+void MovementSystem::update(double l_dt)
+{
+
+}
