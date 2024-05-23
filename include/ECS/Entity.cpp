@@ -4,3 +4,7 @@ Entity::Entity(const std::string& l_tag, size_t l_id)
 	: m_id{ l_id }, m_tag{ l_tag } 
 {}
 
+void Entity::destroy()
+{
+	this->m_dead = true;
+}

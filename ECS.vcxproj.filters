@@ -43,6 +43,12 @@
     <Filter Include="Header Files\util">
       <UniqueIdentifier>{1dd91bfb-e1e6-4445-b390-6122d5620a81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\core">
+      <UniqueIdentifier>{9a9c27bc-bc8a-4ea0-917e-cb028ba04c6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core">
+      <UniqueIdentifier>{fd878853-5a95-444a-8f18-8eeb579b2755}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -78,6 +84,9 @@
     <ClCompile Include="include\ECS\EntityManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="include\core\GameEngine.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UI\UI.hpp">
@@ -103,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="include\ECS\EntityManager.hpp">
       <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\GameEngine.hpp">
+      <Filter>Header Files\core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

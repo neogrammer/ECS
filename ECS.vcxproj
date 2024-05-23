@@ -163,6 +163,7 @@
     <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui_draw.cpp" />
     <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui_tables.cpp" />
     <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui_widgets.cpp" />
+    <ClCompile Include="include\core\GameEngine.cpp" />
     <ClCompile Include="include\ECS\Entity.cpp" />
     <ClCompile Include="include\ECS\EntityManager.cpp" />
     <ClCompile Include="include\ECS\system\systems\MovementSystem.cpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\core\GameEngine.hpp" />
     <ClInclude Include="include\ECS\Component\Component.hpp" />
     <ClInclude Include="include\ECS\component\components\Components.hpp" />
     <ClInclude Include="include\ECS\Entity.hpp" />
