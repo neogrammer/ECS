@@ -59,12 +59,15 @@ public:
     // Housing all the textures in one place so anything in need of a Texture can be a reference initialized to this structure
     enum class Textures : int
     {
+        Spear,
         Player,
+        TitleBG,
+        Selector,
         Count
     };
 
     // fonts for the game
-    enum class Fonts : int { Count };
+    enum class Fonts : int { FiraOTF, Count };
 
     // background music
     enum class Music : int { Count };

@@ -23,7 +23,7 @@ public:
 	virtual ~Scene();
 
 
-	virtual void propogateInput(std::vector<sf::Event>& l_evts) = 0;
+	virtual void propogateInput(std::vector<sf::Event> l_evts) = 0;
 	virtual void processEvents(std::vector<sf::Event>& l_evts) = 0;
 	virtual void update(double l_dt) = 0;
 	virtual void render(sf::RenderWindow& l_wnd) = 0;

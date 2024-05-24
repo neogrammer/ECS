@@ -209,6 +209,13 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\player_atlas.png" />
+    <Image Include="assets\textures\player_atlas84x84.png" />
+    <Image Include="assets\textures\select.png" />
+    <Image Include="assets\textures\spear.png" />
+    <Image Include="assets\textures\TitleScreen.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\Fira.otf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

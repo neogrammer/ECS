@@ -59,6 +59,11 @@ void Config::initSounds()
 void Config::initTextures()
 {
     textures.load((int)Textures::Player, "assets/textures/player_atlas84x84.png");
+    textures.load((int)Textures::TitleBG, "assets/textures/TitleScreen.jpg");
+    textures.load((int)Textures::Selector, "assets/textures/select.png");
+    textures.load((int)Textures::Spear, "assets/textures/spear.png");
+
+
 }
 
 /// <summary>
@@ -66,6 +71,6 @@ void Config::initTextures()
 /// </summary>
 void Config::initFonts()
 {
-    //fonts.load(Fonts::Font1, "assets/fnt/Ww.ttf");
+    fonts.load((int)Fonts::FiraOTF, "assets/fonts/Fira.otf");
 }
 

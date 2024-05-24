@@ -73,6 +73,9 @@
     <Filter Include="Source Files\ECS">
       <UniqueIdentifier>{a1f538d3-affb-4a44-b80a-5efc6c091734}</UniqueIdentifier>
     </Filter>
+    <Filter Include="assets\fonts">
+      <UniqueIdentifier>{c31f0a70-9fb2-4682-906f-3f77a7d94afc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -219,5 +222,22 @@
     <Image Include="assets\textures\player_atlas.png">
       <Filter>assets\textures</Filter>
     </Image>
+    <Image Include="assets\textures\player_atlas84x84.png">
+      <Filter>assets\textures</Filter>
+    </Image>
+    <Image Include="assets\textures\TitleScreen.jpg">
+      <Filter>assets\textures</Filter>
+    </Image>
+    <Image Include="assets\textures\select.png">
+      <Filter>assets\textures</Filter>
+    </Image>
+    <Image Include="assets\textures\spear.png">
+      <Filter>assets\textures</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\Fira.otf">
+      <Filter>assets\fonts</Filter>
+    </Font>
   </ItemGroup>
 </Project>

@@ -38,7 +38,7 @@ Play::~Play()
 {
 }
 
-void Play::propogateInput(std::vector<sf::Event>& l_evts)
+void Play::propogateInput(std::vector<sf::Event> l_evts)
 {
 }
 

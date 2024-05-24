@@ -1,3 +1,7 @@
+#include <imgui.h>
+
+#include <imgui-SFML.h>
+
 #include "GameEngine.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
@@ -12,8 +16,6 @@
 #include "../scene/scenes/Title.hpp"
 
 
-#include <imgui-SFML.h>
-#include <imgui.h>
 #include <iostream>
 #include <typeinfo>
 #include <type_traits>
@@ -27,7 +29,7 @@ GameEngine::GameEngine()
 	m_scenes["play"] = std::make_shared<Play>(*this, "aStringGoesHere");
 	m_scenes["title"] = std::make_shared<Title>(*this);
 
-	m_currentScene = "play";
+	m_currentScene = "title";
 
 }
 
@@ -42,9 +44,9 @@ void GameEngine::changeScene(std::string l_scene)
 }
 
 // hotpotato that shit
-void GameEngine::propogateInput(std::vector<sf::Event>& l_evts)
+void GameEngine::propogateInput(std::vector<sf::Event> l_evts)
 {
-	currentScene()->propogateInput(l_evts);
+	currentScene()->propogateInput(std::move(l_evts));
 }
 
 // make it rain on em
@@ -65,9 +67,9 @@ void GameEngine::handleWindowEvents(std::vector<sf::Event>& l_evts)
 
 // value passed to this function always simulates a normalization to 60 fps, no matter what
 //  should be smooth physics calculations because of this
-void GameEngine::update(double l_dt)
+void GameEngine::update(sf::Time l_dt)
 {
-	currentScene()->update(l_dt);
+	currentScene()->update((double)l_dt.asSeconds());
 
 	
 }
@@ -76,6 +78,23 @@ void GameEngine::update(double l_dt)
 void GameEngine::render(sf::RenderWindow& l_wnd)
 {
 	currentScene()->render(l_wnd);
+}
+
+std::vector<sf::Event> GameEngine::checkRealtime()
+{
+	std::vector<sf::Event> evts;
+	evts.clear();
+	for (int i = 0; i < sf::Keyboard::KeyCount; i++)
+	{
+		auto k = (sf::Keyboard::Key)i;
+		if (sf::Keyboard::isKeyPressed(k))
+		{
+			evts.emplace_back(sf::Event{});
+			evts.back().type = sf::Event::KeyPressed;
+			evts.back().key.code = k;
+		}
+	}
+	return evts;
 }
 
 bool GameEngine::gameRunning = true;
@@ -90,26 +109,28 @@ void GameEngine::mainLoop()
 	sf::Time deltaTime{ sf::Time::Zero };
 	sf::Clock frameTimer{ };
 
-	bool focus = true;
 	wnd.setVerticalSyncEnabled(true);
 
+	wnd.setPosition(sf::Vector2i(450, 300));
+	wnd.setSize({ (unsigned int)::GameProperties::SCRW, (unsigned int)::GameProperties::SCRH });
 	ImGui::SFML::Init(wnd);
 	frameTimer.restart();
-	bool guiIsOpen = false;
+	bool focus = false;
+	bool hadFocus = false;
+	bool waitingForARender = false;
+	sf::Time fps60 = sf::seconds(1.f / 60.f);
 	while (gameRunning)
 	{
-		wnd.setPosition(sf::Vector2i(450, 300));
 		focus = wnd.hasFocus();
-		wnd.setSize({ (unsigned int)::GameProperties::SCRW, (unsigned int)::GameProperties::SCRH });
 
-		if (focus)
+		if (focus && wnd.isOpen())
 		{
+			hadFocus = true;
 			// process realtime input
+			propogateInput(std::move(checkRealtime()));
+
 			std::vector<sf::Event> evtsToProp;
 			evtsToProp.clear();
-			propogateInput(evtsToProp);
-			evtsToProp.clear();
-			evtsToProp.resize(0);
 			// process window events
 			sf::Event event;
 			while (wnd.pollEvent(event))
@@ -128,67 +149,51 @@ void GameEngine::mainLoop()
 			handleWindowEvents(evtsToProp);
 
 			deltaTime += frameTimer.restart();
-			bool repaint = false;
-			while ((double)deltaTime.asSeconds() > ::GameProperties::FPS)
+			ImGui::SFML::Update(wnd, deltaTime);
+			waitingForARender = true;
+			ImGui::ShowDemoWindow();
+	
+			while (deltaTime > fps60)
 			{
-				update(::GameProperties::FPS);
-				if (guiIsOpen)
-				{
-					ImGui::SFML::Render();
-					guiIsOpen = false;
-				}
-				if (!guiIsOpen)
-				{
-					ImGui::SFML::Update(wnd, deltaTime);
-					ImGui::Begin("Window");
-					ImGui::SeparatorText("hello world");
-					ImGui::End();
-				}
-
-				deltaTime -= sf::seconds((float)::GameProperties::FPS);
-				repaint = true;
-			}
-			if (repaint && !guiIsOpen)
-			{
-				guiIsOpen = true;
-			}
-			// no partual update (carry over to build up to an update next frame if less than 0.016666667 seconds
-
-			// render every frame update only
-			if (repaint)
-			{
-				wnd.clear(sf::Color::Blue);
-
-				render(wnd);
-
-				if (guiIsOpen)
-				{
-					ImGui::SFML::Render(wnd);
-					guiIsOpen = false;
-				}
-
-				wnd.display();
+				update(fps60);
 				
+				deltaTime -= fps60;
 			}
+			ImGui::Begin("Window");
+			ImGui::SeparatorText("hello world");
+			ImGui::End();
+
+			wnd.clear(sf::Color::Blue);
+
+			render(wnd);
+			ImGui::SFML::Render(wnd);
+			waitingForARender = false;
+			wnd.display();
 			
 		}
 		else
 		{
 			frameTimer.restart();
-			deltaTime = sf::Time::Zero;
+			if (hadFocus )
+			{
+				hadFocus = false;
+				if (waitingForARender)
+				{
+					ImGui::SFML::Render(wnd);
+					waitingForARender = false;
+				}
+			}
 		}
 
 	}
-	// gameRunning is false
 afterLoop:
-	if (guiIsOpen)
+	if (waitingForARender)
 	{
 		ImGui::SFML::Render(wnd);
+		waitingForARender = false;
 	}
 	ImGui::SFML::Shutdown();
 	wnd.close();
-
-	return;
 }
 
 
