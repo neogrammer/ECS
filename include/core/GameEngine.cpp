@@ -107,6 +107,8 @@ void GameEngine::mainLoop()
 			sf::Event event;
 			while (wnd.pollEvent(event))
 			{
+				ImGui::SFML::ProcessEvent(wnd, event);
+
 				if (event.type == sf::Event::Closed)
 				{
 					gameRunning = false;
@@ -154,7 +156,7 @@ void GameEngine::mainLoop()
 
 				if (guiIsOpen)
 				{
-					ImGui::SFML::Render();
+					ImGui::SFML::Render(wnd);
 					guiIsOpen = false;
 				}
 
