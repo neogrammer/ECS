@@ -15,7 +15,7 @@ protected:
 	bool m_paused{ false };
 	bool m_hasEnded{ false };
 
-	EntityManager& eMgr();
+	
 
 public:
 	Scene(GameEngine& l_game);
@@ -28,6 +28,8 @@ public:
 	virtual void update(double l_dt) = 0;
 	virtual void render(sf::RenderWindow& l_wnd) = 0;
 
+
+	EntityManager& eMgr();
 };
 
 #endif

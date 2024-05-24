@@ -5,9 +5,8 @@
 #include <map>
 #include <string>
 #include "component/components/Components.hpp"
+#include "../core/Config.hpp"
 
-typedef std::vector<std::shared_ptr<Entity> > EntityVec;
-typedef std::map<std::string, EntityVec> EntityMap;
 
 class EntityManager
 {

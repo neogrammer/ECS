@@ -5,6 +5,10 @@
 #include "ResourceManager.hpp"
 #include <vector>
 #include <string>
+class Entity;
+
+typedef std::vector<std::shared_ptr<Entity> > EntityVec;
+typedef std::map<std::string, EntityVec> EntityMap;
 
 struct PlayerConfig
 {
@@ -12,6 +16,14 @@ struct PlayerConfig
     //dataType member2;
 
     PlayerConfig(std::string l_filename);
+};
+
+struct rect
+{
+    float cx;
+    float cy;
+    float halfSizeX;
+    float halfSizeY;
 };
 
 /// Config for the resources for the game is handled here in one fell swoop, before the game is even created

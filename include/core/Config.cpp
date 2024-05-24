@@ -1,6 +1,7 @@
 #include "Config.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "../ECS/Entity.hpp"
 
 //Config Structs
 PlayerConfig::PlayerConfig(std::string l_filename)

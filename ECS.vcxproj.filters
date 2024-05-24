@@ -70,6 +70,9 @@
     <Filter Include="Source Files\scene\scenes">
       <UniqueIdentifier>{1f6cecfa-1491-41cc-af45-88fa0a30ef40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ECS">
+      <UniqueIdentifier>{a1f538d3-affb-4a44-b80a-5efc6c091734}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -95,9 +98,6 @@
     </ClCompile>
     <ClCompile Include="include\util\Vec2.cpp">
       <Filter>Source Files\util</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\Entity.cpp">
-      <Filter>Header Files\ECS</Filter>
     </ClCompile>
     <ClCompile Include="include\ECS\system\systems\MovementSystem.cpp">
       <Filter>Source Files\systems</Filter>
@@ -134,6 +134,15 @@
     </ClCompile>
     <ClCompile Include="include\scene\scenes\Title.cpp">
       <Filter>Source Files\scene\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\Entity.cpp">
+      <Filter>Source Files\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\Animation.cpp">
+      <Filter>Source Files\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="include\util\Physics.cpp">
+      <Filter>Source Files\util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +202,12 @@
     </ClInclude>
     <ClInclude Include="include\scene\scenes\Title.hpp">
       <Filter>Header Files\scene\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Animation.hpp">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\Physics.hpp">
+      <Filter>Header Files\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

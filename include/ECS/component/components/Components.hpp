@@ -53,11 +53,14 @@ struct CShape : Component
 
 struct CBBox : Component
 {
-	// not used
-	int side{};
+	
+	float x;
+	float y;
+	Vec2 size;
+	Vec2 halfSize;
 
-	CBBox() : Component{} {}
-	CBBox(int side) : Component{}, side{ side } {}
+	CBBox() : Component{}, x{}, y{}, size{ Vec2(0,0) }, halfSize{ Vec2(0,0) } {}
+	CBBox(float l_x, float l_y, const Vec2& l_size) : Component{}, x{ l_x }, y{ l_y }, size{ l_size }, halfSize{ l_size.x / 2.f, l_size.y / 2.f } {}
 	~CBBox() override final = default;
 };
 
