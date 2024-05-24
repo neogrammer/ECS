@@ -11,19 +11,22 @@ typedef std::map<std::string, EntityVec> EntityMap;
 
 class EntityManager
 {
-	EntityVec m_entities;
-	EntityVec m_toAdd;
-	EntityMap m_entityMap;	
-	static size_t m_totalEntities;
+	EntityVec m_entities{};
+	EntityVec m_toAdd{};
+	EntityMap m_entityMap{};
+	size_t m_totalEntities;
+
 public:
+
 	EntityManager();
 	void update(double l_dt);
 	std::shared_ptr<Entity> addEntity(const std::string& tag);
 	EntityVec& getEntities();
 	EntityVec& getEntities(const std::string& tag);
-
+	std::shared_ptr<Entity> getEntity(size_t l_id);
+	size_t totalEntities();
 	// returns the player entity, and does not add it to the managed buckets
-	std::shared_ptr<Entity> makeStartingEntities();
+	std::shared_ptr<Entity> makeStartingEntities(std::string l_scene);
 };
 
 #endif

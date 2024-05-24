@@ -49,6 +49,27 @@
     <Filter Include="Source Files\core">
       <UniqueIdentifier>{fd878853-5a95-444a-8f18-8eeb579b2755}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\core\tpl">
+      <UniqueIdentifier>{414a96d3-a40d-4608-a691-29b9f9defbfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{0bed5ab1-5ed8-45e2-9896-f6821786918c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\textures">
+      <UniqueIdentifier>{cc0215ec-b2c0-4f1f-8fef-13f4bc8821eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scene">
+      <UniqueIdentifier>{6c4be3f1-f445-4228-92b7-733047cd0ab6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scene\scenes">
+      <UniqueIdentifier>{fb03eae6-9654-4eea-ade7-09bd8120660d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scene">
+      <UniqueIdentifier>{dc4c67ec-82bf-4921-81d7-f2ec865704b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scene\scenes">
+      <UniqueIdentifier>{1f6cecfa-1491-41cc-af45-88fa0a30ef40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -99,6 +120,21 @@
     <ClCompile Include="include\ECS\Factories.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="include\core\Game.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="include\core\Config.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="include\scene\Scene.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="include\scene\scenes\Play.cpp">
+      <Filter>Source Files\scene\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="include\scene\scenes\Title.cpp">
+      <Filter>Source Files\scene\scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UI\UI.hpp">
@@ -140,5 +176,33 @@
     <ClInclude Include="include\ECS\Factories.hpp">
       <Filter>Header Files\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="include\core\Game.hpp">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\Config.hpp">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\ResourceManager.hpp">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\scene\Scene.hpp">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="include\scene\scenes\Play.hpp">
+      <Filter>Header Files\scene\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\scene\scenes\Title.hpp">
+      <Filter>Header Files\scene\scenes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="include\core\tpl\ResourceManager.tpl">
+      <Filter>Header Files\core\tpl</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\textures\player_atlas.png">
+      <Filter>assets\textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

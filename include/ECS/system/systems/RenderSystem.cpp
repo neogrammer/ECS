@@ -1,5 +1,7 @@
 #include "RenderSystem.hpp"
 #include "../core/GameEngine.hpp"
+#include "../scene/scenes/Play.hpp"
+#include "../scene/scenes/Title.hpp"
 
 
 RenderSystem::RenderSystem(GameEngine& l_game, sf::RenderWindow* l_wnd)
@@ -25,8 +27,21 @@ void RenderSystem::update(double l_dt)
 
 void RenderSystem::render()
 {
-	game.player().cShape->shape.setPosition({ game.player().cTransform->pos.x, game.player().cTransform->pos.y });
-	p_wnd->draw(game.player().cShape->shape);
+	if (dynamic_cast<Play*>(game.currentScene().get()))
+	{
+		auto scene = dynamic_cast<Play*>(game.currentScene().get());
+		scene->player()->cShape->sprite.setPosition({ scene->player()->cTransform->pos.x, scene->player()->cTransform->pos.y });
+		p_wnd->draw(scene->player()->cShape->sprite);
+	}
+	else if (dynamic_cast<Title*>(game.currentScene().get()))
+	{ 
+		auto scene = dynamic_cast<Title*>(game.currentScene().get());
+		// draw title screen
+	}
+	else
+	{
+
+	}
 
 	
 }

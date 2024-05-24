@@ -163,6 +163,8 @@
     <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui_draw.cpp" />
     <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui_tables.cpp" />
     <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui_widgets.cpp" />
+    <ClCompile Include="include\core\Config.cpp" />
+    <ClCompile Include="include\core\Game.cpp" />
     <ClCompile Include="include\core\GameEngine.cpp" />
     <ClCompile Include="include\ECS\Entity.cpp" />
     <ClCompile Include="include\ECS\EntityManager.cpp" />
@@ -171,11 +173,17 @@
     <ClCompile Include="include\ECS\system\systems\InputSystem.cpp" />
     <ClCompile Include="include\ECS\system\systems\MovementSystem.cpp" />
     <ClCompile Include="include\ECS\system\systems\RenderSystem.cpp" />
+    <ClCompile Include="include\scene\Scene.cpp" />
+    <ClCompile Include="include\scene\scenes\Play.cpp" />
+    <ClCompile Include="include\scene\scenes\Title.cpp" />
     <ClCompile Include="include\util\Vec2.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\core\Config.hpp" />
+    <ClInclude Include="include\core\Game.hpp" />
     <ClInclude Include="include\core\GameEngine.hpp" />
+    <ClInclude Include="include\core\ResourceManager.hpp" />
     <ClInclude Include="include\ECS\Component\Component.hpp" />
     <ClInclude Include="include\ECS\component\components\Components.hpp" />
     <ClInclude Include="include\ECS\Entity.hpp" />
@@ -186,8 +194,17 @@
     <ClInclude Include="include\ECS\system\systems\InputSystem.hpp" />
     <ClInclude Include="include\ECS\system\systems\MovementSystem.hpp" />
     <ClInclude Include="include\ECS\system\systems\RenderSystem.hpp" />
+    <ClInclude Include="include\scene\Scene.hpp" />
+    <ClInclude Include="include\scene\scenes\Play.hpp" />
+    <ClInclude Include="include\scene\scenes\Title.hpp" />
     <ClInclude Include="include\util\Vec2.hpp" />
     <ClInclude Include="UI\UI.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="include\core\tpl\ResourceManager.tpl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\textures\player_atlas.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,6 +9,16 @@ Entity::Entity(const std::string& l_tag, size_t l_id)
 	, cLifespan{nullptr}
 {}
 
+size_t Entity::id()
+{
+	return m_id;
+}
+
+bool Entity::isAlive()
+{
+	return m_alive;
+}
+
 const std::string& Entity::tag()
 {
 	return m_tag;

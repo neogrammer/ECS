@@ -22,8 +22,8 @@ public:
 	std::shared_ptr<CBBox> cBBox{};
 	std::shared_ptr<CLifespan> cLifespan{};
 
-	
-	
+	size_t id();
+	bool isAlive();
 	const std::string& tag();
 	void destroy();
 };

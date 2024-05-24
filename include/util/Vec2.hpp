@@ -30,12 +30,11 @@ public:
 		return sqrtf(x * x + y * y);
 	}
 
-	Vec2& normalize()
+	Vec2 normalize()
 	{
-		this->x = this->x / length();
-		this->y = this->y / length();
+		Vec2 v(this->x / length(), this->y / length());
 
-		return *this;
+		return v;
 	}
 
 	Vec2& add(Vec2 v)
@@ -111,6 +110,11 @@ public:
 		a.y /= v.y;
 
 		return a;
+	}
+
+	bool operator==(Vec2 v)
+	{
+		return (this->x == v.x && this->y == v.y);
 	}
 
 };

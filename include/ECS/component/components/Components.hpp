@@ -2,6 +2,9 @@
 #define COMPONENTS_HPP__
 #include "../Component.hpp"
 #include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
+
 #include <SFML/Graphics/Color.hpp>
 
 
@@ -27,31 +30,23 @@ struct CName : Component
 
 struct CShape : Component
 {
-	
-	sf::CircleShape shape;
-	int numSides{ 6 };
-	int outlineThickness{ 1 };
-	sf::Color fillCol;
-	sf::Color outlineCol;
-	float radius{ 3.f };
+	sf::Sprite sprite;
+	sf::Texture* tex{ nullptr };
 	sf::Vector2f origin{ 0.f,0.f };
+	sf::Vector2i size{ 1, 1 };
 
-	CShape() : Component{}, shape{} {}
-	CShape(const Vec2& l_origin, int l_numSides, int l_outlineThickness, int l_rFill, int l_gFill, int l_bFill, int l_rOut, int l_gOut, int l_bOut, int l_radius)
-		: Component{} 
+	CShape() : Component{}, sprite{}, tex{}, origin{}, size{} {}
+	CShape(sf::Texture* l_tex, const Vec2& l_size, const Vec2& l_origin = {0.f, 0.f})
+		: Component{}
+		, sprite{}
+		, tex{l_tex}
 		, origin{l_origin.x, l_origin.y}
-		, shape(sf::CircleShape((float)l_radius, (size_t)l_numSides))
-		, numSides{l_numSides}
-		, outlineThickness{l_outlineThickness}
-		, fillCol{ sf::Color((sf::Uint8)l_rFill, (sf::Uint8)l_gFill, (sf::Uint8)l_bFill, 255) }
-		, outlineCol{ sf::Color((sf::Uint8)l_rOut, (sf::Uint8)l_gOut, (sf::Uint8)l_bOut, 255) }
-		, radius{(float)l_radius}
+		, size{(int)l_size.x, (int)l_size.y}
 	{
-		shape.setOutlineThickness((float)outlineThickness);
-		shape.setFillColor(fillCol);
-		shape.setOutlineColor(outlineCol);
-		shape.setPosition({ 0.f,0.f });
-		shape.setOrigin({ origin.x, origin.y });
+		sprite.setTexture(*tex);
+		sprite.setPosition({ 0.f,0.f });
+		sprite.setOrigin({ origin.x, origin.y });
+		sprite.setTextureRect({ {0,0}, {size} });
 	}
 	~CShape() override final = default;
 };

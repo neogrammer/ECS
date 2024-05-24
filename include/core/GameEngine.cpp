@@ -8,6 +8,9 @@
 #include "../ECS/system/systems/RenderSystem.hpp"
 #include "../ECS/system/systems/CollisionSystem.hpp"
 #include "../ECS/system/systems/InputSystem.hpp"
+#include "../scene/scenes/Play.hpp"
+#include "../scene/scenes/Title.hpp"
+
 
 #include <imgui-SFML.h>
 #include <imgui.h>
@@ -15,78 +18,64 @@
 #include <typeinfo>
 #include <type_traits>
 
-Entity& GameEngine::player()
-{
-	return *m_player;
-}
-
-EntityManager& GameEngine::eMgr()
-{
-	return m_entityManager;
-}
-
 // ctor, no dtor neccessary... RAII be like that sometimes
 GameEngine::GameEngine()
-	: m_player{nullptr}, m_entityManager{}, m_systems{}
+	: m_scenes{}, m_currentScene{}
 	, wnd{ sf::VideoMode(::GameProperties::SCRW, ::GameProperties::SCRH), "ECS_Architecture", sf::Style::None }
+	, paused{false}
 {
-	m_systems.clear();
-	// 0 - Movement System
-	m_systems.emplace_back(std::make_unique<RenderSystem>(*this, &wnd));
-	m_systems.emplace_back(std::make_unique<MovementSystem>(*this));
-	m_systems.emplace_back(std::make_unique<InputSystem>(*this));
-	m_systems.emplace_back(std::make_unique<CollisionSystem>(*this));
-	
-	m_player = m_entityManager.makeStartingEntities();
-	
+	m_scenes["play"] = std::make_shared<Play>(*this, "aStringGoesHere");
+	m_scenes["title"] = std::make_shared<Title>(*this);
 
+	m_currentScene = "play";
+
+}
+
+std::shared_ptr<Scene> GameEngine::currentScene()
+{
+	return m_scenes[m_currentScene];
+}
+
+void GameEngine::changeScene(std::string l_scene)
+{
+	m_currentScene = l_scene;
 }
 
 // hotpotato that shit
 void GameEngine::propogateInput(std::vector<sf::Event>& l_evts)
 {
-	for (auto& e : l_evts)
-	{
-		// check which event and handle it via delegation
-		// if delegate returns true, it was a successful execution, 
-		//   log the event into an action file sequentially for an action replay file we could possibly use
-	}
+	currentScene()->propogateInput(l_evts);
 }
 
 // make it rain on em
 void GameEngine::handleWindowEvents(std::vector<sf::Event>& l_evts)
 {
+	
 	for (auto& e : l_evts)
 	{
 		if (e.type == sf::Event::KeyReleased && e.key.code == sf::Keyboard::Escape)
 		{
-			gameRunning = false;;
+			gameRunning = false;
 		}
 		// check which event , handle it here first as super ceding any inner game action, such as reset,
 		//   then still pass it along in case a delegate is waiting for it
 	}
+	currentScene()->processEvents(l_evts);
 }
 
 // value passed to this function always simulates a normalization to 60 fps, no matter what
 //  should be smooth physics calculations because of this
 void GameEngine::update(double l_dt)
 {
-	m_entityManager.update(l_dt);
+	currentScene()->update(l_dt);
 
-	for (auto& s : m_systems)
-	{
-		
-		if (dynamic_cast<RenderSystem*>(s.get()) == nullptr)
-			s->update(l_dt);
-	}
+	
 }
 
 // work your magic in here, blit a portion of a giant rendertexture sitting on the GPU the size of the window to the window for performance
 void GameEngine::render(sf::RenderWindow& l_wnd)
 {
-	// this system only renders, which is handled outside of the traditional update section
-	//  hence the odd name here that is misleading, it renders to the window, not updates
-	m_systems.at(0)->update(::GameProperties::FPS);
+	currentScene()->render(l_wnd);
 }
 
 bool GameEngine::gameRunning = true;

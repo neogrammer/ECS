@@ -3,11 +3,13 @@
 #include <vector>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "../ECS/EntityManager.hpp"
-#include "../ECS/system/System.hpp"
 
+#include <map>
 #include <memory>
 #include <utility>
+#include <string>
+
+class Scene;
 
 struct GameProperties
 {
@@ -18,10 +20,10 @@ struct GameProperties
 
 class GameEngine
 {
+	
 
-	std::shared_ptr<Entity> m_player{};
-	EntityManager m_entityManager{};
-	std::vector<std::unique_ptr<System> > m_systems;
+	std::map<std::string, std::shared_ptr<Scene> > m_scenes{};
+	std::string m_currentScene;
 
 	// handle the entirety of the game with these four functions
 	void handleWindowEvents(std::vector<sf::Event>& l_evts);
@@ -29,11 +31,14 @@ class GameEngine
 	void update(double l_dt);
 	void render(sf::RenderWindow& l_wnd);
 
+	
+
+
 public:
 	sf::RenderWindow wnd;
+	bool paused{ false };
 	static bool gameRunning;
-	Entity& player();
-	EntityManager& eMgr();
+
 	// cuz im an explicit mofukka
 	explicit GameEngine();
 	~GameEngine() = default;
@@ -45,8 +50,8 @@ public:
 
 	//  One function to rule them all
 	void mainLoop();
-
-
+	void changeScene(std::string l_scene);
+	std::shared_ptr<Scene> currentScene();
 
 };
 
