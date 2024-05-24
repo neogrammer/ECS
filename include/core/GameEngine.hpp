@@ -29,6 +29,7 @@ class GameEngine
 
 public:
 	sf::RenderWindow wnd;
+	static bool gameRunning;
 
 	// cuz im an explicit mofukka
 	explicit GameEngine();

@@ -10,11 +10,13 @@
 #include "../ECS/system/systems/InputSystem.hpp"
 
 #include <imgui-SFML.h>
+#include <imgui.h>
+#include <iostream>
 
 // ctor, no dtor neccessary... RAII be like that sometimes
 GameEngine::GameEngine()
 	: m_entityManager{}, m_systems{}
-	, wnd{ sf::VideoMode(::GameProperties::SCRW, ::GameProperties::SCRH), "ECS_Architecture" }
+	, wnd{ sf::VideoMode(::GameProperties::SCRW, ::GameProperties::SCRH), "ECS_Architecture", sf::Style::None }
 {
 	m_systems.clear();
 	// 0 - Movement System
@@ -22,6 +24,8 @@ GameEngine::GameEngine()
 	m_systems.emplace_back(std::make_unique<InputSystem>());
 	m_systems.emplace_back(std::make_unique<CollisionSystem>());
 	m_systems.emplace_back(std::make_unique<RenderSystem>());
+
+	
 
 }
 
@@ -43,7 +47,7 @@ void GameEngine::handleWindowEvents(std::vector<sf::Event>& l_evts)
 	{
 		if (e.type == sf::Event::KeyReleased && e.key.code == sf::Keyboard::Escape)
 		{
-			wnd.close();
+			gameRunning = false;;
 		}
 		// check which event , handle it here first as super ceding any inner game action, such as reset,
 		//   then still pass it along in case a delegate is waiting for it
@@ -67,11 +71,14 @@ void GameEngine::render(sf::RenderWindow& l_wnd)
 {
 }
 
+bool GameEngine::gameRunning = true;
+
+
 // to abstract implementation away from the main function, just to be clean and concise
 void GameEngine::mainLoop()
 {
 	
-	ImGui::SFML::Init(wnd);
+	
 
 	sf::Time deltaTime{ sf::Time::Zero };
 	sf::Clock frameTimer{ };
@@ -79,10 +86,10 @@ void GameEngine::mainLoop()
 	bool focus = true;
 	wnd.setVerticalSyncEnabled(true);
 
-	
-
+	ImGui::SFML::Init(wnd);
 	frameTimer.restart();
-	while (wnd.isOpen())
+	bool guiIsOpen = false;
+	while (gameRunning)
 	{
 		wnd.setPosition(sf::Vector2i(450, 300));
 		focus = wnd.hasFocus();
@@ -101,9 +108,13 @@ void GameEngine::mainLoop()
 			while (wnd.pollEvent(event))
 			{
 				if (event.type == sf::Event::Closed)
-					wnd.close();
+				{
+					gameRunning = false;
+					goto afterLoop;
+				}
 
 				evtsToProp.emplace_back(std::move(event));
+				if (!gameRunning) goto afterLoop;
 			}
 			handleWindowEvents(evtsToProp);
 
@@ -112,19 +123,45 @@ void GameEngine::mainLoop()
 			while ((double)deltaTime.asSeconds() > ::GameProperties::FPS)
 			{
 				update(::GameProperties::FPS);
+				if (guiIsOpen)
+				{
+					ImGui::SFML::Render();
+					guiIsOpen = false;
+				}
+				if (!guiIsOpen)
+				{
+					ImGui::SFML::Update(wnd, deltaTime);
+					ImGui::Begin("Window");
+					ImGui::SeparatorText("hello world");
+					ImGui::End();
+				}
+
 				deltaTime -= sf::seconds((float)::GameProperties::FPS);
 				repaint = true;
 			}
+			if (repaint && !guiIsOpen)
+			{
+				guiIsOpen = true;
+			}
 			// no partual update (carry over to build up to an update next frame if less than 0.016666667 seconds
-
-			wnd.clear(sf::Color::Blue);
 
 			// render every frame update only
 			if (repaint)
 			{
+				wnd.clear(sf::Color::Blue);
+
 				render(wnd);
+
+				if (guiIsOpen)
+				{
+					ImGui::SFML::Render();
+					guiIsOpen = false;
+				}
+
+				wnd.display();
+				
 			}
-			wnd.display();
+			
 		}
 		else
 		{
@@ -133,7 +170,16 @@ void GameEngine::mainLoop()
 		}
 
 	}
-	
+	// gameRunning is false
+afterLoop:
+	if (guiIsOpen)
+	{
+		ImGui::SFML::Render(wnd);
+	}
+	ImGui::SFML::Shutdown();
+	wnd.close();
+
+	return;
 }
 
 

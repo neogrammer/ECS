@@ -2,6 +2,10 @@
 
 Entity::Entity(const std::string& l_tag, size_t l_id)
 	: m_id{ l_id }, m_tag{ l_tag }, m_alive{true}
+	, cTransform{nullptr}
+	, cName{nullptr}
+	, cShape{nullptr}
+	, cBBox{nullptr}
 {}
 
 const std::string& Entity::tag()
