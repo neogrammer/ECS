@@ -6,6 +6,7 @@ Entity::Entity(const std::string& l_tag, size_t l_id)
 	, cName{nullptr}
 	, cShape{nullptr}
 	, cBBox{nullptr}
+	, cLifespan{nullptr}
 {}
 
 const std::string& Entity::tag()

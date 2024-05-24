@@ -166,6 +166,7 @@
     <ClCompile Include="include\core\GameEngine.cpp" />
     <ClCompile Include="include\ECS\Entity.cpp" />
     <ClCompile Include="include\ECS\EntityManager.cpp" />
+    <ClCompile Include="include\ECS\Factories.cpp" />
     <ClCompile Include="include\ECS\system\systems\CollisionSystem.cpp" />
     <ClCompile Include="include\ECS\system\systems\InputSystem.cpp" />
     <ClCompile Include="include\ECS\system\systems\MovementSystem.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="include\ECS\component\components\Components.hpp" />
     <ClInclude Include="include\ECS\Entity.hpp" />
     <ClInclude Include="include\ECS\EntityManager.hpp" />
+    <ClInclude Include="include\ECS\Factories.hpp" />
     <ClInclude Include="include\ECS\system\System.hpp" />
     <ClInclude Include="include\ECS\system\systems\CollisionSystem.hpp" />
     <ClInclude Include="include\ECS\system\systems\InputSystem.hpp" />

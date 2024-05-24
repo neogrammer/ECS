@@ -96,6 +96,9 @@
     <ClCompile Include="include\ECS\system\systems\RenderSystem.cpp">
       <Filter>Source Files\systems</Filter>
     </ClCompile>
+    <ClCompile Include="include\ECS\Factories.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UI\UI.hpp">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="include\ECS\system\systems\RenderSystem.hpp">
       <Filter>Header Files\ECS\system\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Factories.hpp">
+      <Filter>Header Files\ECS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

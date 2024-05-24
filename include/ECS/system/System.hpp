@@ -1,6 +1,9 @@
 #ifndef SYSTEM_HPP__
 #define SYSTEM_HPP__
 
+
+class GameEngine;
+
 enum class SystemType
 {
 	Movement,
@@ -10,8 +13,11 @@ enum class SystemType
 
 class System
 {
+protected:
+	GameEngine& game;
 public:
-	System() = default;
+	System() = delete;
+	explicit System(GameEngine& l_game) : game{ l_game } {}
 	virtual ~System() {}
 
 	virtual void update(double l_dt) = 0;

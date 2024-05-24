@@ -18,8 +18,10 @@ struct GameProperties
 
 class GameEngine
 {
-	EntityManager m_entityManager;
-	std::vector<std::unique_ptr<System> > m_systems{};
+
+	std::shared_ptr<Entity> m_player{};
+	EntityManager m_entityManager{};
+	std::vector<std::unique_ptr<System> > m_systems;
 
 	// handle the entirety of the game with these four functions
 	void handleWindowEvents(std::vector<sf::Event>& l_evts);
@@ -30,7 +32,8 @@ class GameEngine
 public:
 	sf::RenderWindow wnd;
 	static bool gameRunning;
-
+	Entity& player();
+	EntityManager& eMgr();
 	// cuz im an explicit mofukka
 	explicit GameEngine();
 	~GameEngine() = default;

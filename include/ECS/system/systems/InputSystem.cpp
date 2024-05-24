@@ -1,7 +1,8 @@
 #include "InputSystem.hpp"
+#include "../core/GameEngine.hpp"
 
-InputSystem::InputSystem()
-	: System{}
+InputSystem::InputSystem(GameEngine& l_game)
+	: System{l_game}
 {
 }
 

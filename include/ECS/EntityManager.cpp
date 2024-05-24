@@ -1,4 +1,5 @@
 #include "EntityManager.hpp"
+#include "Factories.hpp"
 
 size_t EntityManager::m_totalEntities = 0;
 
@@ -44,5 +45,15 @@ EntityVec& EntityManager::getEntities(const std::string& tag)
 {
 	
 	return m_entityMap[tag];
+}
+
+std::shared_ptr<Entity> EntityManager::makeStartingEntities()
+{
+	// dont add the player to the bucket, he is special, return it
+	auto p = Make::Player(EntityManager::m_totalEntities++);
+
+	// make other entities then add them to the buckets for starting game state
+	
+	return p;
 }
 

@@ -1,7 +1,8 @@
 #include "CollisionSystem.hpp"
+#include "../core/GameEngine.hpp"
 
-CollisionSystem::CollisionSystem()
-	: System{}
+CollisionSystem::CollisionSystem(GameEngine& l_game)
+	: System{l_game}
 {
 }
 

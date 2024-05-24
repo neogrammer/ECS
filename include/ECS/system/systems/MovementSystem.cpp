@@ -1,7 +1,9 @@
 #include "MovementSystem.hpp"
+#include "../core/GameEngine.hpp"
 
-MovementSystem::MovementSystem()
-	: System{}
+
+MovementSystem::MovementSystem(GameEngine& l_game)
+	: System{l_game}
 {
 }
 

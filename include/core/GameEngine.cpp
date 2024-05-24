@@ -12,19 +12,32 @@
 #include <imgui-SFML.h>
 #include <imgui.h>
 #include <iostream>
+#include <typeinfo>
+#include <type_traits>
+
+Entity& GameEngine::player()
+{
+	return *m_player;
+}
+
+EntityManager& GameEngine::eMgr()
+{
+	return m_entityManager;
+}
 
 // ctor, no dtor neccessary... RAII be like that sometimes
 GameEngine::GameEngine()
-	: m_entityManager{}, m_systems{}
+	: m_player{nullptr}, m_entityManager{}, m_systems{}
 	, wnd{ sf::VideoMode(::GameProperties::SCRW, ::GameProperties::SCRH), "ECS_Architecture", sf::Style::None }
 {
 	m_systems.clear();
 	// 0 - Movement System
-	m_systems.emplace_back(std::make_unique<MovementSystem>());
-	m_systems.emplace_back(std::make_unique<InputSystem>());
-	m_systems.emplace_back(std::make_unique<CollisionSystem>());
-	m_systems.emplace_back(std::make_unique<RenderSystem>());
-
+	m_systems.emplace_back(std::make_unique<RenderSystem>(*this, &wnd));
+	m_systems.emplace_back(std::make_unique<MovementSystem>(*this));
+	m_systems.emplace_back(std::make_unique<InputSystem>(*this));
+	m_systems.emplace_back(std::make_unique<CollisionSystem>(*this));
+	
+	m_player = m_entityManager.makeStartingEntities();
 	
 
 }
@@ -62,13 +75,18 @@ void GameEngine::update(double l_dt)
 
 	for (auto& s : m_systems)
 	{
-		s->update(l_dt);
+		
+		if (dynamic_cast<RenderSystem*>(s.get()) == nullptr)
+			s->update(l_dt);
 	}
 }
 
 // work your magic in here, blit a portion of a giant rendertexture sitting on the GPU the size of the window to the window for performance
 void GameEngine::render(sf::RenderWindow& l_wnd)
 {
+	// this system only renders, which is handled outside of the traditional update section
+	//  hence the odd name here that is misleading, it renders to the window, not updates
+	m_systems.at(0)->update(::GameProperties::FPS);
 }
 
 bool GameEngine::gameRunning = true;

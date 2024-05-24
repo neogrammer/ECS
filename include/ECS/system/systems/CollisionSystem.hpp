@@ -3,10 +3,12 @@
 
 #include "../System.hpp"
 
+class GameEngine;
+
 class CollisionSystem : public System
 {
 public:
-	CollisionSystem();
+	CollisionSystem(GameEngine& l_game);
 	~CollisionSystem() override final;
 
 	void update(double l_dt) override final;
