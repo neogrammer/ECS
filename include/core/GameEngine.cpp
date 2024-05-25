@@ -18,29 +18,92 @@
 
 #include <iostream>
 #include <typeinfo>
+#include <fstream>
 #include <type_traits>
+
+#include "../ECS/Animation.hpp"
 
 // ctor, no dtor neccessary... RAII be like that sometimes
 GameEngine::GameEngine()
 	: m_scenes{}, m_currentScene{}
 	, wnd{ sf::VideoMode(::GameProperties::SCRW, ::GameProperties::SCRH), "ECS_Architecture", sf::Style::None }
 	, paused{false}
+	, animations{}
 {
 	m_scenes["play"] = std::make_shared<Play>(*this, Config::inputs, "aStringGoesHere");
+
 	m_scenes["title"] = std::make_shared<Title>(*this, Config::inputs);
 
-	m_currentScene = "title";
+	changeScene("title");
+	
 
 }
 
 std::shared_ptr<Scene> GameEngine::currentScene()
 {
-	return m_scenes[m_currentScene];
+	return m_scenes.at(m_currentScene);
 }
+
+void GameEngine::loadAnimations(std::string filename)
+{
+	std::ifstream iFile;
+	iFile.open(filename);
+
+	if (!iFile.is_open())
+	{
+		std::cout << "Animation File unable to be read in!" << std::endl;
+	}
+	else
+	{
+		int numTextures;
+		iFile >> numTextures;
+
+		for (int i = 0; i < numTextures; i++)
+		{
+			std::string texName;
+			iFile >> texName;
+
+			int numAnimsInTexture;
+			iFile >> numAnimsInTexture;
+
+			for (int j = 0; j < numAnimsInTexture; j++)
+			{
+				std::string animName;
+				iFile >> animName;
+
+				//file is open
+				int sizex, sizey, numframes, cols, rows, startposx, startposy, framedelayMS;
+				std::string looping, flippedH, flippedV;
+
+				iFile >> sizex >> sizey >> numframes >> cols >> rows >> startposx >> startposy >> framedelayMS >> looping >> flippedH >> flippedV;
+				const std::string str = animName;
+				animations.insert(std::pair(Config::Textures::Player, std::map<std::string, std::shared_ptr<Animation>>{std::make_pair(str, std::make_shared<Animation>(sf::Vector2i(sizex, sizey), str, numframes, cols, rows, sf::Vector2i{ startposx,startposy }, (float)framedelayMS / 1000.f, (looping == "true") ? true : false, (flippedH == "true") ? true : false, (flippedV == "true") ? true : false))}));
+			}
+		}
+		iFile.close();
+	}
+}
+
+std::shared_ptr<Animation> GameEngine::getAnimation(Config::Textures texName, const std::string& animName)
+{
+	for (auto& outer : this->animations)
+	{
+		for (auto& inner : outer.second)
+		{
+			if (inner.second->name() == animName)
+				return inner.second;
+		}
+	}
+
+	return nullptr;
+
+}
+
 
 void GameEngine::changeScene(std::string l_scene)
 {
 	m_currentScene = l_scene;
+	currentScene()->init();
 }
 
 // value passed to this function always simulates a normalization to 60 fps, no matter what
@@ -80,6 +143,9 @@ void GameEngine::mainLoop()
 	bool hadFocus = false;
 	bool waitingForARender = false;
 	sf::Time fps60 = sf::seconds(1.f / 60.f);
+	
+	//
+	
 	while (gameRunning)
 	{
 		focus = wnd.hasFocus();
@@ -89,7 +155,7 @@ void GameEngine::mainLoop()
 			hadFocus = true;
 			// process realtime input
 			currentScene()->processInput();
-
+			currentScene()->currentSystem->update((double)fps60.asSeconds());
 			
 
 			std::vector<sf::Event> evtsToProp;
@@ -106,6 +172,7 @@ void GameEngine::mainLoop()
 						gameRunning = false;
 						goto afterLoop;
 					}
+					
 				}
 				else if (event.type == sf::Event::Closed)
 				{

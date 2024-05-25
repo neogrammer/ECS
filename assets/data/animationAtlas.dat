@@ -1,0 +1,27 @@
+1
+Player
+12
+RunRight
+84 84 4 4 1 0 0 100 true false false
+IdleRight
+84 84 1 1 1 336 0 100 false false false
+ShootRight
+84 84 1 1 1 420 0 100 false false false
+RunShootRight
+84 84 4 4 1 0 84 100 true false false
+JumpShootRight
+84 84 1 1 1 336 84 100 false false false
+JumpRight
+84 84 1 1 1 420 84 100 false false false
+RunLeft
+84 84 4 4 1 0 168 100 true false false
+IdleLeft
+84 84 1 1 1 336 168 100 false false false
+ShootLeft
+84 84 1 1 1 420 168 100 false false false
+RunShootLeft
+84 84 4 4 1 0 252 100 true false false
+JumpShootLeft
+84 84 1 1 1 336 252 100 false false false
+JumpLeft
+84 84 1 1 1 420 252 100 false false false

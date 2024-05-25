@@ -5,7 +5,9 @@ Scene::Scene(GameEngine& l_game, ActionMap<int>& l_actionMap)
 	: ActionTarget<int>{l_actionMap}
 	, game{l_game}
 	, m_entityMgr{}
+	, currentSystem{}
 {
+	currentSystem = nullptr;
 }
 
 Scene::~Scene()

@@ -6,6 +6,9 @@
 #include <vector>
 #include <string>
 #include "../action/ActionMap.hpp"
+#include "../ECS/Animation.hpp"
+#include <map>
+
 class Entity;
 
 typedef std::vector<std::shared_ptr<Entity> > EntityVec;
@@ -67,6 +70,8 @@ public:
         Count
     };
 
+    static std::map<std::string, Textures> texNamelookup;
+
     // fonts for the game
     enum class Fonts : int { FiraOTF, Count };
 
@@ -96,6 +101,7 @@ public:
     static ResourceManager<sf::Font, int> fonts;
     static ResourceManager<sf::Music, int> music;
     static ResourceManager<sf::SoundBuffer, int> sounds;
+
 
     static ActionMap<int> inputs;
 

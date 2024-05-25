@@ -11,47 +11,38 @@
 Play::Play(GameEngine& l_game, ActionMap<int>& l_actionMap, std::string l_playerCfgFile)
 	: Scene(l_game, l_actionMap)
 	, m_playerCfg(l_playerCfgFile)
-	, m_systems{}
+	, m_player{}
+	, renderSystem{ nullptr }
+	, inputSystem{ nullptr }
+	, collisionSystem{ nullptr }
+	, movementSystem{ nullptr }
 {
-
-	eMgr().makeStartingEntities("play");
-
-	m_player = eMgr().getEntity(size_t(0));
-	auto& t = m_player->getComponent<CTransform>();
-	auto& s = m_player->getComponent<CShape>();
-
 	
-	t.pos = Vec2(512, 283);
-	t.prevPos = Vec2(512, 283);
-	s.sprite.setPosition({t.pos.x,t.pos.y});
-	if (m_player == nullptr)
-	{
-		std::cout << "Player not found in the play scene's entity manager" << std::endl;
-		throw std::runtime_error("shit");
-	}
+	inputSystem = std::make_shared<InputSystem>(game);
+	renderSystem = std::make_shared<RenderSystem>(game, &game.wnd);
+	movementSystem = std::make_shared<MovementSystem>(game);
+	collisionSystem = std::make_shared<CollisionSystem>(game);
+	
 
-	m_systems.clear();
-	// 0 - Movement System
-	m_systems.emplace_back(std::make_unique<RenderSystem>(game, &game.wnd));
-	m_systems.emplace_back(std::make_unique<InputSystem>(game));
-	m_systems.emplace_back(std::make_unique<CollisionSystem>(game));
-	m_systems.emplace_back(std::make_unique<MovementSystem>(game));
 
 	// action bindings
 	this->bind((int)Config::Inputs::Up, [this](const sf::Event&) {
+		inputSystem->currentlyPressed[0].second = true;
+		});
+	this->bind((int)Config::Inputs::Down, [this](const sf::Event&) {
+		inputSystem->currentlyPressed[1].second = true;
 
 		});
-
 	this->bind((int)Config::Inputs::Left, [this](const sf::Event&) {
-
+		inputSystem->currentlyPressed[2].second = true;
 		});
 
 	this->bind((int)Config::Inputs::Right, [this](const sf::Event&) {
-
+		inputSystem->currentlyPressed[3].second = true;
 		});
 
 	this->bind((int)Config::Inputs::A, [this](const sf::Event&) {
-
+		std::cout << "A" << std::endl;
 		});
 	this->bind((int)Config::Inputs::AxisX, [this](const sf::Event&) {
 		sf::Joystick::update();
@@ -87,9 +78,56 @@ Play::~Play()
 {
 }
 
+void Play::init()
+{
+	m_player = eMgr().makeStartingEntities("play");
+	m_player->getComponent<CTransform>().pos = Vec2(512, 283);
+	m_player->getComponent<CTransform>().prevPos = Vec2(512, 283);
+	m_player->getComponent<CShape>().sprite.setPosition({ m_player->getComponent<CTransform>().pos.x,m_player->getComponent<CTransform>().pos.y });
+	if (m_player == nullptr)
+	{
+		std::cout << "Player not found in the play scene's entity manager" << std::endl;
+		throw std::runtime_error("shit");
+	}
+	game.loadAnimations("assets/data/animationAtlas.dat");
+	m_player->addComponent<CAnimation>();
+	m_player->getComponent<CAnimation>().animation = *game.getAnimation(Config::texNamelookup["Player"], "RunRight");
+
+	m_player->getComponent<CShape>().sprite.setTexture(Config::textures.get((int)Config::texNamelookup["Player"]));
+	m_player->getComponent<CShape>().sprite.setTextureRect(m_player->getComponent<CAnimation>().animation.currFrame());
+	currentSystem = inputSystem;
+}
+
 void Play::processInput()
 {
 	ActionTarget<int>::processEvents();
+
+	if (inputSystem->inputMap[InputSystem::Signal::Left] == InputSystem::Status::On
+		|| inputSystem->inputMap[InputSystem::Signal::Left] == InputSystem::Status::Held)
+	{
+		if (m_player->getComponent<CTransform>().velocity.x >= 0.1f)
+			m_player->getComponent<CTransform>().velocity.x = -60.f;
+		else if (m_player->getComponent<CTransform>().velocity.x >= -240.f)
+			m_player->getComponent<CTransform>().velocity.x -= 60.f;
+	}
+	if (inputSystem->inputMap[InputSystem::Signal::Right] == InputSystem::Status::On
+		|| inputSystem->inputMap[InputSystem::Signal::Right] == InputSystem::Status::Held)
+	{
+		if (m_player->getComponent<CTransform>().velocity.x <= -0.1f)
+			m_player->getComponent<CTransform>().velocity.x = 60.f;
+		else if (m_player->getComponent<CTransform>().velocity.x <= 240.f)
+			m_player->getComponent<CTransform>().velocity.x += 60.f;
+			
+	}
+	if (inputSystem->inputMap[InputSystem::Signal::Left] == InputSystem::Status::Off
+		&& inputSystem->inputMap[InputSystem::Signal::Right] == InputSystem::Status::Off)
+	{
+		m_player->getComponent<CTransform>().velocity.x *= 0.86f;
+		if (abs(m_player->getComponent<CTransform>().velocity.x) <= 50.f)
+			m_player->getComponent<CTransform>().velocity.x *= 0.f;
+
+	}
+	
 }
 
 
@@ -99,20 +137,50 @@ void Play::processEvents(std::vector<sf::Event>& l_evts)
 
 void Play::update(double l_dt)
 {
+	collisionSystem->update(l_dt);
 
-	for (auto& s : m_systems)
+	movementSystem->update(l_dt);
+
+	// animation
+	if (m_player->getComponent<CAnimation>().has)
 	{
-
-		if (dynamic_cast<RenderSystem*>(s.get()) == nullptr)
-			s->update(l_dt);
+		if (m_player->getComponent<CTransform>().velocity.x < -0.01f || m_player->getComponent<CTransform>().velocity.x > 0.01f)
+		{
+			if (m_player->getComponent<CTransform>().velocity.x > 0.01f && m_player->getComponent<CAnimation>().animation.name() != "RunRight")
+			{
+				// set animation to run right
+				m_player->getComponent<CAnimation>().animation = *game.getAnimation(Config::texNamelookup["Player"], "RunRight");
+			}
+			else if (m_player->getComponent<CTransform>().velocity.x < -0.01f && m_player->getComponent<CAnimation>().animation.name() != "RunLeft")
+			{
+				//set anim to run left
+				m_player->getComponent<CAnimation>().animation = *game.getAnimation(Config::texNamelookup["Player"], "RunLeft");
+			}
+			
+		}
+		else
+		{
+			if (m_player->getComponent<CAnimation>().animation.name() == "RunLeft")
+			{
+				// idle left
+				m_player->getComponent<CAnimation>().animation = *game.getAnimation(Config::texNamelookup["Player"], "IdleLeft");
+			}
+			else if (m_player->getComponent<CAnimation>().animation.name() == "RunRight")
+			{
+				// idle right
+				m_player->getComponent<CAnimation>().animation = *game.getAnimation(Config::texNamelookup["Player"], "IdleRight");
+			}
+		}
+		m_player->getComponent<CAnimation>().animation.update(sf::seconds((float)l_dt));
+		m_player->getComponent<CShape>().sprite.setTextureRect(m_player->getComponent<CAnimation>().animation.currFrame());
 	}
 }
 
+
 void Play::render(sf::RenderWindow& l_wnd)
 {
-	// this system only renders, which is handled outside of the traditional update section
-	//  hence the odd name here that is misleading, it renders to the window, not updates
-	m_systems.at(0)->update(::GameProperties::FPS);
+	player()->getComponent<CShape>().sprite.setPosition({player()->getComponent<CTransform>().pos.x, player()->getComponent<CTransform>().pos.y });
+	l_wnd.draw(player()->getComponent<CShape>().sprite);
 }
 
 std::shared_ptr<Entity> Play::player()

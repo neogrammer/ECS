@@ -4,23 +4,26 @@
 #include "../ECS/system/systems/MovementSystem.hpp"
 #include "../ECS/system/systems/InputSystem.hpp"
 #include "../ECS/system/systems/CollisionSystem.hpp"
+#include "../core/Config.hpp"
 #include <iostream>
 
 Title::Title(GameEngine& l_game, ActionMap<int>& l_actionMap)
 	: Scene(l_game, l_actionMap)
-	, m_systems{}
 	, spear{}
 	, titleBG{}
 	, titleFont{}
 	, selector{}
 	, curChoice{ 1 }
+	, renderSystem{nullptr}
+	, inputSystem{ nullptr }
+	, movementSystem{ nullptr }
+	, collisionSystem{ nullptr }
 {
-	m_systems.clear();
-	// 0 - Movement System
-	m_systems.emplace_back(std::make_unique<RenderSystem>(game, &game.wnd));
-	m_systems.emplace_back(std::make_unique<MovementSystem>(game));
-	m_systems.emplace_back(std::make_unique<InputSystem>(game));
-	m_systems.emplace_back(std::make_unique<CollisionSystem>(game));
+	
+	inputSystem = std::make_shared<InputSystem>(game);
+	renderSystem = std::make_shared<RenderSystem>(game, &game.wnd);
+	movementSystem = std::make_shared<MovementSystem>(game);
+	collisionSystem = std::make_shared<CollisionSystem>(game);
 
 	titleBG.setTexture(Config::textures.get((int)Config::Textures::TitleBG));
 	titleFont.setFont(Config::fonts.get((int)Config::Fonts::FiraOTF));
@@ -46,13 +49,17 @@ Title::Title(GameEngine& l_game, ActionMap<int>& l_actionMap)
 	spear.setTextureRect({ {0, 0}, {192, 192} });
 	spear.setPosition(choicePos[curChoice]);
 
-	// action bindings
 	this->bind((int)Config::Inputs::Up, [this](const sf::Event&) {
 		curChoice = 0;
+
 		});
 
 	this->bind((int)Config::Inputs::Down, [this](const sf::Event&) {
 		curChoice = 1;
+		
+
+		
+		game.changeScene("play");
 		});
 
 	this->bind((int)Config::Inputs::Right, [this](const sf::Event&) {
@@ -60,7 +67,9 @@ Title::Title(GameEngine& l_game, ActionMap<int>& l_actionMap)
 		});
 
 	this->bind((int)Config::Inputs::A, [this](const sf::Event&) {
-	
+			
+		
+
 		});
 	this->bind((int)Config::Inputs::AxisX, [this](const sf::Event&) {
 		sf::Joystick::update();
@@ -97,6 +106,11 @@ Title::~Title()
 {
 }
 
+void Title::init()
+{
+	currentSystem = inputSystem;
+}
+
 void Title::processInput()
 {
 	ActionTarget<int>::processEvents();
@@ -105,18 +119,16 @@ void Title::processInput()
 
 void Title::processEvents(std::vector<sf::Event>& l_evts)
 {
+
 }
 
 void Title::update(double l_dt)
 {
-
-	for (auto& s : m_systems)
-	{
-
-		if (dynamic_cast<RenderSystem*>(s.get()) == nullptr)
-			s->update(l_dt);
-	}
+	
+	// run the movement system
 	spear.setPosition(choicePos[curChoice]);
+
+	
 }
 
 void Title::render(sf::RenderWindow& l_wnd)
@@ -128,4 +140,6 @@ void Title::render(sf::RenderWindow& l_wnd)
 	l_wnd.draw(titleFont);
 	l_wnd.draw(level1Text);
 	l_wnd.draw(spear);
+
+	
 }

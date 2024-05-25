@@ -72,20 +72,24 @@ std::shared_ptr<Entity> EntityManager::makeStartingEntities(std::string l_scene)
 	{
 		// dont add the player to the bucket, he is special, return it
 		auto p = Make::Player(this->m_totalEntities++);
-		m_entityMap[p->tag()].clear();
+		auto n = m_entityMap.insert(std::pair( "player",std::vector<std::shared_ptr<Entity> >{}));
+		n.first->second.clear();
+		n.first->second.push_back(p);
+
 		// make other entities then add them to the buckets for starting game state
-		m_entities.push_back(p);
-		m_entityMap[p->tag()].push_back(p);			
+		m_entities.push_back(p);	
 
 		return p;
 	}
 	else {
 
 		auto e = std::make_shared<Entity>(Entity{ "default", this->m_totalEntities++ });
-		m_entityMap[e->tag()].clear();
+		auto n = m_entityMap.insert(std::pair("default", std::vector<std::shared_ptr<Entity> >{}));
+		n.first->second.clear();
+		n.first->second.push_back(e);
 
+		// make other entities then a
 		m_entities.push_back(e);
-		m_entityMap[e->tag()].push_back(e);
 
 		return e;
 	}

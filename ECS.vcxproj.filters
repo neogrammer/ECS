@@ -85,6 +85,9 @@
     <Filter Include="Header Files\action\tpl">
       <UniqueIdentifier>{f0fadc6b-25de-4d3b-ba98-d45db5f1b302}</UniqueIdentifier>
     </Filter>
+    <Filter Include="assets\data">
+      <UniqueIdentifier>{cdbfd042-ae46-41a3-9585-644f23ab37ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -243,6 +246,9 @@
     </None>
     <None Include="include\action\tpl\ActionTarget.tpl">
       <Filter>Header Files\action\tpl</Filter>
+    </None>
+    <None Include="assets\data\animationAtlas.dat">
+      <Filter>assets\data</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

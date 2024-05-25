@@ -3,6 +3,8 @@
 #include <vector>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "../core/Config.hpp"
+
 
 #include <map>
 #include <memory>
@@ -10,7 +12,7 @@
 #include <string>
 
 class Scene;
-
+class Animation;
 struct GameProperties
 {
 	static constexpr double FPS = 0.016666667;
@@ -20,6 +22,9 @@ struct GameProperties
 
 class GameEngine
 {
+
+	std::multimap<Config::Textures, std::map<std::string, std::shared_ptr<Animation>> > animations;
+
 	std::map<std::string, std::shared_ptr<Scene> > m_scenes{};
 	std::string m_currentScene;
 	
@@ -44,7 +49,8 @@ public:
 	void mainLoop();
 	void changeScene(std::string l_scene);
 	std::shared_ptr<Scene> currentScene();
-
+	void loadAnimations(std::string filename);
+	std::shared_ptr<Animation> getAnimation(Config::Textures tex, const std::string& animName);
 };
 
 #endif

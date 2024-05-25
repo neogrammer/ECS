@@ -2,6 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "../ECS/Entity.hpp"
+#include <fstream>
+#include <iostream>
+
 
 //Config Structs
 PlayerConfig::PlayerConfig(std::string l_filename)
@@ -68,6 +71,17 @@ void Config::initTextures()
 
 
 }
+
+std::map<std::string, Config::Textures> Config::texNamelookup = {
+    {"Player", Textures::Player},
+    {"TitleBG", Textures::TitleBG},
+    {"Selector", Textures::Selector},
+    {"Spear", Textures::Spear}
+};
+
+
+
+
 
 /// <summary>
 /// font enum resources

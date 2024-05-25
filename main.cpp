@@ -4,7 +4,7 @@
 int main()
 {
 	Config::initialize();
-
+	
 	GameEngine game;
 
 	game.mainLoop();

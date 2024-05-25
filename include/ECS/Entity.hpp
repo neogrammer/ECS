@@ -16,7 +16,7 @@ typedef std::tuple<
 > CTuple;
 
 
-
+class GameEngine;
 class Entity
 {
 	friend class EntityManager;
@@ -34,6 +34,8 @@ public:
 	bool isAlive() const;
 	const std::string& tag();
 	void destroy();
+
+	void setAnim(GameEngine& l_game, std::string texName, std::string animName);
 
 	template <typename AComponent>
 	bool hasComponent() const

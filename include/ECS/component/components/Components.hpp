@@ -25,11 +25,12 @@ struct CAnimation : Component
 {
 	Animation animation;
 	CAnimation() : Component{}, animation{} {}
+	CAnimation(sf::Vector2i l_frameSize, const std::string& l_name, int l_numFrames = 1, int l_cols = 1, int l_rows = 1, sf::Vector2i l_startPos = {0,0}, float l_frameDelay = 0.1f, bool l_looping = true, bool l_isFlippedH = false, bool l_isFlippedV = false) : Component{}, animation(l_frameSize, l_name, l_numFrames, l_cols, l_rows, l_startPos, l_frameDelay, l_looping, l_isFlippedH, l_isFlippedV) {}
+	CAnimation(const Animation& l_animation) : Component{}, animation(l_animation) {}
 	CAnimation(const CAnimation&) = default;
 	CAnimation& operator=(const CAnimation&) = default;
 
-	CAnimation(sf::Texture* l_tex) : Component{}, animation{} {}
-
+	CAnimation(Animation l_animation) : Component{}, animation(l_animation) {}
 	~CAnimation() override final = default;
 };
 
