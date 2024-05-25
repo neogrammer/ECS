@@ -5,7 +5,8 @@
 
 struct Component
 {
-	Component() {};
+	bool has;
+	Component() : has{ false } {};
 	virtual ~Component() {};
 };
 

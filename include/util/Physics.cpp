@@ -95,30 +95,37 @@ Vec2 Physics::prevRectvRect(rect& l_r1, rect& l_r2, Vec2 l_olap, Vec2 l_prevOlap
 
 void Physics::resolveCollisions(std::shared_ptr<Entity> l_dynamic, EntityVec& l_unaffected)
 {
-	if (!l_dynamic->cBBox || !l_dynamic->cTransform) return;
+	
 
-	rect r1{ l_dynamic->cBBox->x + l_dynamic->cTransform->pos.x, l_dynamic->cBBox->x + l_dynamic->cTransform->pos.y, l_dynamic->cBBox->halfSize.x, l_dynamic->cBBox->halfSize.y };
-	for (auto e : l_unaffected)
+
+	if (!l_dynamic->hasComponent<CBBox>() || !l_dynamic->hasComponent<CTransform>()) return;
+	auto& bd = l_dynamic->getComponent<CBBox>();
+	auto& td = l_dynamic->getComponent<CTransform>();
+	rect r1{ bd.x + td.pos.x, bd.y + td.pos.y, bd.halfSize.x, bd.halfSize.y };
+	for (auto& e : l_unaffected)
 	{
-		if (!e->cBBox || !e->cTransform) continue;
+
+		if (!e->hasComponent<CBBox>() || !e->hasComponent<CTransform>()) continue;
+		auto& bu = e->getComponent<CBBox>();
+		auto& tu = e->getComponent<CTransform>();
 
 		Vec2 prevOlap(-1, -1);
 
-		rect r2{ e->cBBox->x + e->cTransform->pos.x, e->cBBox->x + e->cTransform->pos.y, e->cBBox->halfSize.x, e->cBBox->halfSize.y };
+		rect r2{ bu.x + tu.pos.x, bu.y + tu.pos.y, bu.halfSize.x, bu.halfSize.y };
 		Vec2 currOlap = rectvRect(r1, r2);
 
 
 		if (currOlap.x >= 0.f && currOlap.y >= 0)
 		{
-			rect r1Prev{ l_dynamic->cBBox->x + l_dynamic->cTransform->prevPos.x, l_dynamic->cBBox->x + l_dynamic->cTransform->prevPos.y, l_dynamic->cBBox->halfSize.x, l_dynamic->cBBox->halfSize.y };
-			rect r2Prev{ e->cBBox->x + e->cTransform->prevPos.x, e->cBBox->x + e->cTransform->prevPos.y, e->cBBox->halfSize.x, e->cBBox->halfSize.y };
+			rect r1Prev{ bd.x + td.prevPos.x, bd.y + td.prevPos.y, bd.halfSize.x, bd.halfSize.y };
+			rect r2Prev{ bu.x + tu.prevPos.x, bu.y + tu.prevPos.y, bu.halfSize.x, bu.halfSize.y };
 			Vec2 prevOlap = rectvRect(r1Prev, r2Prev);
 			//collision occurred
 			Vec2 normal = prevRectvRect(r1, r2, currOlap, prevOlap);
 			if (normal.x != 0.f)
-				l_dynamic->cTransform->velocity.x = currOlap.x * normal.x;
+				td.velocity.x = currOlap.x * normal.x;
 			if (normal.y != 0.f)
-				l_dynamic->cTransform->velocity.y = currOlap.y * normal.y;
+				td.velocity.y = currOlap.y * normal.y;
 
 			// now ur good to update the sprite, may need to get rid of the return and resolve against another entity
 			return;

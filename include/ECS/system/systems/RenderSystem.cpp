@@ -30,8 +30,8 @@ void RenderSystem::render()
 	if (dynamic_cast<Play*>(game.currentScene().get()))
 	{
 		auto scene = dynamic_cast<Play*>(game.currentScene().get());
-		scene->player()->cShape->sprite.setPosition({ scene->player()->cTransform->pos.x, scene->player()->cTransform->pos.y });
-		p_wnd->draw(scene->player()->cShape->sprite);
+		scene->player()->getComponent<CShape>().sprite.setPosition({ scene->player()->getComponent<CTransform>().pos.x, scene->player()->getComponent<CTransform>().pos.y});
+		p_wnd->draw(scene->player()->getComponent<CShape>().sprite);
 	}
 	else if (dynamic_cast<Title*>(game.currentScene().get()))
 	{ 

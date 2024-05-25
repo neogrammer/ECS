@@ -24,7 +24,7 @@ EntityVec& EntityManager::getEntities()
 
 void EntityManager::update(double l_dt)
 {
-	for (auto e : m_toAdd)
+	for (auto& e : m_toAdd)
 	{
 		m_entities.push_back(e);
 		m_entityMap[e->tag()].push_back(e);
@@ -58,7 +58,7 @@ std::shared_ptr<Entity> EntityManager::getEntity(size_t l_id)
 	return nullptr;
 }
 
-size_t EntityManager::totalEntities()
+size_t EntityManager::totalEntities() const
 {
 	return m_totalEntities;
 }

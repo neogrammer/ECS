@@ -1,10 +1,12 @@
 #ifndef COMPONENTS_HPP__
 #define COMPONENTS_HPP__
 #include "../Component.hpp"
+#include <memory>
+#include "../../Animation.hpp"
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
-
+#include "../core/Config.hpp"
 #include <SFML/Graphics/Color.hpp>
 
 
@@ -19,14 +21,27 @@ struct CTransform : Component
 	~CTransform() override final = default;
 };
 
-struct CName : Component
+struct CAnimation : Component
 {
-	const std::string name{"Default"};
+	Animation animation;
+	CAnimation() : Component{}, animation{} {}
+	CAnimation(const CAnimation&) = default;
+	CAnimation& operator=(const CAnimation&) = default;
 
-	CName() : Component{} {}
-	CName(const std::string& l_name = "Default") : Component{}, name{l_name} {}
-	~CName() override final = default;
-}; 
+	CAnimation(sf::Texture* l_tex) : Component{}, animation{} {}
+
+	~CAnimation() override final = default;
+};
+
+struct CGravity : Component
+{
+	Vec2 direction;
+	float magnitude;
+
+	CGravity() : Component{}, direction{ Vec2(0,0) }, magnitude{} {}
+	CGravity(Vec2 l_direction, float l_magnitude) : Component{}, direction{ l_direction }, magnitude{ l_magnitude } {}
+	~CGravity() override final {}
+};
 
 struct CShape : Component
 {

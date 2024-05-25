@@ -23,7 +23,7 @@ public:
 	EntityVec& getEntities();
 	EntityVec& getEntities(const std::string& tag);
 	std::shared_ptr<Entity> getEntity(size_t l_id);
-	size_t totalEntities();
+	size_t totalEntities() const;
 	// returns the player entity, and does not add it to the managed buckets
 	std::shared_ptr<Entity> makeStartingEntities(std::string l_scene);
 };

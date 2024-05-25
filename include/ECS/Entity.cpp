@@ -2,21 +2,18 @@
 
 Entity::Entity(const std::string& l_tag, size_t l_id)
 	: m_id{ l_id }, m_tag{ l_tag }, m_alive{true}
-	, cTransform{nullptr}
-	, cName{nullptr}
-	, cShape{nullptr}
-	, cBBox{nullptr}
-	, cLifespan{nullptr}
+	, m_cTuple()
 {}
 
-size_t Entity::id()
-{
-	return m_id;
-}
 
-bool Entity::isAlive()
+bool Entity::isAlive() const
 {
 	return m_alive;
+}
+
+size_t Entity::id() const
+{
+	return m_id;
 }
 
 const std::string& Entity::tag()

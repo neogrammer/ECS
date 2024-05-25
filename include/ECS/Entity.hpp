@@ -4,6 +4,18 @@
 #include <memory>
 #include <string>
 #include "component/components/Components.hpp"
+#include <tuple>
+
+typedef std::tuple<
+	CTransform,
+	CGravity,
+	CLifespan,
+	CBBox,
+	CShape,
+	CAnimation
+> CTuple;
+
+
 
 class Entity
 {
@@ -12,19 +24,49 @@ class Entity
 
 	size_t m_id{ 0 };
 	std::string m_tag{ "default" };
-	bool m_alive{ true };	
+	bool m_alive{ true };
+	std::tuple<CTransform, CGravity, CLifespan, CBBox, CShape, CAnimation> m_cTuple;
 
 	Entity(const std::string& l_tag, size_t l_id);
 public:
-	std::shared_ptr<CTransform> cTransform{};
-	std::shared_ptr<CName> cName{};
-	std::shared_ptr<CShape> cShape{};
-	std::shared_ptr<CBBox> cBBox{};
-	std::shared_ptr<CLifespan> cLifespan{};
 
-	size_t id();
-	bool isAlive();
+	size_t id() const;
+	bool isAlive() const;
 	const std::string& tag();
 	void destroy();
+
+	template <typename AComponent>
+	bool hasComponent() const
+	{
+		return getComponent<AComponent>().has;
+	};
+
+	template <typename AComponent, typename... AComponentArgs>
+	AComponent& addComponent(AComponentArgs&&... l_args)
+	{
+		auto& component = getComponent<AComponent>();
+		component = AComponent(std::forward<AComponentArgs>(l_args)...);
+		component.has = true;
+		return component;
+	};
+
+	template <typename AComponent>
+	AComponent & getComponent()
+	{
+		return std::get<AComponent>(m_cTuple);
+	};
+
+	template <typename AComponent>
+	const AComponent& getComponent() const
+	{
+		return std::get<AComponent>(m_cTuple);
+	};
+
+	template <typename AComponent>
+	void removeComponent()
+	{
+		getComponent<AComponent>() = AComponent();
+	};
+
 };
 #endif
