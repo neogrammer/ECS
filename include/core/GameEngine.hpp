@@ -20,19 +20,11 @@ struct GameProperties
 
 class GameEngine
 {
-	
-
 	std::map<std::string, std::shared_ptr<Scene> > m_scenes{};
 	std::string m_currentScene;
-
-	// handle the entirety of the game with these four functions
-	void handleWindowEvents(std::vector<sf::Event>& l_evts);
-	void propogateInput(std::vector<sf::Event> l_evts);
+	
 	void update(sf::Time l_dt);
 	void render(sf::RenderWindow& l_wnd);
-	std::vector<sf::Event> checkRealtime();
-	
-
 
 public:
 	sf::RenderWindow wnd;

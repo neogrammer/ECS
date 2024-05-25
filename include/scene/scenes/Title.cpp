@@ -5,13 +5,15 @@
 #include "../ECS/system/systems/InputSystem.hpp"
 #include "../ECS/system/systems/CollisionSystem.hpp"
 #include <iostream>
-Title::Title(GameEngine& l_game)
-	: Scene(l_game)
+
+Title::Title(GameEngine& l_game, ActionMap<int>& l_actionMap)
+	: Scene(l_game, l_actionMap)
 	, m_systems{}
 	, spear{}
 	, titleBG{}
 	, titleFont{}
 	, selector{}
+	, curChoice{ 1 }
 {
 	m_systems.clear();
 	// 0 - Movement System
@@ -42,49 +44,64 @@ Title::Title(GameEngine& l_game)
 
 	spear.setTexture(Config::textures.get((int)Config::Textures::Spear));
 	spear.setTextureRect({ {0, 0}, {192, 192} });
-	spear.setPosition(320, 160);
+	spear.setPosition(choicePos[curChoice]);
+
+	// action bindings
+	this->bind((int)Config::Inputs::Up, [this](const sf::Event&) {
+		curChoice = 0;
+		});
+
+	this->bind((int)Config::Inputs::Down, [this](const sf::Event&) {
+		curChoice = 1;
+		});
+
+	this->bind((int)Config::Inputs::Right, [this](const sf::Event&) {
+		
+		});
+
+	this->bind((int)Config::Inputs::A, [this](const sf::Event&) {
+	
+		});
+	this->bind((int)Config::Inputs::AxisX, [this](const sf::Event&) {
+		sf::Joystick::update();
+
+		float speed = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);
+		if (speed < 0.0f)
+		{
+		
+		}
+		else
+		{
+		
+		}
+
+		});
+	this->bind((int)Config::Inputs::DPadX, [this](const sf::Event&) {
+		sf::Joystick::update();
+
+		float speed = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::PovX);
+		if (speed < 0.0f)
+		{
+		
+		}
+		else
+		{
+
+		}
+
+		});
+
 }
 
 Title::~Title()
 {
 }
 
-void Title::propogateInput(std::vector<sf::Event> l_evts)
+void Title::processInput()
 {
-
-	// container of keys pressed this frame
-	for (auto& e : l_evts)
-	{
-		switch (e.type)
-		{
-		case sf::Event::KeyPressed:
-		{
-			switch (e.key.code)
-			{
-			case sf::Keyboard::Enter:
-				std::cout << "Input System Test:  Working" << std::endl;
-
-				// add "Enter" to keys pressed this frame
-				break;
-			default:
-				break;
-			}
-		}
-			break;
-		default:
-			break;
-		}
-	}
-	// send container to ActiveKeys data structure, review Status of ActiveKeys unique to this Scene
-	// any currently Status::OFF that are in the container, set Status::ON, 
-	// any currently Status::ON but not in the container, set Status::RELEASED, 
-	// any currently STATUS::ON and are in the container, set Status::HELD, 
-	// any currently STATUS::RELEASED that are not in the container set Status::OFF, but the ones that are set Status::ON
-
-	// now we have the states of all our current keyboard, send those updated states to be processed by each active key's registered action for their respective Status
-	// which is a partial function living in another class defined as the varying parameter for the function bound to a Derived scene type, 
-	// so the same function  can switch on the scene type and change its behavior dynamically while having access to the scenes data for manipulation
+	ActionTarget<int>::processEvents();
 }
+
 
 void Title::processEvents(std::vector<sf::Event>& l_evts)
 {
@@ -92,12 +109,14 @@ void Title::processEvents(std::vector<sf::Event>& l_evts)
 
 void Title::update(double l_dt)
 {
+
 	for (auto& s : m_systems)
 	{
 
 		if (dynamic_cast<RenderSystem*>(s.get()) == nullptr)
 			s->update(l_dt);
 	}
+	spear.setPosition(choicePos[curChoice]);
 }
 
 void Title::render(sf::RenderWindow& l_wnd)

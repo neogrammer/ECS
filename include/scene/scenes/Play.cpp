@@ -8,8 +8,8 @@
 #include <fstream>
 #include <iostream>
 
-Play::Play(GameEngine& l_game, std::string l_playerCfgFile)
-	: Scene(l_game)
+Play::Play(GameEngine& l_game, ActionMap<int>& l_actionMap, std::string l_playerCfgFile)
+	: Scene(l_game, l_actionMap)
 	, m_playerCfg(l_playerCfgFile)
 	, m_systems{}
 {
@@ -32,15 +32,62 @@ Play::Play(GameEngine& l_game, std::string l_playerCfgFile)
 	m_systems.emplace_back(std::make_unique<InputSystem>(game));
 	m_systems.emplace_back(std::make_unique<CollisionSystem>(game));
 	m_systems.emplace_back(std::make_unique<MovementSystem>(game));
+
+	// action bindings
+	this->bind((int)Config::Inputs::Up, [this](const sf::Event&) {
+
+		});
+
+	this->bind((int)Config::Inputs::Left, [this](const sf::Event&) {
+
+		});
+
+	this->bind((int)Config::Inputs::Right, [this](const sf::Event&) {
+
+		});
+
+	this->bind((int)Config::Inputs::A, [this](const sf::Event&) {
+
+		});
+	this->bind((int)Config::Inputs::AxisX, [this](const sf::Event&) {
+		sf::Joystick::update();
+
+		float speed = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);
+		if (speed < 0.0f)
+		{
+
+		}
+		else
+		{
+
+		}
+
+		});
+	this->bind((int)Config::Inputs::DPadX, [this](const sf::Event&) {
+		sf::Joystick::update();
+
+		float speed = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::PovX);
+		if (speed < 0.0f)
+		{
+
+		}
+		else
+		{
+
+		}
+
+		});
 }
 
 Play::~Play()
 {
 }
 
-void Play::propogateInput(std::vector<sf::Event> l_evts)
+void Play::processInput()
 {
+	ActionTarget<int>::processEvents();
 }
+
 
 void Play::processEvents(std::vector<sf::Event>& l_evts)
 {
@@ -48,6 +95,7 @@ void Play::processEvents(std::vector<sf::Event>& l_evts)
 
 void Play::update(double l_dt)
 {
+
 	for (auto& s : m_systems)
 	{
 

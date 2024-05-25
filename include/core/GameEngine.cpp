@@ -26,8 +26,8 @@ GameEngine::GameEngine()
 	, wnd{ sf::VideoMode(::GameProperties::SCRW, ::GameProperties::SCRH), "ECS_Architecture", sf::Style::None }
 	, paused{false}
 {
-	m_scenes["play"] = std::make_shared<Play>(*this, "aStringGoesHere");
-	m_scenes["title"] = std::make_shared<Title>(*this);
+	m_scenes["play"] = std::make_shared<Play>(*this, Config::inputs, "aStringGoesHere");
+	m_scenes["title"] = std::make_shared<Title>(*this, Config::inputs);
 
 	m_currentScene = "title";
 
@@ -43,28 +43,6 @@ void GameEngine::changeScene(std::string l_scene)
 	m_currentScene = l_scene;
 }
 
-// hotpotato that shit
-void GameEngine::propogateInput(std::vector<sf::Event> l_evts)
-{
-	currentScene()->propogateInput(std::move(l_evts));
-}
-
-// make it rain on em
-void GameEngine::handleWindowEvents(std::vector<sf::Event>& l_evts)
-{
-	
-	for (auto& e : l_evts)
-	{
-		if (e.type == sf::Event::KeyReleased && e.key.code == sf::Keyboard::Escape)
-		{
-			gameRunning = false;
-		}
-		// check which event , handle it here first as super ceding any inner game action, such as reset,
-		//   then still pass it along in case a delegate is waiting for it
-	}
-	currentScene()->processEvents(l_evts);
-}
-
 // value passed to this function always simulates a normalization to 60 fps, no matter what
 //  should be smooth physics calculations because of this
 void GameEngine::update(sf::Time l_dt)
@@ -78,23 +56,6 @@ void GameEngine::update(sf::Time l_dt)
 void GameEngine::render(sf::RenderWindow& l_wnd)
 {
 	currentScene()->render(l_wnd);
-}
-
-std::vector<sf::Event> GameEngine::checkRealtime()
-{
-	std::vector<sf::Event> evts;
-	evts.clear();
-	for (int i = 0; i < sf::Keyboard::KeyCount; i++)
-	{
-		auto k = (sf::Keyboard::Key)i;
-		if (sf::Keyboard::isKeyPressed(k))
-		{
-			evts.emplace_back(sf::Event{});
-			evts.back().type = sf::Event::KeyPressed;
-			evts.back().key.code = k;
-		}
-	}
-	return evts;
 }
 
 bool GameEngine::gameRunning = true;
@@ -127,7 +88,9 @@ void GameEngine::mainLoop()
 		{
 			hadFocus = true;
 			// process realtime input
-			propogateInput(std::move(checkRealtime()));
+			currentScene()->processInput();
+
+			
 
 			std::vector<sf::Event> evtsToProp;
 			evtsToProp.clear();
@@ -136,8 +99,15 @@ void GameEngine::mainLoop()
 			while (wnd.pollEvent(event))
 			{
 				ImGui::SFML::ProcessEvent(wnd, event);
-
-				if (event.type == sf::Event::Closed)
+				if (event.type == sf::Event::KeyReleased)
+				{
+					if (event.key.code == sf::Keyboard::Escape)
+					{
+						gameRunning = false;
+						goto afterLoop;
+					}
+				}
+				else if (event.type == sf::Event::Closed)
 				{
 					gameRunning = false;
 					goto afterLoop;
@@ -146,7 +116,7 @@ void GameEngine::mainLoop()
 				evtsToProp.emplace_back(std::move(event));
 				if (!gameRunning) goto afterLoop;
 			}
-			handleWindowEvents(evtsToProp);
+			currentScene()->processEvents(evtsToProp);
 
 			deltaTime += frameTimer.restart();
 			ImGui::SFML::Update(wnd, deltaTime);
