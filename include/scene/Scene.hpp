@@ -3,6 +3,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #include <vector>
+#include <map>
 #include "../ECS/EntityManager.hpp"
 
 class GameEngine;

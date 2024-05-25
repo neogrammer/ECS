@@ -26,6 +26,8 @@ ResourceManager<sf::Texture, int> Config::textures;
 ResourceManager<sf::Font, int> Config::fonts;
 ResourceManager<sf::Music, int> Config::music;
 ResourceManager<sf::SoundBuffer, int> Config::sounds;
+
+ActionMap<int> Config::inputs{};
 // for events
 
 /// <summary>
@@ -37,6 +39,7 @@ void Config::initialize()
     initFonts();
     initMusic();
     initSounds();
+    initInputs();
 }
 
 /// <summary>
@@ -72,5 +75,48 @@ void Config::initTextures()
 void Config::initFonts()
 {
     fonts.load((int)Fonts::FiraOTF, "assets/fonts/Fira.otf");
+}
+
+
+/// <summary>
+/// setup input enum mappings
+/// </summary>
+void Config::initInputs()
+{
+
+    // realtime events
+
+    // Keyboard pressed commands
+    inputs.map((int)Config::Inputs::X, Action(sf::Keyboard::Num9));
+    inputs.map((int)Config::Inputs::Y, Action(sf::Keyboard::Num5));
+    inputs.map((int)Config::Inputs::A, Action(sf::Keyboard::Space));
+    inputs.map((int)Config::Inputs::B, Action(sf::Keyboard::Num0));
+    inputs.map((int)Config::Inputs::L1, Action(sf::Keyboard::Num7));
+    inputs.map((int)Config::Inputs::R1, Action(sf::Keyboard::Add));
+    // menu controls
+    inputs.map((int)Config::Inputs::Start, Action(sf::Keyboard::Enter));
+    inputs.map((int)Config::Inputs::Select, Action(sf::Keyboard::Backspace));
+    // direction controls
+    inputs.map((int)Config::Inputs::Up, Action(sf::Keyboard::Up));
+    inputs.map((int)Config::Inputs::Down, Action(sf::Keyboard::Down));
+    inputs.map((int)Config::Inputs::Left, Action(sf::Keyboard::Left));
+    inputs.map((int)Config::Inputs::Right, Action(sf::Keyboard::Right));
+
+
+    // Joystick Controls
+    // Axis mappings
+    inputs.map((int)Config::Inputs::AxisX, Action(sf::Joystick::Axis::X, Action::Type::RealTime | Action::Type::Tilted));
+    inputs.map((int)Config::Inputs::AxisY, Action(sf::Joystick::Axis::Y, Action::Type::RealTime | Action::Type::Tilted));
+    inputs.map((int)Config::Inputs::DPadX, Action(sf::Joystick::Axis::PovX, Action::Type::RealTime | Action::Type::Tilted));
+    inputs.map((int)Config::Inputs::DPadY, Action(sf::Joystick::Axis::PovY, Action::Type::RealTime | Action::Type::Tilted));
+    // Button mappings
+    inputs.map((int)Config::Inputs::JoyA, Action(JoystickBtn::A, Action::Type::RealTime | Action::Type::Pressed));
+    inputs.map((int)Config::Inputs::JoyB, Action(JoystickBtn::B, Action::Type::RealTime | Action::Type::Pressed));
+    inputs.map((int)Config::Inputs::JoyX, Action(JoystickBtn::X, Action::Type::RealTime | Action::Type::Pressed));
+    inputs.map((int)Config::Inputs::JoyY, Action(JoystickBtn::Y, Action::Type::RealTime | Action::Type::Pressed));
+    inputs.map((int)Config::Inputs::JoyL1, Action(JoystickBtn::L1, Action::Type::RealTime | Action::Type::Pressed));
+    inputs.map((int)Config::Inputs::JoyR1, Action(JoystickBtn::R1, Action::Type::RealTime | Action::Type::Pressed));
+    inputs.map((int)Config::Inputs::JoyStart, Action(JoystickBtn::Start, Action::Type::RealTime | Action::Type::Pressed));
+    inputs.map((int)Config::Inputs::JoySelect, Action(JoystickBtn::Select, Action::Type::RealTime | Action::Type::Pressed));
 }
 

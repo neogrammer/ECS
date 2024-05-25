@@ -5,6 +5,7 @@
 #include "ResourceManager.hpp"
 #include <vector>
 #include <string>
+#include "../action/ActionMap.hpp"
 class Entity;
 
 typedef std::vector<std::shared_ptr<Entity> > EntityVec;
@@ -35,7 +36,7 @@ class Config
     static void initMusic();
     static void initSounds();
     static void initTextures();
-    static void initPlayerInputs();
+    static void initInputs();
 public:
     // screen configuration global settings
     static float SCREENW;
@@ -78,13 +79,25 @@ public:
         Count
     };
 
+    // inputs the player will be able to use
+    enum class Inputs : int
+    {
+        // Keyboard mappable Keypresses
+        Up, Down, Left, Right, A, X, Y, B, Start, Select, R1, L1,
 
+        // Joystick input, like a ps5 controller, DPad* and Axis* are handled differently than the rest of the joystick
+        DPadX, DPadY, AxisX, AxisY,
+        JoyA, JoyB, JoyX, JoyY, JoyR1, JoyL1, JoyStart, JoySelect,
+        Count
+    };
 
     // resource buckets for each type of resource
     static ResourceManager<sf::Texture, int> textures;
     static ResourceManager<sf::Font, int> fonts;
     static ResourceManager<sf::Music, int> music;
     static ResourceManager<sf::SoundBuffer, int> sounds;
+
+    static ActionMap<int> inputs;
 
     /// <summary>
     /// Call this before anything else within main to set up all the resources for use within the game

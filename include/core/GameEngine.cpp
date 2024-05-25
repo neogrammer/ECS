@@ -151,7 +151,8 @@ void GameEngine::mainLoop()
 			deltaTime += frameTimer.restart();
 			ImGui::SFML::Update(wnd, deltaTime);
 			waitingForARender = true;
-			ImGui::ShowDemoWindow();
+			// uncomment to learn ImGui
+			//ImGui::ShowDemoWindow();
 	
 			while (deltaTime > fps60)
 			{

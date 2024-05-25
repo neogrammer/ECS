@@ -76,6 +76,15 @@
     <Filter Include="assets\fonts">
       <UniqueIdentifier>{c31f0a70-9fb2-4682-906f-3f77a7d94afc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\action">
+      <UniqueIdentifier>{746686f6-15ad-490e-9e68-a9ef9b098e47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\action">
+      <UniqueIdentifier>{ac8857ec-bae9-4121-a16a-cd23cd0cd05a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\action\tpl">
+      <UniqueIdentifier>{f0fadc6b-25de-4d3b-ba98-d45db5f1b302}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -147,6 +156,9 @@
     <ClCompile Include="include\util\Physics.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
+    <ClCompile Include="include\action\Action.cpp">
+      <Filter>Source Files\action</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UI\UI.hpp">
@@ -212,10 +224,25 @@
     <ClInclude Include="include\util\Physics.hpp">
       <Filter>Header Files\util</Filter>
     </ClInclude>
+    <ClInclude Include="include\action\Action.hpp">
+      <Filter>Header Files\action</Filter>
+    </ClInclude>
+    <ClInclude Include="include\action\ActionMap.hpp">
+      <Filter>Header Files\action</Filter>
+    </ClInclude>
+    <ClInclude Include="include\action\ActionTarget.hpp">
+      <Filter>Header Files\action</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\core\tpl\ResourceManager.tpl">
       <Filter>Header Files\core\tpl</Filter>
+    </None>
+    <None Include="include\action\tpl\ActionMap.tpl">
+      <Filter>Header Files\action\tpl</Filter>
+    </None>
+    <None Include="include\action\tpl\ActionTarget.tpl">
+      <Filter>Header Files\action\tpl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
