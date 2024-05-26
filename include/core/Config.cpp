@@ -68,6 +68,8 @@ void Config::initTextures()
     textures.load((int)Textures::TitleBG, "assets/textures/TitleScreen.jpg");
     textures.load((int)Textures::Selector, "assets/textures/select.png");
     textures.load((int)Textures::Spear, "assets/textures/spear.png");
+    textures.load((int)Textures::Tileset1, "assets/textures/crateria64.png");
+
 
 
 }
@@ -76,7 +78,8 @@ std::map<std::string, Config::Textures> Config::texNamelookup = {
     {"Player", Textures::Player},
     {"TitleBG", Textures::TitleBG},
     {"Selector", Textures::Selector},
-    {"Spear", Textures::Spear}
+    {"Spear", Textures::Spear},
+    {"Tileset1", Textures::Tileset1}
 };
 
 
@@ -101,15 +104,15 @@ void Config::initInputs()
     // realtime events
 
     // Keyboard pressed commands
-    inputs.map((int)Config::Inputs::X, Action(sf::Keyboard::Num9));
-    inputs.map((int)Config::Inputs::Y, Action(sf::Keyboard::Num5));
+    inputs.map((int)Config::Inputs::X, Action(sf::Keyboard::W));
+    inputs.map((int)Config::Inputs::Y, Action(sf::Keyboard::D));
     inputs.map((int)Config::Inputs::A, Action(sf::Keyboard::Space));
-    inputs.map((int)Config::Inputs::B, Action(sf::Keyboard::Num0));
-    inputs.map((int)Config::Inputs::L1, Action(sf::Keyboard::Num7));
-    inputs.map((int)Config::Inputs::R1, Action(sf::Keyboard::Add));
+    inputs.map((int)Config::Inputs::B, Action(sf::Keyboard::A));
+    inputs.map((int)Config::Inputs::L1, Action(sf::Keyboard::Q));
+    inputs.map((int)Config::Inputs::R1, Action(sf::Keyboard::R));
     // menu controls
     inputs.map((int)Config::Inputs::Start, Action(sf::Keyboard::Enter));
-    inputs.map((int)Config::Inputs::Select, Action(sf::Keyboard::Backspace));
+    inputs.map((int)Config::Inputs::Select, Action(sf::Keyboard::Slash));
     // direction controls
     inputs.map((int)Config::Inputs::Up, Action(sf::Keyboard::Up));
     inputs.map((int)Config::Inputs::Down, Action(sf::Keyboard::Down));

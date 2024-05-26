@@ -50,9 +50,10 @@ struct CShape : Component
 	sf::Texture* tex{ nullptr };
 	sf::Vector2f origin{ 0.f,0.f };
 	sf::Vector2i size{ 1, 1 };
+	
 
 	CShape() : Component{}, sprite{}, tex{}, origin{}, size{} {}
-	CShape(sf::Texture* l_tex, const Vec2& l_size, const Vec2& l_origin = {0.f, 0.f})
+	CShape(sf::Texture* l_tex, const Vec2& l_size, const Vec2& l_origin = { 0.f, 0.f }, Vec2 l_texPos = Vec2(0, 0))
 		: Component{}
 		, sprite{}
 		, tex{l_tex}
@@ -62,14 +63,14 @@ struct CShape : Component
 		sprite.setTexture(*tex);
 		sprite.setPosition({ 0.f,0.f });
 		sprite.setOrigin({ origin.x, origin.y });
-		sprite.setTextureRect({ {0,0}, {size} });
+		sprite.setTextureRect({ {(int)l_texPos.x,(int)l_texPos.y}, {size} });
 	}
 	~CShape() override final = default;
 };
 
 struct CBBox : Component
 {
-	
+	bool solid{ true };
 	float x;
 	float y;
 	Vec2 size;

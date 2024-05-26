@@ -19,9 +19,6 @@
     <Filter Include="Header Files\ECS">
       <UniqueIdentifier>{cff22868-7a7f-4280-b450-fca632595ac8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\util">
-      <UniqueIdentifier>{539e04db-9b76-4a24-9d9c-31d640c28f18}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ECS\component">
       <UniqueIdentifier>{da44418a-1a5a-4438-b891-a1c509c41be7}</UniqueIdentifier>
     </Filter>
@@ -34,20 +31,11 @@
     <Filter Include="Header Files\ECS\system\systems">
       <UniqueIdentifier>{0b1f9061-a010-4f2d-9c34-3b512eba1b96}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\systems">
-      <UniqueIdentifier>{cbec1d86-ea2e-460f-81f1-602c0a0a7630}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Managers">
-      <UniqueIdentifier>{e1ef48f4-44f7-469a-b308-6a0ae74d5067}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\util">
       <UniqueIdentifier>{1dd91bfb-e1e6-4445-b390-6122d5620a81}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\core">
       <UniqueIdentifier>{9a9c27bc-bc8a-4ea0-917e-cb028ba04c6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\core">
-      <UniqueIdentifier>{fd878853-5a95-444a-8f18-8eeb579b2755}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\core\tpl">
       <UniqueIdentifier>{414a96d3-a40d-4608-a691-29b9f9defbfb}</UniqueIdentifier>
@@ -64,29 +52,20 @@
     <Filter Include="Header Files\scene\scenes">
       <UniqueIdentifier>{fb03eae6-9654-4eea-ade7-09bd8120660d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\scene">
-      <UniqueIdentifier>{dc4c67ec-82bf-4921-81d7-f2ec865704b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\scene\scenes">
-      <UniqueIdentifier>{1f6cecfa-1491-41cc-af45-88fa0a30ef40}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ECS">
-      <UniqueIdentifier>{a1f538d3-affb-4a44-b80a-5efc6c091734}</UniqueIdentifier>
-    </Filter>
     <Filter Include="assets\fonts">
       <UniqueIdentifier>{c31f0a70-9fb2-4682-906f-3f77a7d94afc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\action">
       <UniqueIdentifier>{746686f6-15ad-490e-9e68-a9ef9b098e47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\action">
-      <UniqueIdentifier>{ac8857ec-bae9-4121-a16a-cd23cd0cd05a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\action\tpl">
       <UniqueIdentifier>{f0fadc6b-25de-4d3b-ba98-d45db5f1b302}</UniqueIdentifier>
     </Filter>
     <Filter Include="assets\data">
       <UniqueIdentifier>{cdbfd042-ae46-41a3-9585-644f23ab37ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\level">
+      <UniqueIdentifier>{cba0ee6d-8e4e-41cd-b687-c7dd93b574d7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -111,62 +90,62 @@
     <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui_tables.cpp">
       <Filter>Source Files\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="include\util\Vec2.cpp">
-      <Filter>Source Files\util</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\system\systems\MovementSystem.cpp">
-      <Filter>Source Files\systems</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\EntityManager.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="include\core\GameEngine.cpp">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\system\systems\CollisionSystem.cpp">
-      <Filter>Source Files\systems</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\system\systems\InputSystem.cpp">
-      <Filter>Source Files\systems</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\system\systems\RenderSystem.cpp">
-      <Filter>Source Files\systems</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\Factories.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="include\core\Game.cpp">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
-    <ClCompile Include="include\core\Config.cpp">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
-    <ClCompile Include="include\scene\Scene.cpp">
-      <Filter>Source Files\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="include\scene\scenes\Play.cpp">
-      <Filter>Source Files\scene\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="include\scene\scenes\Title.cpp">
-      <Filter>Source Files\scene\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\Entity.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\Animation.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="include\util\Physics.cpp">
-      <Filter>Source Files\util</Filter>
+    <ClCompile Include="include\level\Tilemap.cpp">
+      <Filter>Header Files\level</Filter>
     </ClCompile>
     <ClCompile Include="include\action\Action.cpp">
-      <Filter>Source Files\action</Filter>
+      <Filter>Header Files\action</Filter>
+    </ClCompile>
+    <ClCompile Include="include\core\GameEngine.cpp">
+      <Filter>Header Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="include\core\Config.cpp">
+      <Filter>Header Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="include\core\Game.cpp">
+      <Filter>Header Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\EntityManager.cpp">
+      <Filter>Header Files\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\Factories.cpp">
+      <Filter>Header Files\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="include\scene\scenes\Title.cpp">
+      <Filter>Header Files\scene\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="include\scene\Scene.cpp">
+      <Filter>Header Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="include\scene\scenes\Play.cpp">
+      <Filter>Header Files\scene\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\system\systems\InputSystem.cpp">
+      <Filter>Header Files\ECS\system\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\system\systems\MovementSystem.cpp">
+      <Filter>Header Files\ECS\system\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\system\systems\RenderSystem.cpp">
+      <Filter>Header Files\ECS\system\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\system\systems\CollisionSystem.cpp">
+      <Filter>Header Files\ECS\system\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="include\util\Physics.cpp">
+      <Filter>Header Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="include\util\Vec2.cpp">
+      <Filter>Header Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\Entity.cpp">
+      <Filter>Header Files\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\Animation.cpp">
+      <Filter>Header Files\ECS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="UI\UI.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\ECS\Entity.hpp">
       <Filter>Header Files\ECS</Filter>
     </ClInclude>
@@ -236,6 +215,9 @@
     <ClInclude Include="include\action\ActionTarget.hpp">
       <Filter>Header Files\action</Filter>
     </ClInclude>
+    <ClInclude Include="include\level\Tilemap.hpp">
+      <Filter>Header Files\level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\core\tpl\ResourceManager.tpl">
@@ -265,6 +247,9 @@
       <Filter>assets\textures</Filter>
     </Image>
     <Image Include="assets\textures\spear.png">
+      <Filter>assets\textures</Filter>
+    </Image>
+    <Image Include="assets\textures\crateria64.png">
       <Filter>assets\textures</Filter>
     </Image>
   </ItemGroup>

@@ -3,6 +3,7 @@
 #include "../Scene.hpp"
 #include <string>
 #include "../../core/Config.hpp"
+#include "../../level/Tilemap.hpp"
 class InputSystem;
 class CollisionSystem;
 class MovementSystem;
@@ -19,9 +20,10 @@ class Play : public Scene
 	std::shared_ptr<InputSystem> inputSystem;
 	std::shared_ptr<MovementSystem> movementSystem;
 	std::shared_ptr<RenderSystem> renderSystem;
+	
 
 public:
-
+	std::shared_ptr<Tilemap> tmap;
 
 	Play(GameEngine& l_game, ActionMap<int>& l_actionMap, std::string l_playerCfgFile);
 	~Play() override final;

@@ -175,6 +175,7 @@
     <ClCompile Include="include\ECS\system\systems\InputSystem.cpp" />
     <ClCompile Include="include\ECS\system\systems\MovementSystem.cpp" />
     <ClCompile Include="include\ECS\system\systems\RenderSystem.cpp" />
+    <ClCompile Include="include\level\Tilemap.cpp" />
     <ClCompile Include="include\scene\Scene.cpp" />
     <ClCompile Include="include\scene\scenes\Play.cpp" />
     <ClCompile Include="include\scene\scenes\Title.cpp" />
@@ -201,12 +202,12 @@
     <ClInclude Include="include\ECS\system\systems\InputSystem.hpp" />
     <ClInclude Include="include\ECS\system\systems\MovementSystem.hpp" />
     <ClInclude Include="include\ECS\system\systems\RenderSystem.hpp" />
+    <ClInclude Include="include\level\Tilemap.hpp" />
     <ClInclude Include="include\scene\Scene.hpp" />
     <ClInclude Include="include\scene\scenes\Play.hpp" />
     <ClInclude Include="include\scene\scenes\Title.hpp" />
     <ClInclude Include="include\util\Physics.hpp" />
     <ClInclude Include="include\util\Vec2.hpp" />
-    <ClInclude Include="UI\UI.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\data\animationAtlas.dat" />
@@ -215,6 +216,7 @@
     <None Include="include\core\tpl\ResourceManager.tpl" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\textures\crateria64.png" />
     <Image Include="assets\textures\player_atlas.png" />
     <Image Include="assets\textures\player_atlas84x84.png" />
     <Image Include="assets\textures\select.png" />

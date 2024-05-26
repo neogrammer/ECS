@@ -67,6 +67,7 @@ public:
         Player,
         TitleBG,
         Selector,
+        Tileset1,
         Count
     };
 

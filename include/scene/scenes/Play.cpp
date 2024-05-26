@@ -16,6 +16,7 @@ Play::Play(GameEngine& l_game, ActionMap<int>& l_actionMap, std::string l_player
 	, inputSystem{ nullptr }
 	, collisionSystem{ nullptr }
 	, movementSystem{ nullptr }
+	, tmap{}
 {
 	
 	inputSystem = std::make_shared<InputSystem>(game);
@@ -96,7 +97,17 @@ void Play::init()
 	m_player->getComponent<CShape>().sprite.setTexture(Config::textures.get((int)Config::texNamelookup["Player"]));
 	m_player->getComponent<CShape>().sprite.setTextureRect(m_player->getComponent<CAnimation>().animation.currFrame());
 	currentSystem = inputSystem;
+	std::vector<std::shared_ptr<Entity> > tiles;
+	tiles.clear();
+	tiles.reserve(144);
+	for (int i = 0; i < 144; i++)
+	{
+		tiles.push_back(this->m_entityMgr.addEntity("tile"));
+	}
+	tmap = std::shared_ptr<Tilemap>(new Tilemap{ tiles });
 }
+
+
 
 void Play::processInput()
 {
@@ -179,8 +190,12 @@ void Play::update(double l_dt)
 
 void Play::render(sf::RenderWindow& l_wnd)
 {
+	tmap->draw(l_wnd);
+
 	player()->getComponent<CShape>().sprite.setPosition({player()->getComponent<CTransform>().pos.x, player()->getComponent<CTransform>().pos.y });
 	l_wnd.draw(player()->getComponent<CShape>().sprite);
+
+
 }
 
 std::shared_ptr<Entity> Play::player()

@@ -84,8 +84,8 @@ bool Action::test()const
     bool res = false;
     if (_event.type == sf::Event::EventType::KeyPressed)
     {
-        if ((_type & Type::Pressed) && ((_event.key.code != sf::Keyboard::F)
-            && _event.key.code != sf::Keyboard::D))
+        if (_type & Type::Pressed)// && ((_event.key.code != sf::Keyboard::F)
+           // && _event.key.code != sf::Keyboard::D))
         {
             res = sf::Keyboard::isKeyPressed(_event.key.code);
         }

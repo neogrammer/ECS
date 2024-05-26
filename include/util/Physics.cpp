@@ -35,20 +35,7 @@ Vec2 Physics::prevRectvRect(rect& l_r1, rect& l_r2, Vec2 l_olap, Vec2 l_prevOlap
 	// only enters here if either of the prev olap dims are negative
 	if (l_prevOlap.x < 0.f && l_prevOlap.y < 0.f)
 	{
-		if (l_olap.x < l_olap.y)
-		{
-			// resolve on x
-			if (l_r1.cx - l_r1.halfSizeX < l_r2.cx - l_r2.halfSizeX)
-			{
-				// coming from the left, push back left
-				return Vec2(-1, 0);
-			}
-			else
-			{
-				return Vec2(1, 0);
-			}
-		}
-		else
+		if (l_olap.x > l_olap.y)
 		{
 			// resolve on y
 			if (l_r1.cy - l_r1.halfSizeY < l_r2.cy - l_r2.halfSizeY)
@@ -61,9 +48,38 @@ Vec2 Physics::prevRectvRect(rect& l_r1, rect& l_r2, Vec2 l_olap, Vec2 l_prevOlap
 				return Vec2(0, 1);
 			}
 		}
+		else
+		{
+			
+			// resolve on x
+			if (l_r1.cx - l_r1.halfSizeX < l_r2.cx - l_r2.halfSizeX)
+			{
+				// coming from the left, push back left
+				return Vec2(-1, 0);
+			}
+			else
+			{
+				return Vec2(1, 0);
+			}
+		}
 	}
-	else if (l_prevOlap.x < 0.f)
+	else if (l_prevOlap.x > 0.f)
 	{
+		// (l_prevOlap.y < 0.f)
+	// resolve on y
+		if (l_r1.cy - l_r1.halfSizeY < l_r2.cy - l_r2.halfSizeY)
+		{
+			// coming from the top, push back up
+			return Vec2(0, -1);
+		}
+		else
+		{
+			return Vec2(0, 1);
+		}
+	}
+	else
+	{
+	
 		// resolve on x
 		if (l_r1.cx - l_r1.halfSizeX < l_r2.cx - l_r2.halfSizeX)
 		{
@@ -73,20 +89,6 @@ Vec2 Physics::prevRectvRect(rect& l_r1, rect& l_r2, Vec2 l_olap, Vec2 l_prevOlap
 		else
 		{
 			return Vec2(1, 0);
-		}
-	}
-	else
-	{
-		// (l_prevOlap.y < 0.f)
-		// resolve on y
-		if (l_r1.cy - l_r1.halfSizeY < l_r2.cy - l_r2.halfSizeY)
-		{
-			// coming from the top, push back up
-			return Vec2(0, -1);
-		}
-		else
-		{
-			return Vec2(0, 1);
 		}
 	}
 
@@ -102,10 +104,24 @@ void Physics::resolveCollisions(std::shared_ptr<Entity> l_dynamic, EntityVec& l_
 	auto& bd = l_dynamic->getComponent<CBBox>();
 	auto& td = l_dynamic->getComponent<CTransform>();
 	rect r1{ bd.x + td.pos.x, bd.y + td.pos.y, bd.halfSize.x, bd.halfSize.y };
+
+	std::vector<std::shared_ptr<Entity> > test{  };
+	test.clear();
 	for (auto& e : l_unaffected)
+	{
+		if (!e->hasComponent<CBBox>() || !e->hasComponent<CTransform>()) continue;
+
+		auto& bu = e->getComponent<CBBox>();
+		if (bu.solid)
+		{
+			test.push_back(e);
+		}
+	}
+	for (auto& e : test)
 	{
 
 		if (!e->hasComponent<CBBox>() || !e->hasComponent<CTransform>()) continue;
+		
 		auto& bu = e->getComponent<CBBox>();
 		auto& tu = e->getComponent<CTransform>();
 
