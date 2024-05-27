@@ -23,7 +23,7 @@ class Play : public Scene
 	
 
 public:
-	std::shared_ptr<Tilemap> tmap;
+	//std::shared_ptr<Tilemap> tmap;
 
 	Play(GameEngine& l_game, ActionMap<int>& l_actionMap, std::string l_playerCfgFile);
 	~Play() override final;

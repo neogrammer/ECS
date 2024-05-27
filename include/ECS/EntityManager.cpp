@@ -8,9 +8,9 @@ EntityManager::EntityManager()
 	, m_entityMap{}
 {}
 
-std::shared_ptr<Entity> EntityManager::addEntity(const std::string& tag)
+std::shared_ptr<Entity> EntityManager::addEntity(const std::string& tag, sf::IntRect l_frameRect, std::string l_texName, Vec2 l_pos)
 {
-	auto e = std::make_shared<Entity>(Entity{ tag, this->m_totalEntities++ });
+	auto e = std::shared_ptr<Entity>(new Entity(tag, l_frameRect, this->m_totalEntities++, l_texName, l_pos));
 
 	//auto e = std::shared_ptr<Entity>(new Entity{tag, EntityManager::m_totalEntities++});
 	m_toAdd.push_back(e);
@@ -81,18 +81,7 @@ std::shared_ptr<Entity> EntityManager::makeStartingEntities(std::string l_scene)
 
 		return p;
 	}
-	else {
-
-		auto e = std::make_shared<Entity>(Entity{ "default", this->m_totalEntities++ });
-		auto n = m_entityMap.insert(std::pair("default", std::vector<std::shared_ptr<Entity> >{}));
-		n.first->second.clear();
-		n.first->second.push_back(e);
-
-		// make other entities then a
-		m_entities.push_back(e);
-
-		return e;
-	}
+	
 
 	return nullptr;
 }

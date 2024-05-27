@@ -22,7 +22,7 @@ int Config::TILEW{ 64 };
 int Config::TILEH{ 64 };
 
 
-sf::Vector2f Config::GRAVITY{ 0.f , 4.8f };
+
 
 // for resources
 ResourceManager<sf::Texture, int> Config::textures;

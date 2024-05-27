@@ -168,6 +168,7 @@
     <ClCompile Include="include\core\Game.cpp" />
     <ClCompile Include="include\core\GameEngine.cpp" />
     <ClCompile Include="include\ECS\Animation.cpp" />
+    <ClCompile Include="include\ECS\component\components\cMaster.cpp" />
     <ClCompile Include="include\ECS\Entity.cpp" />
     <ClCompile Include="include\ECS\EntityManager.cpp" />
     <ClCompile Include="include\ECS\Factories.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="include\core\ResourceManager.hpp" />
     <ClInclude Include="include\ECS\Animation.hpp" />
     <ClInclude Include="include\ECS\Component\Component.hpp" />
+    <ClInclude Include="include\ECS\component\components\cMaster.hpp" />
     <ClInclude Include="include\ECS\component\components\Components.hpp" />
     <ClInclude Include="include\ECS\Entity.hpp" />
     <ClInclude Include="include\ECS\EntityManager.hpp" />

@@ -144,6 +144,9 @@
     <ClCompile Include="include\ECS\Animation.cpp">
       <Filter>Header Files\ECS</Filter>
     </ClCompile>
+    <ClCompile Include="include\ECS\component\components\cMaster.cpp">
+      <Filter>Header Files\ECS\component\components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ECS\Entity.hpp">
@@ -217,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="include\level\Tilemap.hpp">
       <Filter>Header Files\level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\component\components\cMaster.hpp">
+      <Filter>Header Files\ECS\component\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

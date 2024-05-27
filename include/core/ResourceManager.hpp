@@ -22,6 +22,7 @@ public:
     void load(const IDENTIFIER& id, Args&& ... args);
 
     RESOURCE& get(const IDENTIFIER& id)const;
+   
 
 private:
     std::unordered_map<IDENTIFIER, std::unique_ptr<RESOURCE>> _map;

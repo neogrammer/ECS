@@ -30,7 +30,7 @@ GameEngine::GameEngine()
 	, paused{false}
 	, animations{}
 {
-	m_scenes["play"] = std::make_shared<Play>(*this, Config::inputs, "aStringGoesHere");
+	
 
 	m_scenes["title"] = std::make_shared<Title>(*this, Config::inputs);
 

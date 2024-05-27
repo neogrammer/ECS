@@ -22,13 +22,6 @@ struct PlayerConfig
     PlayerConfig(std::string l_filename);
 };
 
-struct rect
-{
-    float cx;
-    float cy;
-    float halfSizeX;
-    float halfSizeY;
-};
 
 /// Config for the resources for the game is handled here in one fell swoop, before the game is even created
 /// </summary>

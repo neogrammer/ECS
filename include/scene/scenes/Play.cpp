@@ -16,7 +16,7 @@ Play::Play(GameEngine& l_game, ActionMap<int>& l_actionMap, std::string l_player
 	, inputSystem{ nullptr }
 	, collisionSystem{ nullptr }
 	, movementSystem{ nullptr }
-	, tmap{}
+	//, tmap{}
 {
 	
 	inputSystem = std::make_shared<InputSystem>(game);
@@ -82,29 +82,24 @@ Play::~Play()
 void Play::init()
 {
 	m_player = eMgr().makeStartingEntities("play");
-	m_player->getComponent<CTransform>().pos = Vec2(512, 283);
-	m_player->getComponent<CTransform>().prevPos = Vec2(512, 283);
-	m_player->getComponent<CShape>().sprite.setPosition({ m_player->getComponent<CTransform>().pos.x,m_player->getComponent<CTransform>().pos.y });
+
 	if (m_player == nullptr)
 	{
 		std::cout << "Player not found in the play scene's entity manager" << std::endl;
 		throw std::runtime_error("shit");
 	}
 	game.loadAnimations("assets/data/animationAtlas.dat");
-	m_player->addComponent<CAnimation>();
-	m_player->getComponent<CAnimation>().animation = *game.getAnimation(Config::texNamelookup["Player"], "RunRight");
-
-	m_player->getComponent<CShape>().sprite.setTexture(Config::textures.get((int)Config::texNamelookup["Player"]));
-	m_player->getComponent<CShape>().sprite.setTextureRect(m_player->getComponent<CAnimation>().animation.currFrame());
+	
+	//m_player->getComponent<CShape>().sprite.setTextureRect(m_player->getComponent<CAnimation>().animation.currFrame());
 	currentSystem = inputSystem;
 	std::vector<std::shared_ptr<Entity> > tiles;
 	tiles.clear();
 	tiles.reserve(144);
 	for (int i = 0; i < 144; i++)
 	{
-		tiles.push_back(this->m_entityMgr.addEntity("tile"));
+		//tiles.push_back(this->m_entityMgr.addEntity("tile",{{,}}));
 	}
-	tmap = std::shared_ptr<Tilemap>(new Tilemap{ tiles });
+	//tmap = std::shared_ptr<Tilemap>(new Tilemap{ tiles });
 }
 
 
@@ -116,26 +111,26 @@ void Play::processInput()
 	if (inputSystem->inputMap[InputSystem::Signal::Left] == InputSystem::Status::On
 		|| inputSystem->inputMap[InputSystem::Signal::Left] == InputSystem::Status::Held)
 	{
-		if (m_player->getComponent<CTransform>().velocity.x >= 0.1f)
+	/*	if (m_player->getComponent<CTransform>().velocity.x >= 0.1f)
 			m_player->getComponent<CTransform>().velocity.x = -60.f;
 		else if (m_player->getComponent<CTransform>().velocity.x >= -240.f)
-			m_player->getComponent<CTransform>().velocity.x -= 60.f;
+			m_player->getComponent<CTransform>().velocity.x -= 60.f;*/
 	}
 	if (inputSystem->inputMap[InputSystem::Signal::Right] == InputSystem::Status::On
 		|| inputSystem->inputMap[InputSystem::Signal::Right] == InputSystem::Status::Held)
 	{
-		if (m_player->getComponent<CTransform>().velocity.x <= -0.1f)
+	/*	if (m_player->getComponent<CTransform>().velocity.x <= -0.1f)
 			m_player->getComponent<CTransform>().velocity.x = 60.f;
 		else if (m_player->getComponent<CTransform>().velocity.x <= 240.f)
-			m_player->getComponent<CTransform>().velocity.x += 60.f;
+			m_player->getComponent<CTransform>().velocity.x += 60.f;*/
 			
 	}
 	if (inputSystem->inputMap[InputSystem::Signal::Left] == InputSystem::Status::Off
 		&& inputSystem->inputMap[InputSystem::Signal::Right] == InputSystem::Status::Off)
 	{
-		m_player->getComponent<CTransform>().velocity.x *= 0.86f;
-		if (abs(m_player->getComponent<CTransform>().velocity.x) <= 50.f)
-			m_player->getComponent<CTransform>().velocity.x *= 0.f;
+		//m_player->getComponent<CTransform>().velocity.x *= 0.86f;
+		//if (abs(m_player->getComponent<CTransform>().velocity.x) <= 50.f)
+		//	m_player->getComponent<CTransform>().velocity.x *= 0.f;
 
 	}
 	
@@ -153,47 +148,47 @@ void Play::update(double l_dt)
 	movementSystem->update(l_dt);
 
 	// animation
-	if (m_player->getComponent<CAnimation>().has)
-	{
-		if (m_player->getComponent<CTransform>().velocity.x < -0.01f || m_player->getComponent<CTransform>().velocity.x > 0.01f)
-		{
-			if (m_player->getComponent<CTransform>().velocity.x > 0.01f && m_player->getComponent<CAnimation>().animation.name() != "RunRight")
-			{
-				// set animation to run right
-				m_player->getComponent<CAnimation>().animation = *game.getAnimation(Config::texNamelookup["Player"], "RunRight");
-			}
-			else if (m_player->getComponent<CTransform>().velocity.x < -0.01f && m_player->getComponent<CAnimation>().animation.name() != "RunLeft")
-			{
-				//set anim to run left
-				m_player->getComponent<CAnimation>().animation = *game.getAnimation(Config::texNamelookup["Player"], "RunLeft");
-			}
-			
-		}
-		else
-		{
-			if (m_player->getComponent<CAnimation>().animation.name() == "RunLeft")
-			{
-				// idle left
-				m_player->getComponent<CAnimation>().animation = *game.getAnimation(Config::texNamelookup["Player"], "IdleLeft");
-			}
-			else if (m_player->getComponent<CAnimation>().animation.name() == "RunRight")
-			{
-				// idle right
-				m_player->getComponent<CAnimation>().animation = *game.getAnimation(Config::texNamelookup["Player"], "IdleRight");
-			}
-		}
-		m_player->getComponent<CAnimation>().animation.update(sf::seconds((float)l_dt));
-		m_player->getComponent<CShape>().sprite.setTextureRect(m_player->getComponent<CAnimation>().animation.currFrame());
-	}
+	//if (m_player->getComponent<CAnimation>().has)
+	//{
+	//	if (m_player->getComponent<CTransform>().velocity.x < -0.01f || m_player->getComponent<CTransform>().velocity.x > 0.01f)
+	//	{
+	//		if (m_player->getComponent<CTransform>().velocity.x > 0.01f && m_player->getComponent<CAnimation>().animation.name() != "RunRight")
+	//		{
+	//			// set animation to run right
+	//			m_player->getComponent<CAnimation>().animation = *game.getAnimation(Config::texNamelookup["Player"], "RunRight");
+	//		}
+	//		else if (m_player->getComponent<CTransform>().velocity.x < -0.01f && m_player->getComponent<CAnimation>().animation.name() != "RunLeft")
+	//		{
+	//			//set anim to run left
+	//			m_player->getComponent<CAnimation>().animation = *game.getAnimation(Config::texNamelookup["Player"], "RunLeft");
+	//		}
+	//		
+	//	}
+	//	else
+	//	{
+	//		if (m_player->getComponent<CAnimation>().animation.name() == "RunLeft")
+	//		{
+	//			// idle left
+	//			m_player->getComponent<CAnimation>().animation = *game.getAnimation(Config::texNamelookup["Player"], "IdleLeft");
+	//		}
+	//		else if (m_player->getComponent<CAnimation>().animation.name() == "RunRight")
+	//		{
+	//			// idle right
+	//			m_player->getComponent<CAnimation>().animation = *game.getAnimation(Config::texNamelookup["Player"], "IdleRight");
+	//		}
+	//	}
+	//	m_player->getComponent<CAnimation>().animation.update(sf::seconds((float)l_dt));
+	//	m_player->getComponent<CShape>().sprite.setTextureRect(m_player->getComponent<CAnimation>().animation.currFrame());
+	//}
 }
 
 
 void Play::render(sf::RenderWindow& l_wnd)
 {
-	tmap->draw(l_wnd);
+	//tmap->draw(l_wnd);
 
-	player()->getComponent<CShape>().sprite.setPosition({player()->getComponent<CTransform>().pos.x, player()->getComponent<CTransform>().pos.y });
-	l_wnd.draw(player()->getComponent<CShape>().sprite);
+	/*player()->getComponent<CShape>().sprite.setPosition({player()->getComponent<CTransform>().pos.x, player()->getComponent<CTransform>().pos.y });
+	l_wnd.draw(player()->getComponent<CShape>().sprite);*/
 
 
 }
