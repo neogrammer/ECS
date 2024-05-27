@@ -65,24 +65,29 @@ size_t EntityManager::totalEntities() const
 
 std::shared_ptr<Entity> EntityManager::makeStartingEntities(std::string l_scene)
 {
-	m_entities.clear();
+	std::shared_ptr<Entity> ptr;
+
 	
-	m_toAdd.clear();
 	if (l_scene == "play")
 	{
+		m_entities.clear();
+		m_toAdd.clear();
 		// dont add the player to the bucket, he is special, return it
-		auto p = Make::Player(this->m_totalEntities++);
+		auto p = Make::Player( this->m_totalEntities++);
 		auto n = m_entityMap.insert(std::pair( "player",std::vector<std::shared_ptr<Entity> >{}));
 		n.first->second.clear();
 		n.first->second.push_back(p);
 
 		// make other entities then add them to the buckets for starting game state
 		m_entities.push_back(p);	
-
-		return p;
+		ptr = p;
 	}
-	
+	else
+	{
 
-	return nullptr;
+		return nullptr;
+	}
+	calledMakeStart = true;
+	return ptr;
 }
 

@@ -43,7 +43,7 @@ Play::Play(GameEngine& l_game, ActionMap<int>& l_actionMap, std::string l_player
 		});
 
 	this->bind((int)Config::Inputs::A, [this](const sf::Event&) {
-		std::cout << "A" << std::endl;
+		
 		});
 	this->bind((int)Config::Inputs::AxisX, [this](const sf::Event&) {
 		sf::Joystick::update();
@@ -81,7 +81,8 @@ Play::~Play()
 
 void Play::init()
 {
-	m_player = eMgr().makeStartingEntities("play");
+	if (!eMgr().calledMakeStart)
+		m_player = eMgr().makeStartingEntities("play");
 
 	if (m_player == nullptr)
 	{

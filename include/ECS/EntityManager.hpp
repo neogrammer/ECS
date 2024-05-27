@@ -19,6 +19,7 @@ class EntityManager
 	size_t m_totalEntities;
 
 public:
+	bool calledMakeStart{ false };
 
 	EntityManager();
 	void update(double l_dt);

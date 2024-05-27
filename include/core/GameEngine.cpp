@@ -41,7 +41,31 @@ GameEngine::GameEngine()
 
 std::shared_ptr<Scene> GameEngine::currentScene()
 {
-	return m_scenes.at(m_currentScene);
+	if (m_scenes.find(m_currentScene) == m_scenes.end())
+	{
+		std::shared_ptr<Scene> ptr{};
+
+		
+		if (m_currentScene == "title")
+		{
+			ptr = m_scenes["title"] = std::make_shared<Title>(*this, Config::inputs);
+		}
+		else if (m_currentScene == "play")
+		{
+			ptr = m_scenes["play"] = std::make_shared<Play>(*this, Config::inputs, "PlayerShitConfigMAYBE");
+		}
+		else
+		{
+
+		}
+		ptr->init();
+		return ptr;
+	}
+	else
+	{
+		return m_scenes.begin()->second;
+	}
+	
 }
 
 void GameEngine::loadAnimations(std::string filename)
@@ -102,6 +126,16 @@ std::shared_ptr<Animation> GameEngine::getAnimation(Config::Textures texName, co
 
 void GameEngine::changeScene(std::string l_scene)
 {
+	if (l_scene == m_currentScene) return;
+
+	auto itr = m_scenes.find(m_currentScene);
+	if (itr != m_scenes.end())
+	{
+		m_scenes.erase(itr);
+	}
+
+	m_currentScene = l_scene;
+
 	m_currentScene = l_scene;
 	currentScene()->init();
 }
