@@ -60,7 +60,7 @@ void Tilemap::draw(sf::RenderWindow& l_wnd)
 {
 	for (auto& t : m_tiles)
 	{
-		//l_wnd.draw(t->getComponent<CShape>().sprite);
+		t->render(l_wnd);
 	}
 }
 

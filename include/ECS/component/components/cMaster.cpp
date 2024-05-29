@@ -85,6 +85,11 @@ void cMaster::move(Vec2 l_offset)
 	m_spr.move({ off.x, off.y });
 }
 
+void cMaster::setOrigin(Vec2 l_orig)
+{
+	m_spr.setOrigin(l_orig.x, l_orig.y);
+}
+
 void cMaster::addTexture(std::string l_texName, Vec2 l_frameSize, bool setCurrent)
 {
 	if (setCurrent == false)

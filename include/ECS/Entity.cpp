@@ -4,7 +4,9 @@
 Entity::Entity(const std::string& l_tag, sf::IntRect l_texFrame, size_t l_id, std::string l_texName, Vec2 l_pos)
 	: m_id{ l_id }, m_tag{ l_tag }, m_alive{true}
 	, m_cTuple{}, cMgr{ *this, l_texFrame,  l_texName, l_pos }
-{}
+{
+	cMgr.has = true;
+}
 
 
 

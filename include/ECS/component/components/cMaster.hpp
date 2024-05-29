@@ -53,7 +53,7 @@ public:
 	Vec2 getPosition();
 
 	void move(Vec2 l_offset);
-
+	void setOrigin(Vec2 l_orig);
 	void addTexture(std::string l_texName, Vec2 l_frameSize, bool setCurrent = false);
 	// looks string up in the parallel vectors to update the entities m_spr.textureRect
 	void setCurrentTex(std::string l_tex);

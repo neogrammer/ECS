@@ -19,7 +19,7 @@ struct cRigidBody : Component
 
 
 	cRigidBody() : Component{}, size{}, center{}, vel{}, prevPos{}, halfSize{} {}
-	cRigidBody(Vec2 l_size, Vec2 l_center, Vec2 l_vel, Vec2 l_pos) : Component{}, size{ l_size }, center{ l_center }, vel{ l_vel }, prevPos{ l_pos } { halfSize = Vec2(size / 2.f); }
+	cRigidBody(Vec2 l_size, Vec2 l_vel, Vec2 l_pos) : Component{}, size{ l_size }, center{ l_pos }, vel{ l_vel }, prevPos{ l_pos } { halfSize = Vec2(size / 2.f); }
 
 	void update(sf::Time l_dt)
 	{
