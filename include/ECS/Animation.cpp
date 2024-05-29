@@ -1,5 +1,5 @@
 #include "Animation.hpp"
-
+#include <iostream>
 void Animation::animate()
 {
 	if (++m_currIndex >= m_frames.size())
@@ -65,6 +65,19 @@ sf::IntRect& Animation::currFrame()
 	return m_frames[m_currIndex];
 }
 
+void Animation::setCurrIdx(int idx)
+{
+	if (idx < m_frames.size())
+	{
+		m_currIndex = idx;
+	}
+	else
+	{
+		std::cout << "index not within range, setting index back to zero" << std::endl;
+		m_currIndex = 0;
+	}
+}
+
 bool Animation::onLastFrame()
 {
 	return m_onLastFrame;
@@ -95,4 +108,9 @@ void Animation::setVFlip(bool l_vFlip)
 void Animation::setHFlip(bool l_hFlip)
 {
 	m_isFlippedH = l_hFlip;
+}
+
+const std::string& Animation::getName() const
+{
+	return m_name;
 }

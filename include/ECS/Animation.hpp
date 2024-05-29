@@ -38,11 +38,13 @@ public:
 	const int totalFrames() const;
 	const std::string& name() const;
 	sf::IntRect& currFrame();
+	void setCurrIdx(int idx);
 	bool onLastFrame();
 	void update(sf::Time l_dt);
 	void setLooping(bool l_loop);
 	void setVFlip(bool l_vFlip);
 	void setHFlip(bool l_hFlip);
+	const std::string& getName() const ;
 
 };
 

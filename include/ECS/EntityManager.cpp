@@ -81,13 +81,14 @@ std::shared_ptr<Entity> EntityManager::makeStartingEntities(std::string l_scene)
 		// make other entities then add them to the buckets for starting game state
 		m_entities.push_back(p);	
 		ptr = p;
+
+		calledMakeStart = true;
 	}
 	else
 	{
 
 		return nullptr;
 	}
-	calledMakeStart = true;
 	return ptr;
 }
 

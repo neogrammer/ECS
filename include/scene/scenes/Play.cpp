@@ -16,7 +16,7 @@ Play::Play(GameEngine& l_game, ActionMap<int>& l_actionMap, std::string l_player
 	, inputSystem{ nullptr }
 	, collisionSystem{ nullptr }
 	, movementSystem{ nullptr }
-	//, tmap{}
+	, tmap{}
 {
 	
 	inputSystem = std::make_shared<InputSystem>(game);
@@ -89,18 +89,19 @@ void Play::init()
 		std::cout << "Player not found in the play scene's entity manager" << std::endl;
 		throw std::runtime_error("shit");
 	}
-	game.loadAnimations("assets/data/animationAtlas.dat");
-	
-	//m_player->getComponent<CShape>().sprite.setTextureRect(m_player->getComponent<CAnimation>().animation.currFrame());
+
 	currentSystem = inputSystem;
 	std::vector<std::shared_ptr<Entity> > tiles;
 	tiles.clear();
 	tiles.reserve(144);
 	for (int i = 0; i < 144; i++)
 	{
-		//tiles.push_back(this->m_entityMgr.addEntity("tile",{{,}}));
+		int col = i % 32;
+		int row = i / 32;
+
+		tiles.push_back(this->m_entityMgr.addEntity("tile", { {col * 64, row * 64}, {64, 64} }, "Tileset1", Vec2(0,0)));
 	}
-	//tmap = std::shared_ptr<Tilemap>(new Tilemap{ tiles });
+	tmap = std::shared_ptr<Tilemap>(new Tilemap{ tiles });
 }
 
 
@@ -148,6 +149,8 @@ void Play::update(double l_dt)
 
 	movementSystem->update(l_dt);
 
+	m_player->update(sf::seconds((float)l_dt));
+
 	// animation
 	//if (m_player->getComponent<CAnimation>().has)
 	//{
@@ -186,10 +189,8 @@ void Play::update(double l_dt)
 
 void Play::render(sf::RenderWindow& l_wnd)
 {
-	//tmap->draw(l_wnd);
-
-	/*player()->getComponent<CShape>().sprite.setPosition({player()->getComponent<CTransform>().pos.x, player()->getComponent<CTransform>().pos.y });
-	l_wnd.draw(player()->getComponent<CShape>().sprite);*/
+	tmap->draw(l_wnd);
+	m_player->render(l_wnd);
 
 
 }

@@ -23,7 +23,6 @@ class cMaster : public Component
 	void update(sf::Time l_dt);
 	void render(sf::RenderWindow& l_wnd);
 
-	void setSize(Vec2 l_frameSize);
 	void setFrame(sf::IntRect l_frame);
 	// every entity is a game object in the universe with locale, and a physical description such as a sprite image texture, texture rect
 	// velocity, size of the sprite frame with the handle anchor at it's center and position.  with functions to update these qualities if the 
@@ -32,7 +31,7 @@ class cMaster : public Component
 	sf::Sprite m_spr{};
 	std::map<Config::Textures, sf::Texture*> m_texMap{};
 	std::vector<std::string> m_texStrVec{};
-	// may change size with each texture, but all in that texturesheet are uniform size in case of aniimation componenet is added
+	// may change size with each texture, but all in that texturesheet are uniform size in case of animation component is added
 	std::vector<sf::IntRect> m_texFrameRect{};
 
 	//std::map<std::string, Config::Textures> m_texMap;
@@ -55,7 +54,7 @@ public:
 
 	void move(Vec2 l_offset);
 
-	void addTexture(std::string l_texName, sf::IntRect l_texFrame, bool setCurrent = false);
+	void addTexture(std::string l_texName, Vec2 l_frameSize, bool setCurrent = false);
 	// looks string up in the parallel vectors to update the entities m_spr.textureRect
 	void setCurrentTex(std::string l_tex);
 };

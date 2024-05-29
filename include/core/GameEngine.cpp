@@ -25,119 +25,69 @@
 
 // ctor, no dtor neccessary... RAII be like that sometimes
 GameEngine::GameEngine()
-	: m_scenes{}, m_currentScene{}
+	: m_scenes{}, m_currentScene{""}
 	, wnd{ sf::VideoMode(::GameProperties::SCRW, ::GameProperties::SCRH), "ECS_Architecture", sf::Style::None }
 	, paused{false}
-	, animations{}
 {
-	
-
-	m_scenes["title"] = std::make_shared<Title>(*this, Config::inputs);
-
 	changeScene("title");
-	
-
 }
 
 std::shared_ptr<Scene> GameEngine::currentScene()
 {
-	if (m_scenes.find(m_currentScene) == m_scenes.end())
+	auto itr = m_scenes.find(m_currentScene);
+	if (itr == m_scenes.end())
 	{
-		std::shared_ptr<Scene> ptr{};
-
-		
-		if (m_currentScene == "title")
-		{
-			ptr = m_scenes["title"] = std::make_shared<Title>(*this, Config::inputs);
-		}
-		else if (m_currentScene == "play")
-		{
-			ptr = m_scenes["play"] = std::make_shared<Play>(*this, Config::inputs, "PlayerShitConfigMAYBE");
-		}
-		else
-		{
-
-		}
-		ptr->init();
-		return ptr;
+		std::cout << "uh oh, no scene" << std::endl;
+		assert(1 == 2);
+		return nullptr;
 	}
 	else
 	{
-		return m_scenes.begin()->second;
-	}
-	
+		return itr->second;
+	}	
 }
-
-void GameEngine::loadAnimations(std::string filename)
-{
-	std::ifstream iFile;
-	iFile.open(filename);
-
-	if (!iFile.is_open())
-	{
-		std::cout << "Animation File unable to be read in!" << std::endl;
-	}
-	else
-	{
-		int numTextures;
-		iFile >> numTextures;
-
-		for (int i = 0; i < numTextures; i++)
-		{
-			std::string texName;
-			iFile >> texName;
-
-			int numAnimsInTexture;
-			iFile >> numAnimsInTexture;
-
-			for (int j = 0; j < numAnimsInTexture; j++)
-			{
-				std::string animName;
-				iFile >> animName;
-
-				//file is open
-				int sizex, sizey, numframes, cols, rows, startposx, startposy, framedelayMS;
-				std::string looping, flippedH, flippedV;
-
-				iFile >> sizex >> sizey >> numframes >> cols >> rows >> startposx >> startposy >> framedelayMS >> looping >> flippedH >> flippedV;
-				const std::string str = animName;
-				animations.insert(std::pair(Config::Textures::Player, std::map<std::string, std::shared_ptr<Animation>>{std::make_pair(str, std::make_shared<Animation>(sf::Vector2i(sizex, sizey), str, numframes, cols, rows, sf::Vector2i{ startposx,startposy }, (float)framedelayMS / 1000.f, (looping == "true") ? true : false, (flippedH == "true") ? true : false, (flippedV == "true") ? true : false))}));
-			}
-		}
-		iFile.close();
-	}
-}
-
-std::shared_ptr<Animation> GameEngine::getAnimation(Config::Textures texName, const std::string& animName)
-{
-	for (auto& outer : this->animations)
-	{
-		for (auto& inner : outer.second)
-		{
-			if (inner.second->name() == animName)
-				return inner.second;
-		}
-	}
-
-	return nullptr;
-
-}
-
 
 void GameEngine::changeScene(std::string l_scene)
 {
 	if (l_scene == m_currentScene) return;
-
-	auto itr = m_scenes.find(m_currentScene);
-	if (itr != m_scenes.end())
+	if (m_currentScene != "")
 	{
-		m_scenes.erase(itr);
+		auto itr = m_scenes.find(m_currentScene);
+		if (itr != m_scenes.end())
+		{
+			m_scenes.erase(itr);
+		}
+
+		
 	}
 
 	m_currentScene = l_scene;
-
-	m_currentScene = l_scene;
-	currentScene()->init();
+	
+	auto itr = m_scenes.find(m_currentScene);
+	if (itr != m_scenes.end())
+	{
+		return;
+	}
+	else
+	{
+		if (m_currentScene == "title")
+		{
+			m_scenes["title"] = std::make_shared<Title>(*this, Config::inputs);
+		}
+		else if (m_currentScene == "play")
+		{
+			m_scenes["play"] = std::make_shared<Play>(*this, Config::inputs, "PlayerShitConfigMAYBE");
+		}
+		else
+		{
+			std::cout << "no scene" << std::endl;
+			m_scenes["title"] = std::make_shared<Title>(*this, Config::inputs);
+		}
+	}
+	
+	m_scenes[m_currentScene]->init();
+	return;
+	
 }
 
 // value passed to this function always simulates a normalization to 60 fps, no matter what

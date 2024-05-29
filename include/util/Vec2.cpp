@@ -2,7 +2,7 @@
 
 Vec2::Vec2() : Vec2{ 0, 0 } {}
 Vec2::Vec2(int l_x, int l_y) : Vec2{ (float)l_x,(float)l_y } {}
-Vec2::Vec2(float l_x, float l_y) : x{ l_x }, y{ l_y } {}
+Vec2::Vec2(float l_x, float l_y) : x{ l_x }, y{ l_y }, collapse{ false } {}
 
 bool Vec2::operator==(sf::Vector2f v)
 {
@@ -81,14 +81,6 @@ Vec2& Vec2::add(Vec2 v)
 	return *this;
 }
 
-Vec2 Vec2::operator+(Vec2 v)
-{
-	Vec2 a = *this;
-	a.x += v.x;
-	a.y += v.y;
-
-	return a;
-}
 Vec2& Vec2::sub(Vec2 v)
 {
 	this->x -= v.x;
@@ -98,15 +90,7 @@ Vec2& Vec2::sub(Vec2 v)
 
 }
 
-Vec2 Vec2::operator-(Vec2 v)
-{
-	Vec2 a = *this;
 
-	a.x -= v.x;
-	a.y -= v.y;
-
-	return a;
-}
 
 Vec2& Vec2::mult(Vec2 v)
 {
@@ -118,15 +102,6 @@ Vec2& Vec2::mult(Vec2 v)
 
 }
 
-Vec2 Vec2::operator*(Vec2 v)
-{
-	Vec2 a = *this;
-
-	a.x *= v.x;
-	a.y *= v.y;
-
-	return a;
-}
 
 Vec2& Vec2::divide(Vec2 v)
 {
@@ -178,19 +153,7 @@ Vec2& Vec2::divide(const Vec2& v)
 	return *this;
 }
 
-Vec2 Vec2::operator/(Vec2 v)
-{
-	if (v.x == 0.f || v.y == 0.f)
-	{
-		return Vec2(0.0f, 0.0f);
-	}
-	Vec2 a = *this;
 
-	a.x /= v.x;
-	a.y /= v.y;
-
-	return a;
-}
 
 Vec2& Vec2::operator/(const Vec2& v)
 {
@@ -230,6 +193,14 @@ Vec2& Vec2::operator+(const Vec2& v)
 	// TODO: insert return statement here
 	return *this;
 	// TODO: insert return statement here
+}
+
+Vec2& Vec2::operator+=(const Vec2& v)
+{
+	this->x = this->x + v.x;
+	this->y = this->y + v.y;
+
+	return *this;
 }
 
 Vec2 scale(Vec2 v, float s)

@@ -212,7 +212,7 @@
     <ClInclude Include="include\util\Vec2.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\data\animationAtlas.dat" />
+    <None Include="assets\data\animations\player.anim" />
     <None Include="include\action\tpl\ActionMap.tpl" />
     <None Include="include\action\tpl\ActionTarget.tpl" />
     <None Include="include\core\tpl\ResourceManager.tpl" />
