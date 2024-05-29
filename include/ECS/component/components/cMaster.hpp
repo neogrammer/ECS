@@ -9,12 +9,15 @@
 #include "../Component.hpp"
 #include "../util/Vec2.hpp"
 #include "../core/Config.hpp"
+#include "../util/EntStates.hpp"
 class Entity;
+
 
 class cMaster : public Component
 {
 	friend class Entity;
 
+	EntState m_state;
 	Entity& m_owner;
 	sf::Time m_dt{sf::Time::Zero};
 
@@ -48,7 +51,8 @@ public:
 
 	
 	Vec2 getSize();
-
+	EntState getState();
+	void setState(EntState l_state);
 	void setPosition(Vec2 l_pos);
 	Vec2 getPosition();
 

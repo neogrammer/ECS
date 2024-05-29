@@ -1,0 +1,18 @@
+#ifndef ENTSTATES_HPP__
+#define ENTSTATES_HPP__
+
+enum class EntState : int
+{
+	IDLE,
+	RUNNING,
+	JUMPING,
+	SHOOTING,
+	RUNNING_AND_SHOOTING,
+	JUMPING_AND_SHOOTING,
+	HURT,
+	DEAD,
+	NOT_ANIMATED,
+	COUNT
+};
+
+#endif

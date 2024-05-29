@@ -17,17 +17,20 @@ struct cRigidBody : Component
 	Vec2 vel;
 	Vec2 prevPos;
 
+	bool isDynamic;
 
-	cRigidBody() : Component{}, size{}, center{}, vel{}, prevPos{}, halfSize{} {}
-	cRigidBody(Vec2 l_size, Vec2 l_vel, Vec2 l_pos) : Component{}, size{ l_size }, center{ l_pos }, vel{ l_vel }, prevPos{ l_pos } { halfSize = Vec2(size / 2.f); }
+	cRigidBody() : Component{}, size{}, center{}, vel{}, prevPos{}, halfSize{}, isDynamic{} {}
+	cRigidBody(bool l_dynamic, Vec2 l_size, Vec2 l_vel, Vec2 l_center) : Component{}, size{l_size}, center{ l_center }, vel{l_vel}, prevPos{l_center}, isDynamic{l_dynamic} {halfSize = Vec2(size / 2.f);}
 
 	void update(sf::Time l_dt)
 	{
 		// copy its current position for next frame incase the prevPos is needed for any calculations
 		prevPos = center;
-
-		// if has collided, it will already be adjusted to the right spot and velocity updated to 0 in the correct direction so this is always safe to call
-		center += vel * l_dt.asSeconds();
+		if (isDynamic)
+		{
+			// if has collided, it will already be adjusted to the right spot and velocity updated to 0 in the correct direction so this is always safe to call
+			center += vel * l_dt.asSeconds();
+		}
 	}
 
 	static Vec2 topLeft(Entity&);

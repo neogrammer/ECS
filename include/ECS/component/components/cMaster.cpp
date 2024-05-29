@@ -5,13 +5,17 @@
 #include "../ECS/Entity.hpp"
 
 // for static functions on this page only
-#define RigidBody_ e.getComponent<cRigidBody>() 
+#define RigidBody_ e.getComponent<cRigidBody>()
 #define Animation_ e.getComponent<cAnimation>() 
+#define Lifespan_ e.getComponent<cLifespan>() 
+#define Gravity_ e.getComponent<cGravity>() 
 
 
 cMaster::cMaster(Entity& l_owner, sf::IntRect l_texFrame, std::string l_texName, Vec2 l_pos)
-	: Component{}, m_owner{l_owner}, m_dt{sf::Time::Zero}
-	, m_spr{}, m_texMap{}, m_texStrVec{}, m_texFrameRect{}
+	: Component{}, m_state{EntState::NOT_ANIMATED}, m_owner{l_owner}
+	, m_dt{ sf::Time::Zero }
+	, m_spr{}, m_texMap{}
+	, m_texStrVec{}, m_texFrameRect{}
 {
 	auto name = Config::texNamelookup[l_texName];
 
@@ -130,7 +134,14 @@ void cMaster::update(sf::Time l_dt)
 	// if has rigidbody component run movement logic
 	if (m_owner.hasComponent<cRigidBody>())
 	{
+		if (m_owner.hasComponent<cGravity>())
+		{
+			m_owner.getComponent<cRigidBody>().vel.y += m_owner.getComponent<cGravity>().magnitude * l_dt.asSeconds();
+		}
 		m_owner.getComponent<cRigidBody>().update(m_dt);
+		
+		//Collision section
+		
 		// now position the owner to this location
 		m_spr.setPosition(m_owner.getComponent<cRigidBody>().center.x, m_owner.getComponent<cRigidBody>().center.y);
 	}

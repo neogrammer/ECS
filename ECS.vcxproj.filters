@@ -227,6 +227,9 @@
     <ClInclude Include="include\ECS\component\components\cMaster.hpp">
       <Filter>Header Files\ECS\component\components</Filter>
     </ClInclude>
+    <ClInclude Include="include\util\EntStates.hpp">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\core\tpl\ResourceManager.tpl">

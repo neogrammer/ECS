@@ -7,6 +7,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "../core/Config.hpp"
 class Entity;
+class EntityManager;
 class Tilemap
 {
 		
@@ -18,7 +19,7 @@ public:
 	int tw;
 	int th;
 	Tilemap() = delete;
-	explicit Tilemap(std::vector<std::shared_ptr<Entity> > l_tiles);
+	explicit Tilemap(EntityManager& l_eMgr, const std::string& l_level);
 	~Tilemap() = default;
 
 	void draw(sf::RenderWindow& l_wnd);
