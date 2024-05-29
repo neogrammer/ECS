@@ -138,9 +138,36 @@ void cMaster::update(sf::Time l_dt)
 	// if has animation component run animation logic
 	if (m_owner.hasComponent<cAnimation>())
 	{
+		
+
+		auto& currAnim = m_owner.getComponent<cAnimation>().currAnimation->getName();
+		auto& animTex = m_owner.getComponent<cAnimation>().animTextureMap[currAnim];
+		if (m_spr.getTexture() != NULL)
+		{
+			if (m_spr.getTexture() != &(Config::textures.get((int)Config::texNamelookup[animTex])))
+			{
+				m_spr.setTexture(Config::textures.get((int)Config::texNamelookup[animTex]));
+			}
+		}
+		else
+		{
+			// m_spr texture is NULL, so lets assign it to the one in the owners animation component's texture map connected to by that entitys current animation
+			// thus it should definitely exist if this code is ran, where the entity in question indeed has a animation component,where at least one texture and animation is required
+			// or this just wont be ran at all
+			m_spr.setTexture(Config::textures.get((int)Config::texNamelookup[animTex]));
+		}
+		
+
+		// NOT 100% sure if this should go at the top of the function or not
+		// now animate the animation accordingly
 		m_owner.getComponent<cAnimation>().update(m_dt);
-		// now update the texture and the tex rect
-		// m_spr stuff
+
+		
+		// now update the texture and the tex rect since we have checked for the correct texture for this animation currently running and updated the frame accordingly
+		// because if the animation changed to a different one using a different texture it shoul all be connected and reader to sync up to the entitys sprite now
+		// for rendering		
+		m_spr.setTextureRect(m_owner.getComponent<cAnimation>().currAnimation->currFrame());
+
 	}
 
 	// else look pretty with its current static tex an tex rect
@@ -194,6 +221,7 @@ void cAnimation::setup(Entity& e, std::string l_filename) {
 				iFile >> animName;
 				Animation_.animTextureMap.insert(std::pair{ animName, texName });
 				Animation_.animNames.push_back(animName);
+
 				//file is open
 				int sizex, sizey, numframes, cols, rows, startposx, startposy, framedelayMS;
 				std::string looping, flippedH, flippedV;

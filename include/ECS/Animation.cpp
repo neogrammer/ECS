@@ -24,13 +24,13 @@ void Animation::animate()
 }
 
 Animation::Animation()
-	: Animation{ {1,1} }
+	: Animation{{1,1}}
 {
-
+	// better call setup asap, or im gonna try reading from "Default" texture, whatever the hell that is
 }
 
-Animation::Animation(sf::Vector2i l_frameSize, const std::string& l_name, int l_numFrames, int l_cols, int l_rows, sf::Vector2i l_startPos, float l_frameDelay, bool l_looping, bool l_isFlippedH, bool l_isFlippedV)
-	: m_frames{}, m_currIndex{ 0 }, m_frameDelayElapsed{ sf::Time::Zero }, m_frameDelay{ l_frameDelay }, m_looping{ l_looping }, m_isFlippedH{l_isFlippedH}, m_isFlippedV{l_isFlippedV}, m_name{l_name}
+Animation::Animation( sf::Vector2i l_frameSize, const std::string& l_name, int l_numFrames, int l_cols, int l_rows, sf::Vector2i l_startPos, float l_frameDelay, bool l_looping, bool l_isFlippedH, bool l_isFlippedV)
+	: m_frames {}, m_currIndex{ 0 }, m_frameDelayElapsed{ sf::Time::Zero }, m_frameDelay{ l_frameDelay }, m_looping{ l_looping }, m_isFlippedH{ l_isFlippedH }, m_isFlippedV{ l_isFlippedV }, m_name{ l_name }
 	, m_onLastFrame{ false }
 {
 	m_frames.clear();

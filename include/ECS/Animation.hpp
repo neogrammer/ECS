@@ -35,6 +35,7 @@ public:
 	
 	~Animation();
 	
+
 	const int totalFrames() const;
 	const std::string& name() const;
 	sf::IntRect& currFrame();
