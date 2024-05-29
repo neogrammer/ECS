@@ -10,9 +10,8 @@ EntityManager::EntityManager()
 
 std::shared_ptr<Entity> EntityManager::addEntity(const std::string& tag, sf::IntRect l_frameRect, std::string l_texName, Vec2 l_pos)
 {
-	auto e = std::shared_ptr<Entity>(new Entity(tag, l_frameRect, this->m_totalEntities++, l_texName, l_pos));
+	auto e = std::shared_ptr<Entity>(new Entity(*this, tag, l_frameRect, this->m_totalEntities++, l_texName, l_pos));
 
-	//auto e = std::shared_ptr<Entity>(new Entity{tag, EntityManager::m_totalEntities++});
 	m_toAdd.push_back(e);
 	return e;
 } 
@@ -73,7 +72,7 @@ std::shared_ptr<Entity> EntityManager::makeStartingEntities(std::string l_scene)
 		m_entities.clear();
 		m_toAdd.clear();
 		// dont add the player to the bucket, he is special, return it
-		auto p = Make::Player( this->m_totalEntities++);
+		auto p = Make::Player(*this,  this->m_totalEntities++);
 		auto n = m_entityMap.insert(std::pair( "player",std::vector<std::shared_ptr<Entity> >{}));
 		n.first->second.clear();
 		n.first->second.push_back(p);

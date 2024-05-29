@@ -12,6 +12,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include "../util/Vec2.hpp"
 
+
 // Additional Components and Entity can take on
 typedef std::tuple<
 	cRigidBody,
@@ -20,7 +21,7 @@ typedef std::tuple<
 	cAnimation
 > CTuple;
 
-
+class EntityManager;
 class GameEngine;
 class Entity
 {
@@ -34,12 +35,13 @@ class Entity
 	bool m_alive;
 	std::tuple<cRigidBody, cGravity, cLifespan, cAnimation> m_cTuple;
 	Entity() = delete;
-	Entity(const std::string& l_tag, sf::IntRect l_texFrame, size_t l_id, std::string l_texName, Vec2 l_pos = Vec2(0.0f,0.0f));
+	Entity(EntityManager& l_eMgr, const std::string& l_tag, sf::IntRect l_texFrame, size_t l_id, std::string l_texName, Vec2 l_pos = Vec2(0.0f,0.0f));
 
 public:
 	// Master Component, one on every entity. Contols Entity interaction with itself by acting as the hub between them so functionality becomes encapsulated
 	// without adding specific funnctionality to any of the simple component structures in our ECS pattern, and carries a reference to its owning Entity 
 	cMaster cMgr;
+	EntityManager& eMgr;
 	size_t id();
 	bool isAlive();
 	const std::string& tag();

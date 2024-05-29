@@ -44,6 +44,8 @@ public:
 	Vec2& operator-(const Vec2& v);
 	Vec2& operator+(const Vec2& v);
     Vec2& operator+=(const Vec2& v);
+    Vec2& operator-=(const Vec2& v);
+
     // Overload operator+ for Vec2 + float
     friend Vec2 operator+(const Vec2& v, float f) {
         return Vec2(v.x + f, v.y + f);

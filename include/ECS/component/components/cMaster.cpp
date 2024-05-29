@@ -2,7 +2,9 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
-#include "../ECS/Entity.hpp"
+#include <assert.h>
+#include "../ECS/EntityManager.hpp"
+#include "../util/Physics.hpp"
 
 // for static functions on this page only
 #define RigidBody_ e.getComponent<cRigidBody>()
@@ -126,10 +128,6 @@ void cMaster::update(sf::Time l_dt)
 {
 	m_dt = l_dt;
 
-
-
-	// run collision logic here
-	// 
 	
 	// if has rigidbody component run movement logic
 	if (m_owner.hasComponent<cRigidBody>())
@@ -140,8 +138,134 @@ void cMaster::update(sf::Time l_dt)
 		}
 		m_owner.getComponent<cRigidBody>().update(m_dt);
 		
+
+
+
 		//Collision section
-		
+		if (m_owner.m_tag == "player")
+		{
+			auto& tiles = m_owner.eMgr.getEntities("tile");
+			
+			//check collsions with this entity m_owner, and the tiles
+			// using their RigidBody Components
+			auto& playerBody = m_owner.getComponent<cRigidBody>();
+			
+			for (auto& tile : tiles)
+			{
+				auto& tileBody = tile->getComponent<cRigidBody>();
+
+				Vec2 overlap{ -1, -1 }; // start off at no overlap
+				if (Physics::isColliding(playerBody, tileBody, overlap))   // if true, then overlap is the overlap passed back
+				{
+					playerBody.center.y -= overlap.y;
+					playerBody.vel.y = 0.f;
+
+					if (m_owner.getComponent<cAnimation>().currAnimation->name() == "JumpLeft")
+					{
+						if (playerBody.vel.x < 0.1f)
+							cAnimation::changeAnimation(m_owner, "RunLeft");
+						else if (playerBody.vel.x > 0.0f)
+							cAnimation::changeAnimation(m_owner, "RunRight");
+						else
+							cAnimation::changeAnimation(m_owner, "IdleLeft");
+					}
+					else if (m_owner.getComponent<cAnimation>().currAnimation->name() == "JumpRight")
+					{
+						if (playerBody.vel.x > 0.1f)
+							cAnimation::changeAnimation(m_owner, "RunRight");
+						else if (playerBody.vel.x < 0.0f)
+							cAnimation::changeAnimation(m_owner, "RunLeft");
+						else
+							cAnimation::changeAnimation(m_owner, "IdleRight");
+					}
+					else
+					{
+						if (playerBody.vel.x > 0.0f)
+						{
+							if (m_owner.getComponent<cAnimation>().currAnimation->name() != "RunRight")
+								cAnimation::changeAnimation(m_owner, "RunRight");
+						}
+						else if (playerBody.vel.x < 0.0f)
+						{
+							if (m_owner.getComponent<cAnimation>().currAnimation->name() != "RunLeft")
+								cAnimation::changeAnimation(m_owner, "RunLeft");
+						}
+						else
+						{
+							if (m_owner.getComponent<cAnimation>().currAnimation->name() == "RunRight")
+							{
+								cAnimation::changeAnimation(m_owner, "IdleRight");
+							}
+							else if (m_owner.getComponent<cAnimation>().currAnimation->name() == "RunLeft")
+							{
+								cAnimation::changeAnimation(m_owner, "IdleLeft");
+							}
+						}
+					}
+					
+				}
+				else
+				{
+					if (m_owner.getComponent<cRigidBody>().vel.y > 20.f)
+					{
+						if (m_owner.getComponent<cRigidBody>().vel.x < 0.0f)
+						{
+							cAnimation::changeAnimation(m_owner, "JumpLeft");
+						}
+						else if (m_owner.getComponent<cRigidBody>().vel.x > 0.0f)
+						{
+							cAnimation::changeAnimation(m_owner, "JumpRight");
+						}
+						else
+						{
+							if (m_owner.getComponent<cAnimation>().currAnimation->name() == "RunRight" || m_owner.getComponent<cAnimation>().currAnimation->name() == "IdleRight")
+							{
+								cAnimation::changeAnimation(m_owner, "JumpRight");
+							}
+							else if (m_owner.getComponent<cAnimation>().currAnimation->name() == "RunLeft" || m_owner.getComponent<cAnimation>().currAnimation->name() == "IdleLeft")
+							{
+								cAnimation::changeAnimation(m_owner, "JumpLeft");
+							}
+						}
+						// check if player is shooting, if so shoot left or right depending on velocity or current jump animation direction
+					}
+					else if (m_owner.getComponent<cRigidBody>().vel.y < -20.f)
+					{
+						if (m_owner.getComponent<cRigidBody>().vel.x < 0.0f)
+						{
+							cAnimation::changeAnimation(m_owner, "JumpLeft");
+						}
+						else if (m_owner.getComponent<cRigidBody>().vel.x > 0.0f)
+						{
+							cAnimation::changeAnimation(m_owner, "JumpRight");
+						}
+						else
+						{
+							if (m_owner.getComponent<cAnimation>().currAnimation->name() == "RunRight" || m_owner.getComponent<cAnimation>().currAnimation->name() == "IdleRight")
+							{
+								cAnimation::changeAnimation(m_owner, "JumpRight");
+							}
+							else if (m_owner.getComponent<cAnimation>().currAnimation->name() == "RunLeft" || m_owner.getComponent<cAnimation>().currAnimation->name() == "IdleLeft")
+							{
+								cAnimation::changeAnimation(m_owner, "JumpLeft");
+							}
+						}
+
+						// check if player is shooting, if so shoot left or right depending on velocity or current jump animation direction
+					}
+					else
+					{
+						// if player is shooting, if playeranim is running or idle left, runshootleft or shootleft depending on vel.x, same for right
+					}
+					//  user is on the ground, if the player is pressing the shoot button, change animation to shoot if not already
+					//  if user pressed the jump button, here set the velocity.y of the player to -value and , update center.y  and if not already set to jump anim an
+					//  set player to jumping == true;
+				}
+				
+			}
+			
+		}
+
 		// now position the owner to this location
 		m_spr.setPosition(m_owner.getComponent<cRigidBody>().center.x, m_owner.getComponent<cRigidBody>().center.y);
 	}

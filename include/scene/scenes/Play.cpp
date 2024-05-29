@@ -126,6 +126,10 @@ void Play::processInput()
 			m_player->getComponent<cRigidBody>().vel.x *= 0.f;
 
 	}
+	if (inputSystem->inputMap[InputSystem::Signal::Up] == InputSystem::Status::On && abs(m_player->getComponent<cRigidBody>().vel.y) < 0.1f)
+	{
+		m_player->getComponent<cRigidBody>().vel.y = -60.f;
+	}
 	
 }
 
@@ -143,38 +147,38 @@ void Play::update(double l_dt)
 	m_player->update(sf::seconds((float)l_dt));
 	
 
-		 if (m_player->getComponent<cAnimation>().has)
-		 {
-			 if (m_player->getComponent<cRigidBody>().vel.x < -0.01f || m_player->getComponent<cRigidBody>().vel.x > 0.01f)
-			 {
-				 if (m_player->getComponent<cRigidBody>().vel.x > 0.01f && m_player->getComponent<cAnimation>().currAnimation->name() != "RunRight")
-				 {
-					 // set animation to run right
-					 cAnimation::changeAnimation(*m_player, "RunRight");
-				 }
-				 else if (m_player->getComponent<cRigidBody>().vel.x < -0.01f && m_player->getComponent<cAnimation>().currAnimation->name() != "RunLeft")
-				 {
-					 //set anim to run left
-					 cAnimation::changeAnimation(*m_player, "RunLeft");
-				 }
+		 //if (m_player->getComponent<cAnimation>().has)
+		 //{
+			// if (m_player->getComponent<cRigidBody>().vel.x < -0.01f || m_player->getComponent<cRigidBody>().vel.x > 0.01f)
+			// {
+			//	 if (m_player->getComponent<cRigidBody>().vel.x > 0.01f && m_player->getComponent<cAnimation>().currAnimation->name() != "RunRight")
+			//	 {
+			//		 // set animation to run right
+			//		 cAnimation::changeAnimation(*m_player, "RunRight");
+			//	 }
+			//	 else if (m_player->getComponent<cRigidBody>().vel.x < -0.01f && m_player->getComponent<cAnimation>().currAnimation->name() != "RunLeft")
+			//	 {
+			//		 //set anim to run left
+			//		 cAnimation::changeAnimation(*m_player, "RunLeft");
+			//	 }
 
-			 }
-			 else
-			 {
-				 if (m_player->getComponent<cAnimation>().currAnimation->name() == "RunLeft")
-				 {
-					 // idle left
-					 cAnimation::changeAnimation(*m_player, "IdleLeft");
+			// }
+			// else
+			// {
+			//	 if (m_player->getComponent<cAnimation>().currAnimation->name() == "RunLeft")
+			//	 {
+			//		 // idle left
+			//		 cAnimation::changeAnimation(*m_player, "IdleLeft");
 
-				 }
-				 else if (m_player->getComponent<cAnimation>().currAnimation->name() == "RunRight")
-				 {
-					 // idle right
-					 cAnimation::changeAnimation(*m_player, "IdleRight");
+			//	 }
+			//	 else if (m_player->getComponent<cAnimation>().currAnimation->name() == "RunRight")
+			//	 {
+			//		 // idle right
+			//		 cAnimation::changeAnimation(*m_player, "IdleRight");
 
-				 }
-			 }
-		 }
+			//	 }
+			// }
+		 //}
 
 
 	//	m_player->getComponent<CAnimation>().animation.update(sf::seconds((float)l_dt));

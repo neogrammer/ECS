@@ -203,6 +203,15 @@ Vec2& Vec2::operator+=(const Vec2& v)
 	return *this;
 }
 
+
+Vec2& Vec2::operator-=(const Vec2& v)
+{
+	this->x = this->x - v.x;
+	this->y = this->y - v.y;
+
+	return *this;
+}
+
 Vec2 scale(Vec2 v, float s)
 {
 	return Vec2();

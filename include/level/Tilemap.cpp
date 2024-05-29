@@ -52,11 +52,12 @@ Tilemap::Tilemap(EntityManager& l_eMgr, const std::string& l_level)
 				if (texIndex != 64)
 				{
 					auto e = l_eMgr.addEntity("tile", { {texRect.left,texRect.top},{texRect.width,texRect.height} }, "Tileset1", Vec2(x * tw + tw / 2.f, y * th + tw / 2.f));
-					e->addComponent<cRigidBody>(false, Vec2(texRect.width, texRect.height), Vec2(0, 0), Vec2(x * tw - tw / 2.f, y * th - th / 2.f));
+					e->addComponent<cRigidBody>(false, Vec2(texRect.width, texRect.height), Vec2(0, 0), Vec2(e->cMgr.getPosition().x, e->cMgr.getPosition().y));
 					m_tiles.push_back(e);
 				}
 			}
 		}
+		l_eMgr.update(0.016666667);
 	}
 }
 
