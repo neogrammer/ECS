@@ -5,21 +5,12 @@
 #include "../../core/Config.hpp"
 #include "../../level/Tilemap.hpp"
 class InputSystem;
-class CollisionSystem;
-class MovementSystem;
-class RenderSystem;
 class Player;
 
 class Play : public Scene
 {
-	std::string m_levelPath;
-	PlayerConfig m_playerCfg;
-
-
-	std::shared_ptr<CollisionSystem> collisionSystem;
 	std::shared_ptr<InputSystem> inputSystem;
-	std::shared_ptr<MovementSystem> movementSystem;
-	std::shared_ptr<RenderSystem> renderSystem;
+
 	
 
 public:
@@ -35,6 +26,6 @@ public:
 	void update(double l_dt) override final;
 	void render(sf::RenderWindow& l_wnd) override final;
 
-	std::shared_ptr<Entity> player();
+	
 };
 #endif

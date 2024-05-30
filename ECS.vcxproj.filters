@@ -120,22 +120,10 @@
     <ClCompile Include="include\scene\scenes\Title.cpp">
       <Filter>Header Files\scene\scenes</Filter>
     </ClCompile>
-    <ClCompile Include="include\scene\Scene.cpp">
-      <Filter>Header Files\scene</Filter>
-    </ClCompile>
     <ClCompile Include="include\scene\scenes\Play.cpp">
       <Filter>Header Files\scene\scenes</Filter>
     </ClCompile>
     <ClCompile Include="include\ECS\system\systems\InputSystem.cpp">
-      <Filter>Header Files\ECS\system\systems</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\system\systems\MovementSystem.cpp">
-      <Filter>Header Files\ECS\system\systems</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\system\systems\RenderSystem.cpp">
-      <Filter>Header Files\ECS\system\systems</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\system\systems\CollisionSystem.cpp">
       <Filter>Header Files\ECS\system\systems</Filter>
     </ClCompile>
     <ClCompile Include="include\util\Physics.cpp">
@@ -183,6 +171,9 @@
     <ClCompile Include="include\ECS\system\System.cpp">
       <Filter>Header Files\ECS\system</Filter>
     </ClCompile>
+    <ClCompile Include="include\scene\Scene.cpp">
+      <Filter>Header Files\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ECS\Entity.hpp">
@@ -197,9 +188,6 @@
     <ClInclude Include="include\ECS\component\components\Components.hpp">
       <Filter>Header Files\ECS\component\components</Filter>
     </ClInclude>
-    <ClInclude Include="include\ECS\system\systems\MovementSystem.hpp">
-      <Filter>Header Files\ECS\system\systems</Filter>
-    </ClInclude>
     <ClInclude Include="include\ECS\system\System.hpp">
       <Filter>Header Files\ECS\system</Filter>
     </ClInclude>
@@ -209,13 +197,7 @@
     <ClInclude Include="include\core\GameEngine.hpp">
       <Filter>Header Files\core</Filter>
     </ClInclude>
-    <ClInclude Include="include\ECS\system\systems\CollisionSystem.hpp">
-      <Filter>Header Files\ECS\system\systems</Filter>
-    </ClInclude>
     <ClInclude Include="include\ECS\system\systems\InputSystem.hpp">
-      <Filter>Header Files\ECS\system\systems</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ECS\system\systems\RenderSystem.hpp">
       <Filter>Header Files\ECS\system\systems</Filter>
     </ClInclude>
     <ClInclude Include="include\ECS\Factories.hpp">

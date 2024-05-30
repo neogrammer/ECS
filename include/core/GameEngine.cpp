@@ -7,10 +7,6 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Clock.hpp>
 #include "../../include/core/GameEngine.hpp"
-
-#include "../ECS/system/systems/MovementSystem.hpp"
-#include "../ECS/system/systems/RenderSystem.hpp"
-#include "../ECS/system/systems/CollisionSystem.hpp"
 #include "../ECS/system/systems/InputSystem.hpp"
 #include "../scene/scenes/Play.hpp"
 #include "../scene/scenes/Title.hpp"
@@ -139,7 +135,7 @@ void GameEngine::mainLoop()
 			hadFocus = true;
 			// process realtime input
 			currentScene()->processInput();
-			currentScene()->currentSystem->update((double)fps60.asSeconds());
+			/*currentScene()->currentSystem->update((double)fps60.asSeconds());*/
 			
 
 			std::vector<sf::Event> evtsToProp;

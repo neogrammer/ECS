@@ -1,9 +1,8 @@
 #include "Title.hpp"
 #include "../../core/GameEngine.hpp"
-#include "../../ECS/system/systems/RenderSystem.hpp"
-#include "../../ECS/system/systems/MovementSystem.hpp"
+
 #include "../../ECS/system/systems/InputSystem.hpp"
-#include "../../ECS/system/systems/CollisionSystem.hpp"
+
 #include "../../core/Config.hpp"
 #include <iostream>
 
@@ -14,16 +13,11 @@ Title::Title(GameEngine& l_game, ActionMap<int>& l_actionMap)
 	, titleFont{}
 	, selector{}
 	, curChoice{ 1 }
-	, renderSystem{nullptr}
 	, inputSystem{ nullptr }
-	, movementSystem{ nullptr }
-	, collisionSystem{ nullptr }
 {
 	
 	inputSystem = std::make_shared<InputSystem>(game);
-	renderSystem = std::make_shared<RenderSystem>(game, &game.wnd);
-	movementSystem = std::make_shared<MovementSystem>(game);
-	collisionSystem = std::make_shared<CollisionSystem>(game);
+	
 
 	titleBG.setTexture(Config::textures.get((int)Config::Textures::TitleBG));
 	titleFont.setFont(Config::fonts.get((int)Config::Fonts::FiraOTF));

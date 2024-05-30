@@ -18,10 +18,8 @@ class Title : public Scene
 	sf::Sprite selector;
 	sf::Sprite spear;
 
-	std::shared_ptr<CollisionSystem> collisionSystem;
 	std::shared_ptr<InputSystem> inputSystem;
-	std::shared_ptr<MovementSystem> movementSystem;
-	std::shared_ptr<RenderSystem> renderSystem;
+
 
 	const std::array<sf::Vector2f, 2> choicePos{
 		{{420.f,80.f},

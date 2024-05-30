@@ -6,7 +6,7 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include "../core/Config.hpp"
+#include "../../../core/Config.hpp"
 #include <SFML/Graphics/Color.hpp>
 
 struct cPlayerStatus : Component
