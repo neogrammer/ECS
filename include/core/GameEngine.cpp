@@ -25,6 +25,7 @@ GameEngine::GameEngine()
 	, wnd{ sf::VideoMode(::GameProperties::SCRW, ::GameProperties::SCRH), "ECS_Architecture", sf::Style::None }
 	, paused{false}
 {
+	m_scenes["title"] = std::make_shared<Title>(*this, Config::inputs);
 	changeScene("title");
 }
 

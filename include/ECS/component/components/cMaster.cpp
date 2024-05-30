@@ -144,56 +144,56 @@ void cMaster::update(sf::Time l_dt)
 {
 	m_dt = l_dt;
 
-	/*if (m_owner.hasComponent<cGravity>())
+	if (m_owner.hasComponent<cGravity>())
 	{
-		velocity().y += m_owner.getComponent<cGravity>().magnitude * l_dt.asSeconds();
-		move(velocity() * m_dt.asSeconds());
+		velocity().y += m_owner.getComponent<cGravity>().magnitude;
+		move(velocity());
 	}
 
 	if (m_owner.m_tag == "player")
 	{
 		Physics::ResolveCollisions(m_owner, m_owner.eMgr.getEntities("tile"));
-	}*/
+	}
 	
-	// if has rigidbody component run movement logic
-	if (m_owner.hasComponent<cRigidBody>())
-	{
-		if (m_owner.hasComponent<cGravity>())
-		{
-			m_owner.getComponent<cRigidBody>().vel.y += m_owner.getComponent<cGravity>().magnitude * l_dt.asSeconds();
-		}
-		m_owner.getComponent<cRigidBody>().update(m_dt);
-		
+	//// if has rigidbody component run movement logic
+	//if (m_owner.hasComponent<cRigidBody>())
+	//{
+	//	if (m_owner.hasComponent<cGravity>())
+	//	{
+	//		m_owner.getComponent<cRigidBody>().vel.y += m_owner.getComponent<cGravity>().magnitude * l_dt.asSeconds();
+	//	}
+	//	m_owner.getComponent<cRigidBody>().update(m_dt);
+	//	
 
 
 
-		//Collision section
-		if (m_owner.m_tag == "player")
-		{
-			auto& tiles = m_owner.eMgr.getEntities("tile");
-			
-			//check collsions with this entity m_owner, and the tiles
-			// using their RigidBody Components
-			auto& playerBody = m_owner.getComponent<cRigidBody>();
-			
+	//	//Collision section
+	//	if (m_owner.m_tag == "player")
+	//	{
+	//		auto& tiles = m_owner.eMgr.getEntities("tile");
+	//		
+	//		//check collsions with this entity m_owner, and the tiles
+	//		// using their RigidBody Components
+	//		auto& playerBody = m_owner.getComponent<cRigidBody>();
+	//		
 
 
-			for (auto& tile : tiles)
-			{
-				auto& tileBody = tile->getComponent<cRigidBody>();
+	//		for (auto& tile : tiles)
+	//		{
+	//			auto& tileBody = tile->getComponent<cRigidBody>();
 
-				Vec2 overlap{ -1, -1 }; // start off at no overlap
-				overlap = Physics::RectVsRect(m_owner, *tile);
-				if(overlap.x > 0.f && overlap.y > 0.f)
-				//if (Physics::isColliding(playerBody, tileBody, overlap))   // if true, then overlap is the overlap passed back
-				//{
-				{
-					playerBody.center.y -= overlap.y;
-					playerBody.vel.y = 0.f;
-				}
-			}
-			
-		}
+	//			Vec2 overlap{ -1, -1 }; // start off at no overlap
+	//			overlap = Physics::RectVsRect(m_owner, *tile);
+	//			if(overlap.x > 0.f && overlap.y > 0.f)
+	//			//if (Physics::isColliding(playerBody, tileBody, overlap))   // if true, then overlap is the overlap passed back
+	//			//{
+	//			{
+	//				playerBody.center.y -= overlap.y;
+	//				playerBody.vel.y = 0.f;
+	//			}
+	//		}
+	//		
+	//	}
 		//Physics::RectVsRect(Entity & a, Entity & b)
 		//{
 		//	Vec2 overlap(-1.f, -1.f);
@@ -285,8 +285,8 @@ void cMaster::update(sf::Time l_dt)
 			// sprite has been moved accordingly and velocity updated to stop moving in the collided direction, now animate then render, then update the previous position
 
 		// now position the owner to this location
-		m_spr.setPosition(m_owner.getComponent<cRigidBody>().center.x, m_owner.getComponent<cRigidBody>().center.y);
-	}
+	//	m_spr.setPosition(m_owner.getComponent<cRigidBody>().center.x, m_owner.getComponent<cRigidBody>().center.y);
+	//}
 
 	// if has animation component run animation logic
 	if (m_owner.hasComponent<cAnimation>())

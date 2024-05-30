@@ -27,7 +27,7 @@ void RunningState::handleInput(Player& player, Input input)
 			if (player.get().getComponent<cAnimation>().currAnimation->name() != "JumpRight")
 				cAnimation::changeAnimation(player.get(), "JumpRight");
 		}
-		player.get().getComponent<cRigidBody>().vel.y = -100.f;
+		player.get().cMgr.velocity().y = -100.f;
 		player.setCurrState(PlayerInput::JUMP);
 	}
 
@@ -45,7 +45,7 @@ void RunningState::handleInput(Player& player, Input input)
 		}
 
 		player.setFacingLeft(true);
-		player.get().getComponent<cRigidBody>().vel.x = -60.f;
+		player.get().cMgr.velocity().x = -60.f;
 
 	}
 	else if (input.id() == PlayerInput::MOVE_RIGHT)
@@ -63,7 +63,7 @@ void RunningState::handleInput(Player& player, Input input)
 		}
 
 		player.setFacingLeft(false);
-		player.get().getComponent<cRigidBody>().vel.x = 60.f;
+		player.get().cMgr.velocity().x = 60.f;
 
 	}
 	else if (input.id() == PlayerInput::NONE)
@@ -102,6 +102,7 @@ void RunningState::handleInput(Player& player, Input input)
 
 			}
 		}
+		//player.get().cMgr.velocity().x = 0.f;
 	}
 }
 
