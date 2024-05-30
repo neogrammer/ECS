@@ -8,9 +8,9 @@ EntityManager::EntityManager()
 	, m_entityMap{}
 {}
 
-std::shared_ptr<Entity> EntityManager::addEntity(const std::string& tag, sf::IntRect l_frameRect, std::string l_texName, Vec2 l_pos)
+std::shared_ptr<Entity> EntityManager::addEntity(Vec2 l_bboxSize, const std::string& tag, sf::IntRect l_frameRect, std::string l_texName, Vec2 l_pos)
 {
-	auto e = std::shared_ptr<Entity>(new Entity(*this, tag, l_frameRect, this->m_totalEntities++, l_texName, l_pos));
+	auto e = std::shared_ptr<Entity>(new Entity(l_bboxSize, *this, tag, l_frameRect, this->m_totalEntities++, l_texName, l_pos));
 
 	m_toAdd.push_back(e);
 	return e;

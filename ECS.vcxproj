@@ -222,6 +222,7 @@
     <ClInclude Include="include\scene\Scene.hpp" />
     <ClInclude Include="include\scene\scenes\Play.hpp" />
     <ClInclude Include="include\scene\scenes\Title.hpp" />
+    <ClInclude Include="include\util\BBox.hpp" />
     <ClInclude Include="include\util\EntStates.hpp" />
     <ClInclude Include="include\util\Physics.hpp" />
     <ClInclude Include="include\util\Vec2.hpp" />

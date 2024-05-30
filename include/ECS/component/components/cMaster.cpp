@@ -13,11 +13,14 @@ class Entity;
 #define Gravity_ e.getComponent<cGravity>() 
 
 
-cMaster::cMaster(Entity& l_owner, sf::IntRect l_texFrame, std::string l_texName, Vec2 l_pos)
-	: Component{}, m_state{EntState::NOT_ANIMATED}, m_owner{l_owner}
+cMaster::cMaster(Vec2 l_bboxSize, Entity& l_owner, sf::IntRect l_texFrame, std::string l_texName, Vec2 l_pos)
+	: Component{}, m_state{ EntState::NOT_ANIMATED }, m_owner{ l_owner }
 	, m_dt{ sf::Time::Zero }
 	, m_spr{}, m_texMap{}
 	, m_texStrVec{}, m_texFrameRect{}
+	, m_bbox{}
+	, m_velocity{ 0.f,0.f }
+	, m_prevPos{ l_pos }
 {
 	auto name = Config::texNamelookup[l_texName];
 
@@ -27,12 +30,13 @@ cMaster::cMaster(Entity& l_owner, sf::IntRect l_texFrame, std::string l_texName,
 	m_texFrameRect.clear();
 	//m_texStrVec.push_back(l_texName);
 	m_spr.setTexture(Config::textures.get((int)name));
+	m_bbox.insert(std::pair(name, BBox{ l_bboxSize, l_bboxSize / 2.f } ));
+	m_currTex = name;
 	m_spr.setTextureRect(l_texFrame);
-	// update this when switching animations if the texture changes
-	m_spr.setOrigin({ l_texFrame.width / 2.f, l_texFrame.width / 2.f });
 	// stays put until a rigid body is added or manually changed by the master component
 	m_spr.setPosition({ l_pos.x,l_pos.y });
  }
+
 
 cMaster::~cMaster()
 {
@@ -47,6 +51,7 @@ void cMaster::setCurrentTex(std::string l_tex)
 	if (std::any_of(m_texStrVec.begin(), m_texStrVec.end(), [&](std::string s) {return s == l_tex; }))
 	{
 		m_spr.setTexture(*m_texMap[Config::texNamelookup[l_tex]]);
+		m_currTex = Config::texNamelookup[l_tex];
 		for (int i = 0; i < m_texStrVec.size(); i++)
 		{
 			if (m_texStrVec[i] == l_tex)
@@ -73,6 +78,16 @@ void cMaster::setFrame(sf::IntRect l_frame)
 Vec2 cMaster::getSize()
 {
 	return Vec2(m_spr.getTextureRect().width, m_spr.getTextureRect().height);
+}
+
+EntState cMaster::getState()
+{
+	return m_state;
+}
+
+void cMaster::setState(EntState l_state)
+{
+	m_state = l_state;
 }
 
 void cMaster::setPosition(Vec2 l_pos)
@@ -105,6 +120,7 @@ void cMaster::addTexture(std::string l_texName, Vec2 l_frameSize, bool setCurren
 			m_texMap.insert(std::pair{ Config::texNamelookup[l_texName], &Config::textures.get((int)Config::texNamelookup[l_texName]) });
 			m_texStrVec.push_back(l_texName);
 			m_texFrameRect.push_back(sf::IntRect({0, 0}, {(int)l_frameSize.x, (int)l_frameSize.y}));
+			m_bbox.insert(std::pair(Config::texNamelookup[l_texName], BBox{ {l_frameSize},{l_frameSize / 2.f} }));
 		}
 		else
 		{
@@ -128,6 +144,16 @@ void cMaster::update(sf::Time l_dt)
 {
 	m_dt = l_dt;
 
+	/*if (m_owner.hasComponent<cGravity>())
+	{
+		velocity().y += m_owner.getComponent<cGravity>().magnitude * l_dt.asSeconds();
+		move(velocity() * m_dt.asSeconds());
+	}
+
+	if (m_owner.m_tag == "player")
+	{
+		Physics::ResolveCollisions(m_owner, m_owner.eMgr.getEntities("tile"));
+	}*/
 	
 	// if has rigidbody component run movement logic
 	if (m_owner.hasComponent<cRigidBody>())
@@ -150,20 +176,113 @@ void cMaster::update(sf::Time l_dt)
 			// using their RigidBody Components
 			auto& playerBody = m_owner.getComponent<cRigidBody>();
 			
+
+
 			for (auto& tile : tiles)
 			{
 				auto& tileBody = tile->getComponent<cRigidBody>();
 
 				Vec2 overlap{ -1, -1 }; // start off at no overlap
-				if (Physics::isColliding(playerBody, tileBody, overlap))   // if true, then overlap is the overlap passed back
+				overlap = Physics::RectVsRect(m_owner, *tile);
+				if(overlap.x > 0.f && overlap.y > 0.f)
+				//if (Physics::isColliding(playerBody, tileBody, overlap))   // if true, then overlap is the overlap passed back
+				//{
 				{
 					playerBody.center.y -= overlap.y;
 					playerBody.vel.y = 0.f;
-
 				}
 			}
 			
 		}
+		//Physics::RectVsRect(Entity & a, Entity & b)
+		//{
+		//	Vec2 overlap(-1.f, -1.f);
+
+		//	if (a.cMgr.x1() < b.cMgr.x2()
+		//		&& b.cMgr.x1() < a.cMgr.x2()
+		//		&& a.cMgr.y1() < b.cMgr.y2()
+		//		&& b.cMgr.y1() < a.cMgr.y2())
+		//	{
+		//		//collision, return the overlap
+		//		float dx = abs(b.cMgr.center().x - a.cMgr.center().x);
+		//		float dy = abs(b.cMgr.center().y - a.cMgr.center().y);
+
+		//		overlap.x = a.cMgr.bbox().halfSize.x + b.cMgr.bbox().halfSize.x - dx;
+		//		overlap.y = a.cMgr.bbox().halfSize.y + b.cMgr.bbox().halfSize.y - dy;
+		//	}
+
+		//	return overlap;
+		//}
+
+		//Vec2 Physics::PrevOverlap(Entity & a, Entity & b)
+		//{
+		//	Vec2 a_offset = Vec2(a.cMgr.prevPos().x * a.cMgr.dt() - a.cMgr.getPosition().x * a.cMgr.dt(), a.cMgr.prevPos().y * a.cMgr.dt() - a.cMgr.getPosition().y * a.cMgr.dt());
+		//	Vec2 b_offset = Vec2(b.cMgr.prevPos().x * b.cMgr.dt() - b.cMgr.getPosition().x * b.cMgr.dt(), b.cMgr.prevPos().y * b.cMgr.dt() - b.cMgr.getPosition().y * b.cMgr.dt());
+
+		//	//collision, return the overlap
+		//	float dx = abs((b.cMgr.center().x + b_offset.x) - (a.cMgr.center().x + a_offset.x));
+		//	float dy = abs((b.cMgr.center().y + b_offset.y) - (a.cMgr.center().y + a_offset.y));
+
+		//	return Vec2(a.cMgr.bbox().halfSize.x + b.cMgr.bbox().halfSize.x - dx, a.cMgr.bbox().halfSize.y + b.cMgr.bbox().halfSize.y - dy);
+
+		//}
+		//void Physics::ResolveCollisions(Entity & a, EntityVec & eVec)
+		//{
+		//	// Entity A should have already accepted input this frame and updated the velocity, AND updated the sprites position
+
+		//	for (auto& e : eVec)
+		//	{
+		//		Vec2 overlap = RectVsRect(a, *e);
+
+
+		//		Vec2 norm = a.cMgr.prevPos() - a.cMgr.getPosition();
+		//		norm = norm / Vec2(abs(norm.x), abs(norm.y));
+
+		//		if (overlap.x > 0 && overlap.y > 0) // if not, check next entity for collision
+		//		{
+		//			// collision, get over lap from last frame
+		//			Vec2 previousOlap = PrevOverlap(a, *e);
+
+		//			if (previousOlap.x <= 0.f && previousOlap.y <= 0.f)
+		//			{
+		//				// no overlap last frame, resolve on the greatest dimension of the current overlap
+		//				if (overlap.x > overlap.y)
+		//				{
+		//					// resolve on x
+		//					a.cMgr.move(Vec2(norm.x * overlap.x, 0.0f));
+		//					a.cMgr.velocity().x = 0.f;
+		//				}
+		//				else
+		//				{
+		//					//resolve on y
+		//					a.cMgr.move(Vec2(0.f, norm.y * overlap.y));
+		//					a.cMgr.velocity().y = 0.f;
+		//				}
+		//			}
+		//			else if (previousOlap.x <= 0.f && previousOlap.y > 0.f)
+		//			{
+		//				// resolve on x
+		//				a.cMgr.move(Vec2(norm.x * overlap.x, 0.0f));
+		//				a.cMgr.velocity().x = 0.f;
+		//			}
+		//			else if (previousOlap.y <= 0.f && previousOlap.x > 0.f)
+		//			{
+		//				//resolve on y
+		//				a.cMgr.move(Vec2(0.f, norm.y * overlap.y));
+		//				a.cMgr.velocity().y = 0.f;
+		//			}
+		//			else
+		//			{
+		//				// change nothing ? maybe
+		//			}
+		//		}
+
+			//}
+			// 
+			
+
+			// done checking for Entity A, the player most likely, should work against tiles and other obstacles
+			// sprite has been moved accordingly and velocity updated to stop moving in the collided direction, now animate then render, then update the previous position
 
 		// now position the owner to this location
 		m_spr.setPosition(m_owner.getComponent<cRigidBody>().center.x, m_owner.getComponent<cRigidBody>().center.y);
@@ -211,6 +330,8 @@ void cMaster::render(sf::RenderWindow& l_wnd)
 {
 	// everything should be set to be rendered
 	l_wnd.draw(m_spr);
+
+	m_prevPos = Vec2(m_spr.getPosition().x, m_spr.getPosition().y);
 }
 
 
@@ -262,6 +383,7 @@ void cAnimation::setup(Entity& e, std::string l_filename) {
 
 				iFile >> sizex >> sizey >> numframes >> cols >> rows >> startposx >> startposy >> framedelayMS >> looping >> flippedH >> flippedV;
 				e.cMgr.addTexture(texName, Vec2(sizex, sizey));
+
 				const std::string str = animName;
 				Animation_.animations.insert(std::pair{str, std::make_shared<Animation>(sf::Vector2i(sizex, sizey), str, numframes, cols, rows, sf::Vector2i{ startposx,startposy }, (float)framedelayMS / 1000.f, (looping == "true") ? true : false, (flippedH == "true") ? true : false, (flippedV == "true") ? true : false)});
 				std::cout << "Animation " << animName << ": with properties: sizex: " << sizex << ", sizey: " << sizey << ", numFrames: " <<
@@ -325,4 +447,53 @@ std::vector<std::string> cAnimation::getAnimNames(Entity& e)
 	}
 };
 
+Vec2 cMaster::center()
+{
+	Vec2 c(Vec2(m_spr.getPosition().x, m_spr.getPosition().y) + (getSize() / 2.f));
+	return c;
+}
 
+float cMaster::x1()
+{
+	return center().x - bbox().halfSize.x;
+}
+
+float cMaster::x2()
+{
+	return center().x + bbox().halfSize.x;
+}
+
+float cMaster::y1()
+{
+	return center().x - bbox().halfSize.y;
+}
+
+float cMaster::y2()
+{
+	return center().x + bbox().halfSize.y;
+}
+
+const BBox& cMaster::bbox()
+{
+	return m_bbox[m_currTex];
+}
+
+float cMaster::dt()
+{
+	return m_dt.asSeconds();
+}
+
+sf::Sprite& cMaster::spr()
+{
+	return m_spr;
+}
+
+Vec2& cMaster::prevPos()
+{
+	return m_prevPos;
+}
+
+Vec2& cMaster::velocity()
+{
+	return m_velocity;
+}

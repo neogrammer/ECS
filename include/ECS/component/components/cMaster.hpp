@@ -10,6 +10,8 @@
 #include "../../../util/Vec2.hpp"
 #include "../../../core/Config.hpp"
 #include "../../../util/EntStates.hpp"
+#include "../../../util/BBox.hpp"
+
 class Entity;
 
 
@@ -32,6 +34,12 @@ class cMaster : public Component
 	// entity has them components, otherwise those properties are ignored by the game, as well as functios to get the leftRop and bottomRight
 	// coords in world space as well as its position in the center, in world space.  The origin however is the center.x - leftTop.x etc..
 	sf::Sprite m_spr{};
+	Vec2 m_prevPos{0.f,0.f };
+	Vec2 m_velocity{0.f,0.f};
+
+	std::map<Config::Textures, BBox> m_bbox{};
+
+	Config::Textures m_currTex;
 	std::map<Config::Textures, sf::Texture*> m_texMap{};
 	std::vector<std::string> m_texStrVec{};
 	// may change size with each texture, but all in that texturesheet are uniform size in case of animation component is added
@@ -42,15 +50,30 @@ class cMaster : public Component
 
 public:
 	cMaster() = delete;
-	explicit cMaster(Entity& l_owner, sf::IntRect l_texFrame, std::string l_texName, Vec2 l_pos = Vec2(0.f,0.f));
+	cMaster(Vec2 l_bboxSize, Entity& l_owner, sf::IntRect l_texFrame, std::string l_texName, Vec2 l_pos = Vec2(0.f,0.f));
 	~cMaster() override final;
 	cMaster(const cMaster&) = delete;
 	cMaster& operator=(const cMaster&) = delete;
 	cMaster(cMaster&&) = delete;
 	cMaster& operator=(cMaster&&) = delete;
 
-	
+
+	//  bounding box functions
+	Vec2 center();
+	float x1();
+	float x2();
+	float y1();
+	float y2();
+	const BBox& bbox();
+	float dt();
+
+	// sprite physics functions
+	sf::Sprite& spr();
+	Vec2& prevPos();
+	Vec2& velocity();
 	Vec2 getSize();
+	
+	
 	EntState getState();
 	void setState(EntState l_state);
 	void setPosition(Vec2 l_pos);

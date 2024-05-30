@@ -36,7 +36,7 @@ class Entity
 	bool m_alive;
 	std::tuple<cRigidBody, cGravity, cLifespan, cAnimation, cPlayerStatus> m_cTuple;
 	Entity() = delete;
-	Entity(EntityManager& l_eMgr, const std::string& l_tag, sf::IntRect l_texFrame, size_t l_id, std::string l_texName, Vec2 l_pos = Vec2(0.0f,0.0f));
+	Entity(Vec2 l_bboxSize, EntityManager& l_eMgr, const std::string& l_tag, sf::IntRect l_texFrame, size_t l_id, std::string l_texName, Vec2 l_pos = Vec2(0.0f,0.0f));
 
 public:
 	// Master Component, one on every entity. Contols Entity interaction with itself by acting as the hub between them so functionality becomes encapsulated

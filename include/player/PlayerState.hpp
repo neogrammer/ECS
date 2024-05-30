@@ -9,7 +9,7 @@ public:
 	const std::string id;
 	PlayerState(const std::string& l_id);
 	virtual ~PlayerState();
-	virtual void handleInput(Player& player, Input input);
+	virtual void handleInput(Player& player, Input input) = 0;
 	virtual void update(Player& player, sf::Time l_dt);
 };
 

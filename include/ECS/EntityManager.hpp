@@ -23,7 +23,7 @@ public:
 
 	EntityManager();
 	void update(double l_dt);
-	std::shared_ptr<Entity> addEntity(const std::string& tag, sf::IntRect l_frameRect, std::string l_texName, Vec2 l_pos = Vec2(0.0f,0.0f));
+	std::shared_ptr<Entity> addEntity(Vec2 l_bboxSize, const std::string& tag, sf::IntRect l_frameRect, std::string l_texName, Vec2 l_pos = Vec2(0.0f,0.0f));
 	EntityVec& getEntities();
 	EntityVec& getEntities(const std::string& tag);
 	std::shared_ptr<Entity> getEntity(size_t l_id);

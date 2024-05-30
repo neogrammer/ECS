@@ -17,7 +17,9 @@ Player::Player(std::shared_ptr<Entity> l_playerEnt)
 	m_inputVec.clear();
 	m_entity = l_playerEnt;
 
-	m_currentState = std::make_unique<IdleState>();
+
+	m_currentState = std::make_unique<JumpingState>();
+	m_canJump = false;
 }
 
 Player::~Player()
@@ -33,31 +35,7 @@ void Player::handleInput()
 {
 	for (auto& i : m_inputVec)
 	{
-		/*if (i->id() == PlayerInput::MOVE_LEFT)
-		{
-			m_currentState = std::make_unique<RunningState>();
-			m_facingLeft = true;
-		}
-		else if (i->id() == PlayerInput::MOVE_RIGHT)
-		{
-			m_currentState = std::make_unique<RunningState>();
-			m_facingLeft = false;
-		}
-		else if (i->id() == PlayerInput::SHOOT)
-		{
-			m_currentState = std::make_unique<ShootingState>();
-		}
-		else if (i->id() == PlayerInput::JUMP)
-		{
-			m_currentState = std::make_unique<JumpingState>();
-		}
-		else if(i->id() == PlayerInput::NONE)
-		{
-			m_currentState = std::make_unique<IdleState>();
-		}
 		
-		if (m_currentState == nullptr)
-			continue;*/
 
 		m_currentState->handleInput(*this, *i);
 

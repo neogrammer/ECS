@@ -187,6 +187,8 @@ void GameEngine::mainLoop()
 			ImGui::SFML::Render(wnd);
 			waitingForARender = false;
 			wnd.display();
+
+			
 			
 		}
 		else
