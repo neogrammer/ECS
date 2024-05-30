@@ -1,7 +1,7 @@
 #include "CollisionSystem.hpp"
-#include "../core/GameEngine.hpp"
-#include "../scene/scenes/Play.hpp"
-#include "../util/Physics.hpp"
+#include "../../../core/GameEngine.hpp"
+#include "../../../scene/scenes/Play.hpp"
+#include "../../../util/Physics.hpp"
 
 CollisionSystem::CollisionSystem(GameEngine& l_game)
 	: System{l_game}

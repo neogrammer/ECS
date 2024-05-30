@@ -7,9 +7,9 @@
 #include <string>
 #include <SFML/Graphics/Rect.hpp>
 #include "../Component.hpp"
-#include "../util/Vec2.hpp"
-#include "../core/Config.hpp"
-#include "../util/EntStates.hpp"
+#include "../../../util/Vec2.hpp"
+#include "../../../core/Config.hpp"
+#include "../../../util/EntStates.hpp"
 class Entity;
 
 

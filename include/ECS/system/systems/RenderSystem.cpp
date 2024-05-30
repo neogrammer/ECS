@@ -1,7 +1,7 @@
 #include "RenderSystem.hpp"
-#include "../core/GameEngine.hpp"
-#include "../scene/scenes/Play.hpp"
-#include "../scene/scenes/Title.hpp"
+#include "../../../core/GameEngine.hpp"
+#include "../../../scene/scenes/Play.hpp"
+#include "../../../scene/scenes/Title.hpp"
 
 
 RenderSystem::RenderSystem(GameEngine& l_game, sf::RenderWindow* l_wnd)

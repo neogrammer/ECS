@@ -18,7 +18,8 @@ typedef std::tuple<
 	cRigidBody,
 	cGravity,
 	cLifespan,
-	cAnimation
+	cAnimation,
+	cPlayerStatus
 > CTuple;
 
 class EntityManager;
@@ -33,7 +34,7 @@ class Entity
 	size_t m_id;
 	std::string m_tag;
 	bool m_alive;
-	std::tuple<cRigidBody, cGravity, cLifespan, cAnimation> m_cTuple;
+	std::tuple<cRigidBody, cGravity, cLifespan, cAnimation, cPlayerStatus> m_cTuple;
 	Entity() = delete;
 	Entity(EntityManager& l_eMgr, const std::string& l_tag, sf::IntRect l_texFrame, size_t l_id, std::string l_texName, Vec2 l_pos = Vec2(0.0f,0.0f));
 

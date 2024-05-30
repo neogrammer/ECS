@@ -8,5 +8,9 @@ std::shared_ptr<Entity> Make::Player(EntityManager& l_eMgr, size_t id)
 	e->addComponent<cAnimation>();
 	cAnimation::setup(*e, "assets/data/animations/player.anim");
 	cAnimation::changeAnimation(*e, "JumpRight");
+	e->addComponent<cPlayerStatus>();
+	e->getComponent<cPlayerStatus>().isfacingLeft = false;
+	e->getComponent<cPlayerStatus>().isFalling = true;
+
 	return e;
 }

@@ -70,6 +70,9 @@
     <Filter Include="assets\data\animations">
       <UniqueIdentifier>{bd831fb8-a734-461e-bac7-d514c4e7b906}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\player">
+      <UniqueIdentifier>{3d5eba31-1f69-41a9-af2b-8fd13027ab2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -150,6 +153,36 @@
     <ClCompile Include="include\ECS\component\components\cMaster.cpp">
       <Filter>Header Files\ECS\component\components</Filter>
     </ClCompile>
+    <ClCompile Include="include\player\IdleState.cpp">
+      <Filter>Header Files\player</Filter>
+    </ClCompile>
+    <ClCompile Include="include\player\JumpingShootingState.cpp">
+      <Filter>Header Files\player</Filter>
+    </ClCompile>
+    <ClCompile Include="include\player\JumpingState.cpp">
+      <Filter>Header Files\player</Filter>
+    </ClCompile>
+    <ClCompile Include="include\player\PlayerState.cpp">
+      <Filter>Header Files\player</Filter>
+    </ClCompile>
+    <ClCompile Include="include\player\RunningShootingState.cpp">
+      <Filter>Header Files\player</Filter>
+    </ClCompile>
+    <ClCompile Include="include\player\RunningState.cpp">
+      <Filter>Header Files\player</Filter>
+    </ClCompile>
+    <ClCompile Include="include\player\ShootingState.cpp">
+      <Filter>Header Files\player</Filter>
+    </ClCompile>
+    <ClCompile Include="include\player\Input.cpp">
+      <Filter>Header Files\player</Filter>
+    </ClCompile>
+    <ClCompile Include="include\player\Player.cpp">
+      <Filter>Header Files\player</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\system\System.cpp">
+      <Filter>Header Files\ECS\system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ECS\Entity.hpp">
@@ -229,6 +262,36 @@
     </ClInclude>
     <ClInclude Include="include\util\EntStates.hpp">
       <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="include\player\IdleState.hpp">
+      <Filter>Header Files\player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\player\JumpingShootingState.hpp">
+      <Filter>Header Files\player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\player\JumpingState.hpp">
+      <Filter>Header Files\player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\player\PlayerState.hpp">
+      <Filter>Header Files\player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\player\RunningShootingState.hpp">
+      <Filter>Header Files\player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\player\RunningState.hpp">
+      <Filter>Header Files\player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\player\ShootingState.hpp">
+      <Filter>Header Files\player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\player\Input.hpp">
+      <Filter>Header Files\player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\player\Player.hpp">
+      <Filter>Header Files\player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\player\PlayerInput.hpp">
+      <Filter>Header Files\player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

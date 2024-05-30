@@ -1,6 +1,6 @@
 #include "MovementSystem.hpp"
-#include "../core/GameEngine.hpp"
-#include "../scene/scenes/Play.hpp"
+#include "../../../core/GameEngine.hpp"
+#include "../../../scene/scenes/Play.hpp"
 
 
 MovementSystem::MovementSystem(GameEngine& l_game)

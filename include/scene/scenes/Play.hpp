@@ -8,11 +8,11 @@ class InputSystem;
 class CollisionSystem;
 class MovementSystem;
 class RenderSystem;
+class Player;
 
 class Play : public Scene
 {
 	std::string m_levelPath;
-	std::shared_ptr<Entity> m_player{};
 	PlayerConfig m_playerCfg;
 
 
@@ -23,6 +23,8 @@ class Play : public Scene
 	
 
 public:
+	std::shared_ptr<Player> the_player;
+
 	std::shared_ptr<Tilemap> tmap;
 
 	Play(GameEngine& l_game, ActionMap<int>& l_actionMap, std::string l_playerCfgFile);

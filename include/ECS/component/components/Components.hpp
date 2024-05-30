@@ -9,6 +9,18 @@
 #include "../core/Config.hpp"
 #include <SFML/Graphics/Color.hpp>
 
+struct cPlayerStatus : Component
+{
+	bool isShooting{ false };
+	bool isJumping{ false };
+	bool isFalling{ false };
+	bool isRunning{ false };
+	bool isfacingLeft{ false };
+
+	cPlayerStatus() : Component{} {}
+	~cPlayerStatus() {}
+};
+
 struct cRigidBody : Component
 {
 	Vec2 size;

@@ -1,10 +1,10 @@
 #include "Title.hpp"
 #include "../../core/GameEngine.hpp"
-#include "../ECS/system/systems/RenderSystem.hpp"
-#include "../ECS/system/systems/MovementSystem.hpp"
-#include "../ECS/system/systems/InputSystem.hpp"
-#include "../ECS/system/systems/CollisionSystem.hpp"
-#include "../core/Config.hpp"
+#include "../../ECS/system/systems/RenderSystem.hpp"
+#include "../../ECS/system/systems/MovementSystem.hpp"
+#include "../../ECS/system/systems/InputSystem.hpp"
+#include "../../ECS/system/systems/CollisionSystem.hpp"
+#include "../../core/Config.hpp"
 #include <iostream>
 
 Title::Title(GameEngine& l_game, ActionMap<int>& l_actionMap)
