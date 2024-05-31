@@ -174,6 +174,9 @@
     <ClCompile Include="include\ECS\Factories.cpp" />
     <ClCompile Include="include\ECS\system\System.cpp" />
     <ClCompile Include="include\ECS\system\systems\InputSystem.cpp" />
+    <ClCompile Include="include\gamestate\GameState.cpp" />
+    <ClCompile Include="include\gamestate\gamestates\PlayState.cpp" />
+    <ClCompile Include="include\gamestate\gamestates\TitleState.cpp" />
     <ClCompile Include="include\level\Tilemap.cpp" />
     <ClCompile Include="include\player\IdleState.cpp" />
     <ClCompile Include="include\player\Input.cpp" />
@@ -208,6 +211,9 @@
     <ClInclude Include="include\ECS\Factories.hpp" />
     <ClInclude Include="include\ECS\system\System.hpp" />
     <ClInclude Include="include\ECS\system\systems\InputSystem.hpp" />
+    <ClInclude Include="include\gamestate\GameState.hpp" />
+    <ClInclude Include="include\gamestate\gamestates\PlayState.hpp" />
+    <ClInclude Include="include\gamestate\gamestates\TitleState.hpp" />
     <ClInclude Include="include\level\Tilemap.hpp" />
     <ClInclude Include="include\player\IdleState.hpp" />
     <ClInclude Include="include\player\Input.hpp" />

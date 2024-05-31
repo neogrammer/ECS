@@ -69,6 +69,12 @@
     <Filter Include="Header Files\player">
       <UniqueIdentifier>{3d5eba31-1f69-41a9-af2b-8fd13027ab2f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\gamestate">
+      <UniqueIdentifier>{b7f90b97-e08f-4929-b722-be311c38e3a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gamestate\gamestates">
+      <UniqueIdentifier>{c49313a5-54f2-48d1-bc2c-30161c57672a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -169,6 +175,15 @@
     </ClCompile>
     <ClCompile Include="include\scene\Scene.cpp">
       <Filter>Header Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="include\gamestate\gamestates\PlayState.cpp">
+      <Filter>Header Files\gamestate\gamestates</Filter>
+    </ClCompile>
+    <ClCompile Include="include\gamestate\gamestates\TitleState.cpp">
+      <Filter>Header Files\gamestate\gamestates</Filter>
+    </ClCompile>
+    <ClCompile Include="include\gamestate\GameState.cpp">
+      <Filter>Header Files\gamestate</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +288,15 @@
     </ClInclude>
     <ClInclude Include="include\util\BBox.hpp">
       <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamestate\gamestates\PlayState.hpp">
+      <Filter>Header Files\gamestate\gamestates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamestate\gamestates\TitleState.hpp">
+      <Filter>Header Files\gamestate\gamestates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gamestate\GameState.hpp">
+      <Filter>Header Files\gamestate</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
