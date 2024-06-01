@@ -1,13 +1,13 @@
-#include "include/core/GameEngine.hpp"
+#include "include/core/Game.hpp"
 #include "include/core/Config.hpp"
 
 int main()
 {
 	Config::initialize();
 	
-	GameEngine game;
+	Game demo;
 
-	game.mainLoop();
+	demo.mainLoop();
 
 	return 0;
 }

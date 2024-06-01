@@ -4,18 +4,13 @@
 #include "../../core/Config.hpp"
 #include <array>
 
-
 class TitleState : public GameState
 {
-
 	sf::Sprite titleBG;
 	sf::Text titleFont;
 	sf::Text level1Text;
 	sf::Sprite selector;
 	sf::Sprite spear;
-
-	//std::shared_ptr<InputSystem> inputSystem;
-
 
 	const std::array<sf::Vector2f, 2> choicePos{
 		{{420.f,80.f},

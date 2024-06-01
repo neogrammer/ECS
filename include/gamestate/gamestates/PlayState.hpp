@@ -4,21 +4,14 @@
 #include <string>
 #include "../../core/Config.hpp"
 #include "../../level/Tilemap.hpp"
-class InputSystem;
 class Player;
 
 class PlayState : public GameState
 {
-	std::shared_ptr<InputSystem> inputSystem;
-
-
-
 public:
-	std::shared_ptr<Player> the_player;
 
-	std::shared_ptr<Tilemap> tmap;
 
-	PlayState(Game& l_game, ActionMap<int>& l_actionMap, std::string l_playerCfgFile);
+	PlayState(Game& l_game, ActionMap<int>& l_actionMap);
 	~PlayState() override final;
 	void init() override final;
 	void processInput() override final;

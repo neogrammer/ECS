@@ -9,24 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Source Files\ImGui">
-      <UniqueIdentifier>{8c7b985b-95d6-45a4-87e9-841c54763763}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ECS">
-      <UniqueIdentifier>{cff22868-7a7f-4280-b450-fca632595ac8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ECS\component">
-      <UniqueIdentifier>{da44418a-1a5a-4438-b891-a1c509c41be7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ECS\component\components">
-      <UniqueIdentifier>{59f164f7-e97c-4ab2-a959-b8609e5337c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ECS\system">
-      <UniqueIdentifier>{0eb4d73a-6d61-486e-b668-f0bd93e69ff9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ECS\system\systems">
-      <UniqueIdentifier>{0b1f9061-a010-4f2d-9c34-3b512eba1b96}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\util">
       <UniqueIdentifier>{1dd91bfb-e1e6-4445-b390-6122d5620a81}</UniqueIdentifier>
     </Filter>
@@ -41,12 +23,6 @@
     </Filter>
     <Filter Include="assets\textures">
       <UniqueIdentifier>{cc0215ec-b2c0-4f1f-8fef-13f4bc8821eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\scene">
-      <UniqueIdentifier>{6c4be3f1-f445-4228-92b7-733047cd0ab6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\scene\scenes">
-      <UniqueIdentifier>{fb03eae6-9654-4eea-ade7-09bd8120660d}</UniqueIdentifier>
     </Filter>
     <Filter Include="assets\fonts">
       <UniqueIdentifier>{c31f0a70-9fb2-4682-906f-3f77a7d94afc}</UniqueIdentifier>
@@ -66,37 +42,46 @@
     <Filter Include="assets\data\animations">
       <UniqueIdentifier>{bd831fb8-a734-461e-bac7-d514c4e7b906}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\player">
-      <UniqueIdentifier>{3d5eba31-1f69-41a9-af2b-8fd13027ab2f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\gamestate">
       <UniqueIdentifier>{b7f90b97-e08f-4929-b722-be311c38e3a6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gamestate\gamestates">
       <UniqueIdentifier>{c49313a5-54f2-48d1-bc2c-30161c57672a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\gameObj">
+      <UniqueIdentifier>{4d5f1e17-52ce-4ee6-b054-7148748b0031}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gameObj\actors">
+      <UniqueIdentifier>{b20d9a17-ddd2-4753-b48c-4b8ef3dc6027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gameObj\tiles">
+      <UniqueIdentifier>{d3d1b3ab-dabc-44a1-9124-f519205428a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gameObj\projectiles">
+      <UniqueIdentifier>{cb6da65d-d28e-4670-a90b-53d4a177eb7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gameObj\actors\player">
+      <UniqueIdentifier>{7b99df37-b0f9-4795-9a43-d93719cb7d95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\util\animStates">
+      <UniqueIdentifier>{c8f4607b-fc42-4eeb-aedf-4f6067d41675}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\level\levels">
+      <UniqueIdentifier>{b84fe2ba-da8d-440c-971e-997b99405e08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ImGui">
+      <UniqueIdentifier>{a563df55-534d-4a34-85d5-6e54e6d9f703}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\thirdParty">
+      <UniqueIdentifier>{98cd6b1e-12f1-4ff7-82c2-123f44a162d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\thirdParty\ImGui">
+      <UniqueIdentifier>{b43dd548-8fa2-418f-8e37-332817aadf7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui_demo.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui_draw.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui_widgets.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\sdks\imgui-sfml-2.6.x\imgui-SFML.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\sdks\SFML_ImGUI\imgui_tables.cpp">
-      <Filter>Source Files\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="include\level\Tilemap.cpp">
       <Filter>Header Files\level</Filter>
@@ -104,77 +89,17 @@
     <ClCompile Include="include\action\Action.cpp">
       <Filter>Header Files\action</Filter>
     </ClCompile>
-    <ClCompile Include="include\core\GameEngine.cpp">
-      <Filter>Header Files\core</Filter>
-    </ClCompile>
     <ClCompile Include="include\core\Config.cpp">
       <Filter>Header Files\core</Filter>
     </ClCompile>
     <ClCompile Include="include\core\Game.cpp">
       <Filter>Header Files\core</Filter>
     </ClCompile>
-    <ClCompile Include="include\ECS\EntityManager.cpp">
-      <Filter>Header Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\Factories.cpp">
-      <Filter>Header Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="include\scene\scenes\Title.cpp">
-      <Filter>Header Files\scene\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="include\scene\scenes\Play.cpp">
-      <Filter>Header Files\scene\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\system\systems\InputSystem.cpp">
-      <Filter>Header Files\ECS\system\systems</Filter>
-    </ClCompile>
     <ClCompile Include="include\util\Physics.cpp">
       <Filter>Header Files\util</Filter>
     </ClCompile>
     <ClCompile Include="include\util\Vec2.cpp">
       <Filter>Header Files\util</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\Entity.cpp">
-      <Filter>Header Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\Animation.cpp">
-      <Filter>Header Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\component\components\cMaster.cpp">
-      <Filter>Header Files\ECS\component\components</Filter>
-    </ClCompile>
-    <ClCompile Include="include\player\IdleState.cpp">
-      <Filter>Header Files\player</Filter>
-    </ClCompile>
-    <ClCompile Include="include\player\JumpingShootingState.cpp">
-      <Filter>Header Files\player</Filter>
-    </ClCompile>
-    <ClCompile Include="include\player\JumpingState.cpp">
-      <Filter>Header Files\player</Filter>
-    </ClCompile>
-    <ClCompile Include="include\player\PlayerState.cpp">
-      <Filter>Header Files\player</Filter>
-    </ClCompile>
-    <ClCompile Include="include\player\RunningShootingState.cpp">
-      <Filter>Header Files\player</Filter>
-    </ClCompile>
-    <ClCompile Include="include\player\RunningState.cpp">
-      <Filter>Header Files\player</Filter>
-    </ClCompile>
-    <ClCompile Include="include\player\ShootingState.cpp">
-      <Filter>Header Files\player</Filter>
-    </ClCompile>
-    <ClCompile Include="include\player\Input.cpp">
-      <Filter>Header Files\player</Filter>
-    </ClCompile>
-    <ClCompile Include="include\player\Player.cpp">
-      <Filter>Header Files\player</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\system\System.cpp">
-      <Filter>Header Files\ECS\system</Filter>
-    </ClCompile>
-    <ClCompile Include="include\scene\Scene.cpp">
-      <Filter>Header Files\scene</Filter>
     </ClCompile>
     <ClCompile Include="include\gamestate\gamestates\PlayState.cpp">
       <Filter>Header Files\gamestate\gamestates</Filter>
@@ -185,34 +110,103 @@
     <ClCompile Include="include\gamestate\GameState.cpp">
       <Filter>Header Files\gamestate</Filter>
     </ClCompile>
+    <ClCompile Include="include\core\G.cpp">
+      <Filter>Header Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="include\gameObj\ActorObj.cpp">
+      <Filter>Header Files\gameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="include\gameObj\GameObj.cpp">
+      <Filter>Header Files\gameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="include\gameObj\Projectile.cpp">
+      <Filter>Header Files\gameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="include\gameObj\TileObj.cpp">
+      <Filter>Header Files\gameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="include\gameObj\actors\EnemyObj.cpp">
+      <Filter>Header Files\gameObj\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="include\gameObj\actors\Player.cpp">
+      <Filter>Header Files\gameObj\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="include\gameObj\actors\PlayerObj.cpp">
+      <Filter>Header Files\gameObj\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="include\gameObj\actors\RinoObj.cpp">
+      <Filter>Header Files\gameObj\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="include\gameObj\actors\player\PlayerState.cpp">
+      <Filter>Header Files\gameObj\actors\player</Filter>
+    </ClCompile>
+    <ClCompile Include="include\gameObj\projectiles\BusterStdProjectile.cpp">
+      <Filter>Header Files\gameObj\projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="include\gameObj\tiles\StdTileObj.cpp">
+      <Filter>Header Files\gameObj\tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="include\util\Anim.cpp">
+      <Filter>Header Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="include\util\AnimManager.cpp">
+      <Filter>Header Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="include\util\AnimState.cpp">
+      <Filter>Header Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="include\util\animStates\IdleState.cpp">
+      <Filter>Header Files\util\animStates</Filter>
+    </ClCompile>
+    <ClCompile Include="include\util\animStates\JumpingShootingState.cpp">
+      <Filter>Header Files\util\animStates</Filter>
+    </ClCompile>
+    <ClCompile Include="include\util\animStates\JumpingState.cpp">
+      <Filter>Header Files\util\animStates</Filter>
+    </ClCompile>
+    <ClCompile Include="include\util\animStates\RunningShootingState.cpp">
+      <Filter>Header Files\util\animStates</Filter>
+    </ClCompile>
+    <ClCompile Include="include\util\animStates\RunningState.cpp">
+      <Filter>Header Files\util\animStates</Filter>
+    </ClCompile>
+    <ClCompile Include="include\util\animStates\ShootingState.cpp">
+      <Filter>Header Files\util\animStates</Filter>
+    </ClCompile>
+    <ClCompile Include="include\level\Level.cpp">
+      <Filter>Header Files\level</Filter>
+    </ClCompile>
+    <ClCompile Include="include\level\LevelManager.cpp">
+      <Filter>Header Files\level</Filter>
+    </ClCompile>
+    <ClCompile Include="include\level\levels\IntroLevel.cpp">
+      <Filter>Header Files\level\levels</Filter>
+    </ClCompile>
+    <ClCompile Include="include\thirdParty\ImGui\imgui.cpp">
+      <Filter>Source Files\thirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\thirdParty\ImGui\imgui_demo.cpp">
+      <Filter>Source Files\thirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\thirdParty\ImGui\imgui_draw.cpp">
+      <Filter>Source Files\thirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\thirdParty\ImGui\imgui_tables.cpp">
+      <Filter>Source Files\thirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\thirdParty\ImGui\imgui_widgets.cpp">
+      <Filter>Source Files\thirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\thirdParty\ImGui-SFML\imgui-SFML.cpp">
+      <Filter>Source Files\thirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\core\Input.cpp">
+      <Filter>Header Files\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\ECS\Entity.hpp">
-      <Filter>Header Files\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ECS\Component\Component.hpp">
-      <Filter>Header Files\ECS\component</Filter>
-    </ClInclude>
     <ClInclude Include="include\util\Vec2.hpp">
       <Filter>Header Files\util</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ECS\component\components\Components.hpp">
-      <Filter>Header Files\ECS\component\components</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ECS\system\System.hpp">
-      <Filter>Header Files\ECS\system</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ECS\EntityManager.hpp">
-      <Filter>Header Files\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="include\core\GameEngine.hpp">
-      <Filter>Header Files\core</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ECS\system\systems\InputSystem.hpp">
-      <Filter>Header Files\ECS\system\systems</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ECS\Factories.hpp">
-      <Filter>Header Files\ECS</Filter>
     </ClInclude>
     <ClInclude Include="include\core\Game.hpp">
       <Filter>Header Files\core</Filter>
@@ -222,18 +216,6 @@
     </ClInclude>
     <ClInclude Include="include\core\ResourceManager.hpp">
       <Filter>Header Files\core</Filter>
-    </ClInclude>
-    <ClInclude Include="include\scene\Scene.hpp">
-      <Filter>Header Files\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="include\scene\scenes\Play.hpp">
-      <Filter>Header Files\scene\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\scene\scenes\Title.hpp">
-      <Filter>Header Files\scene\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ECS\Animation.hpp">
-      <Filter>Header Files\ECS</Filter>
     </ClInclude>
     <ClInclude Include="include\util\Physics.hpp">
       <Filter>Header Files\util</Filter>
@@ -250,41 +232,8 @@
     <ClInclude Include="include\level\Tilemap.hpp">
       <Filter>Header Files\level</Filter>
     </ClInclude>
-    <ClInclude Include="include\ECS\component\components\cMaster.hpp">
-      <Filter>Header Files\ECS\component\components</Filter>
-    </ClInclude>
     <ClInclude Include="include\util\EntStates.hpp">
       <Filter>Header Files\util</Filter>
-    </ClInclude>
-    <ClInclude Include="include\player\IdleState.hpp">
-      <Filter>Header Files\player</Filter>
-    </ClInclude>
-    <ClInclude Include="include\player\JumpingShootingState.hpp">
-      <Filter>Header Files\player</Filter>
-    </ClInclude>
-    <ClInclude Include="include\player\JumpingState.hpp">
-      <Filter>Header Files\player</Filter>
-    </ClInclude>
-    <ClInclude Include="include\player\PlayerState.hpp">
-      <Filter>Header Files\player</Filter>
-    </ClInclude>
-    <ClInclude Include="include\player\RunningShootingState.hpp">
-      <Filter>Header Files\player</Filter>
-    </ClInclude>
-    <ClInclude Include="include\player\RunningState.hpp">
-      <Filter>Header Files\player</Filter>
-    </ClInclude>
-    <ClInclude Include="include\player\ShootingState.hpp">
-      <Filter>Header Files\player</Filter>
-    </ClInclude>
-    <ClInclude Include="include\player\Input.hpp">
-      <Filter>Header Files\player</Filter>
-    </ClInclude>
-    <ClInclude Include="include\player\Player.hpp">
-      <Filter>Header Files\player</Filter>
-    </ClInclude>
-    <ClInclude Include="include\player\PlayerInput.hpp">
-      <Filter>Header Files\player</Filter>
     </ClInclude>
     <ClInclude Include="include\util\BBox.hpp">
       <Filter>Header Files\util</Filter>
@@ -297,6 +246,108 @@
     </ClInclude>
     <ClInclude Include="include\gamestate\GameState.hpp">
       <Filter>Header Files\gamestate</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\G.hpp">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gameObj\ActorObj.hpp">
+      <Filter>Header Files\gameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gameObj\GameObj.hpp">
+      <Filter>Header Files\gameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gameObj\Projectile.hpp">
+      <Filter>Header Files\gameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gameObj\TileObj.hpp">
+      <Filter>Header Files\gameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gameObj\actors\EnemyObj.hpp">
+      <Filter>Header Files\gameObj\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gameObj\actors\Player.hpp">
+      <Filter>Header Files\gameObj\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gameObj\actors\PlayerObj.hpp">
+      <Filter>Header Files\gameObj\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gameObj\actors\RinoObj.hpp">
+      <Filter>Header Files\gameObj\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gameObj\actors\player\PlayerInput.hpp">
+      <Filter>Header Files\gameObj\actors\player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gameObj\actors\player\PlayerState.hpp">
+      <Filter>Header Files\gameObj\actors\player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gameObj\projectiles\BusterStdProjectile.hpp">
+      <Filter>Header Files\gameObj\projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gameObj\tiles\StdTileObj.hpp">
+      <Filter>Header Files\gameObj\tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\Anim.hpp">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\AnimManager.hpp">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\AnimState.hpp">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\animStates\IdleState.hpp">
+      <Filter>Header Files\util\animStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\animStates\JumpingShootingState.hpp">
+      <Filter>Header Files\util\animStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\animStates\JumpingState.hpp">
+      <Filter>Header Files\util\animStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\animStates\RunningShootingState.hpp">
+      <Filter>Header Files\util\animStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\animStates\RunningState.hpp">
+      <Filter>Header Files\util\animStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\animStates\ShootingState.hpp">
+      <Filter>Header Files\util\animStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\level\Level.hpp">
+      <Filter>Header Files\level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\level\LevelManager.hpp">
+      <Filter>Header Files\level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\level\levels\IntroLevel.hpp">
+      <Filter>Header Files\level\levels</Filter>
+    </ClInclude>
+    <ClInclude Include="include\thirdParty\ImGui\imconfig.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\thirdParty\ImGui\imgui.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\thirdParty\ImGui\imgui_internal.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\thirdParty\ImGui\imstb_rectpack.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\thirdParty\ImGui\imstb_textedit.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\thirdParty\ImGui\imstb_truetype.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\thirdParty\ImGui-SFML\imgui-SFML.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\thirdParty\ImGui-SFML\imgui-SFML_export.h">
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\Input.hpp">
+      <Filter>Header Files\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

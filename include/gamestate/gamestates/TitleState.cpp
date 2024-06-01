@@ -1,8 +1,5 @@
 #include "TitleState.hpp"
 #include "../../core/Game.hpp"
-
-#include "../../ECS/system/systems/InputSystem.hpp"
-
 #include "../../core/Config.hpp"
 #include <iostream>
 
@@ -13,12 +10,7 @@ TitleState::TitleState(Game& l_game, ActionMap<int>& l_actionMap)
 	, titleFont{}
 	, selector{}
 	, curChoice{ 1 }
-//	, inputSystem{ nullptr }
 {
-
-	//inputSystem = std::make_shared<InputSystem>(game);
-
-
 	titleBG.setTexture(Config::textures.get((int)Config::Textures::TitleBG));
 	titleFont.setFont(Config::fonts.get((int)Config::Fonts::FiraOTF));
 	titleFont.setString("MegaMario");
@@ -53,7 +45,7 @@ TitleState::TitleState(Game& l_game, ActionMap<int>& l_actionMap)
 
 
 
-		game.changeScene("play");
+		game.changeGameState("play");
 		});
 
 	this->bind((int)Config::Inputs::Right, [this](const sf::Event&) {
@@ -102,7 +94,7 @@ TitleState::~TitleState()
 
 void TitleState::init()
 {
-//	currentSystem = inputSystem;
+
 }
 
 void TitleState::processInput()

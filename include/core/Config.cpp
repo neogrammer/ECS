@@ -1,7 +1,6 @@
 #include "Config.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "../ECS/Entity.hpp"
 #include <fstream>
 #include <iostream>
 

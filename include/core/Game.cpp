@@ -3,36 +3,34 @@
 
 #include <imgui-SFML.h>
 
-#include "GameEngine.hpp"
+#include "Game.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Clock.hpp>
-#include "../ECS/system/systems/InputSystem.hpp"
-#include "../scene/scenes/Play.hpp"
-#include "../scene/scenes/Title.hpp"
-
-
+#include "../gamestate/gamestates/PlayState.hpp"
+#include "../gamestate/gamestates/TitleState.hpp"
 #include <iostream>
 #include <typeinfo>
 #include <fstream>
 #include <type_traits>
-
-#include "../ECS/Animation.hpp"
+#include "../util/Anim.hpp"
 
 // ctor, no dtor neccessary... RAII be like that sometimes
 Game::Game()
-	: m_scenes{}, m_currentScene{ "" }
-	, wnd{ sf::VideoMode(::GameProperties::SCRW, ::GameProperties::SCRH), "ECS_Architecture", sf::Style::None }
+	: m_gameStates{}, m_currentGameState{ "" }
+	, wnd{ sf::VideoMode(G::WND_WIDTH, G::WND_HEIGHT), "ECS_Architecture", sf::Style::None }
 	, paused{ false }
 {
 	/*m_scenes["title"] = std::make_shared<Title>(*this, Config::inputs);
 	changeScene("title");*/
+	m_gameStates["title"] = std::make_shared<TitleState>(*this, Config::inputs);
+	m_currentGameState = "title";
 }
 
-std::shared_ptr<Scene> Game::currentScene()
+std::shared_ptr<GameState> Game::currentGameState()
 {
-	auto itr = m_scenes.find(m_currentScene);
-	if (itr == m_scenes.end())
+	auto itr = m_gameStates.find(m_currentGameState);
+	if (itr == m_gameStates.end())
 	{
 		std::cout << "uh oh, no scene" << std::endl;
 		assert(1 == 2);
@@ -44,29 +42,45 @@ std::shared_ptr<Scene> Game::currentScene()
 	}
 }
 
-void Game::changeScene(std::string l_scene)
+void Game::changeGameState(std::string l_gameState)
 {
-	if (l_scene == m_currentScene) return;
-	if (m_currentScene != "")
+	if (l_gameState == m_currentGameState) return;
+	if (m_currentGameState != "")
 	{
-		auto itr = m_scenes.find(m_currentScene);
-		if (itr != m_scenes.end())
+		auto itr = m_gameStates.find(m_currentGameState);
+		if (itr != m_gameStates.end())
 		{
-			m_scenes.erase(itr);
+			m_gameStates.erase(itr);
 		}
 
 
 	}
 
-	m_currentScene = l_scene;
+	m_currentGameState = l_gameState;
 
-	auto itr = m_scenes.find(m_currentScene);
-	if (itr != m_scenes.end())
+	auto itr = m_gameStates.find(m_currentGameState);
+	if (itr != m_gameStates.end())
 	{
 		return;
 	}
 	else
 	{
+		if (m_currentGameState == "title")
+		{
+			m_gameStates["title"] = std::make_shared<TitleState>(*this, Config::inputs);
+
+		}
+		else if (m_currentGameState == "play")
+		{
+			m_gameStates["play"] = std::make_shared<PlayState>(*this, Config::inputs);
+
+		}
+		else
+		{
+			std::cout << "No Game State of the passed in type " << m_currentGameState << " found!" << std::endl;
+			assert(1 == 2);
+		}
+
 	/*	if (m_currentScene == "title")
 		{
 			m_scenes["title"] = std::make_shared<Title>(*this, Config::inputs);
@@ -91,7 +105,7 @@ void Game::changeScene(std::string l_scene)
 //  should be smooth physics calculations because of this
 void Game::update(sf::Time l_dt)
 {
-	currentScene()->update((double)l_dt.asSeconds());
+	currentGameState()->update((double)l_dt.asSeconds());
 
 
 }
@@ -99,7 +113,7 @@ void Game::update(sf::Time l_dt)
 // work your magic in here, blit a portion of a giant rendertexture sitting on the GPU the size of the window to the window for performance
 void Game::render(sf::RenderWindow& l_wnd)
 {
-	currentScene()->render(l_wnd);
+	currentGameState()->render(l_wnd);
 }
 
 bool Game::gameRunning = true;
@@ -117,7 +131,7 @@ void Game::mainLoop()
 	wnd.setVerticalSyncEnabled(true);
 
 	wnd.setPosition(sf::Vector2i(450, 300));
-	wnd.setSize({ (unsigned int)::GameProperties::SCRW, (unsigned int)::GameProperties::SCRH });
+	wnd.setSize({ (unsigned int)G::WND_WIDTH, (unsigned int)G::WND_HEIGHT });
 	ImGui::SFML::Init(wnd);
 	frameTimer.restart();
 	bool focus = false;
@@ -135,7 +149,7 @@ void Game::mainLoop()
 		{
 			hadFocus = true;
 			// process realtime input
-			currentScene()->processInput();
+			currentGameState()->processInput();
 			/*currentScene()->currentSystem->update((double)fps60.asSeconds());*/
 
 
@@ -164,7 +178,7 @@ void Game::mainLoop()
 				evtsToProp.emplace_back(std::move(event));
 				if (!gameRunning) goto afterLoop;
 			}
-			currentScene()->processEvents(evtsToProp);
+			currentGameState()->processEvents(evtsToProp);
 
 			deltaTime += frameTimer.restart();
 			ImGui::SFML::Update(wnd, deltaTime);

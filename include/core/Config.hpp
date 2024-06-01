@@ -6,7 +6,6 @@
 #include <vector>
 #include <string>
 #include "../action/ActionMap.hpp"
-#include "../ECS/Animation.hpp"
 #include <map>
 
 class Entity;
