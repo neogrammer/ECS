@@ -2,14 +2,17 @@
 #define PLAYSTATE_HPP__
 #include "../GameState.hpp"
 #include <string>
+#include <memory>
 #include "../../core/Config.hpp"
 #include "../../level/Tilemap.hpp"
 #include <gameObj/actors/PlayerObj.hpp>
+#include <level/Tilemap.hpp>
 class Player;
 
 class PlayState : public GameState
 {
 	PlayerObj player;
+	std::unique_ptr<Tilemap> tmap;
 
 public:
 	PlayState(Game& l_game, ActionMap<int>& l_actionMap);

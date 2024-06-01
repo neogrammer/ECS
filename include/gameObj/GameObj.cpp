@@ -83,6 +83,11 @@ void GameObj::setTag(const std::string& l_tag)
 	m_tag = l_tag;
 }
 
+sf::Sprite& GameObj::getSprite()
+{
+	return spr();
+}
+
 int GameObj::id()
 {
 	return m_id;

@@ -47,6 +47,7 @@ public:
 	void setId(int l_id);
 	const std::string& getTag();
 	void setTag(const std::string& l_tag);
+	sf::Sprite& getSprite();
 
 	// this will call derived command queue for ai or process mapped input for users
 	virtual void processInput() = 0;

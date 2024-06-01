@@ -11,6 +11,7 @@
 
 PlayState::PlayState(Game& l_game, ActionMap<int>& l_actionMap)
 	: GameState(l_game, l_actionMap)
+	, tmap{}
 	, player{}
 {
 	// action bindings
@@ -57,6 +58,20 @@ PlayState::PlayState(Game& l_game, ActionMap<int>& l_actionMap)
 		}
 
 		});
+
+	std::vector<int> level = {
+			64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+			64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+			64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+			64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+			64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+			64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+			64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+			64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+			 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1
+	};
+
+	tmap = std::make_unique<Tilemap>(Config::textures.get((int)Config::Textures::Tileset1), level, 32, 64, 16);
 }
 
 PlayState::~PlayState()
@@ -92,6 +107,6 @@ void PlayState::update(double l_dt)
 
 void PlayState::render(sf::RenderWindow& l_wnd)
 {
-	//tmap->draw(l_wnd);
+	tmap->render(l_wnd);
 	player.render(l_wnd);
 }
