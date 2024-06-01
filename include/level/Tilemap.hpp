@@ -7,6 +7,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "../core/Config.hpp"
 
+
 class Tilemap
 {
 		

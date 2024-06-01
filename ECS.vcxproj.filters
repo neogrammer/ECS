@@ -119,7 +119,7 @@
     <ClCompile Include="include\gameObj\GameObj.cpp">
       <Filter>Header Files\gameObj</Filter>
     </ClCompile>
-    <ClCompile Include="include\gameObj\Projectile.cpp">
+    <ClCompile Include="include\gameObj\ProjectileObj.cpp">
       <Filter>Header Files\gameObj</Filter>
     </ClCompile>
     <ClCompile Include="include\gameObj\TileObj.cpp">
@@ -256,7 +256,7 @@
     <ClInclude Include="include\gameObj\GameObj.hpp">
       <Filter>Header Files\gameObj</Filter>
     </ClInclude>
-    <ClInclude Include="include\gameObj\Projectile.hpp">
+    <ClInclude Include="include\gameObj\ProjectileObj.hpp">
       <Filter>Header Files\gameObj</Filter>
     </ClInclude>
     <ClInclude Include="include\gameObj\TileObj.hpp">

@@ -11,19 +11,20 @@
 
 PlayState::PlayState(Game& l_game, ActionMap<int>& l_actionMap)
 	: GameState(l_game, l_actionMap)
+	, player{}
 {
 	// action bindings
 	this->bind((int)Config::Inputs::Up, [this](const sf::Event&) {
-		//the_player->pushInput(std::make_shared<Input>(PlayerInput::JUMP));
+		std::cout << "Pressed up seen by the state" << std::endl;
 		});
 	this->bind((int)Config::Inputs::Down, [this](const sf::Event&) {
 		});
 	this->bind((int)Config::Inputs::Left, [this](const sf::Event&) {
-		//the_player->pushInput(std::make_shared<Input>(PlayerInput::MOVE_LEFT));
+
 		});
 
 	this->bind((int)Config::Inputs::Right, [this](const sf::Event&) {
-		//the_player->pushInput(std::make_shared<Input>(PlayerInput::MOVE_RIGHT));
+
 		});
 
 	this->bind((int)Config::Inputs::A, [this](const sf::Event&) {
@@ -75,7 +76,7 @@ void PlayState::init()
 void PlayState::processInput()
 {
 	ActionTarget<int>::processEvents();
-	//the_player->handleInput();
+	player.processInput();
 }
 
 
@@ -85,12 +86,12 @@ void PlayState::processEvents(std::vector<sf::Event>& l_evts)
 
 void PlayState::update(double l_dt)
 {
-	//the_player->update(sf::seconds((float)l_dt));
+	 player.update(sf::seconds((float)l_dt));
 }
 
 
 void PlayState::render(sf::RenderWindow& l_wnd)
 {
 	//tmap->draw(l_wnd);
-	//the_player->render(l_wnd);
+	player.render(l_wnd);
 }

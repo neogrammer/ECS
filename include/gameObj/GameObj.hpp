@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <util/Vec2.hpp>
 #include <util/BBox.hpp>
+#include <core/Config.hpp>
 #include <string>
 class GameObj
 {
@@ -46,6 +47,13 @@ public:
 	void setId(int l_id);
 	const std::string& getTag();
 	void setTag(const std::string& l_tag);
+
+	// this will call derived command queue for ai or process mapped input for users
+	virtual void processInput() = 0;
+	// update the obj in one call, as this will call animate and what not if its a part of this object down the line
+	virtual void update(sf::Time l_dt) = 0;
+	// render the properly updated obj
+	virtual void render(sf::RenderWindow& l_wnd) = 0;
 };
 
 #endif

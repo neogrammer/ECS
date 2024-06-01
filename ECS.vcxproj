@@ -169,7 +169,7 @@
     <ClCompile Include="include\gameObj\actors\player\PlayerState.cpp" />
     <ClCompile Include="include\gameObj\actors\RinoObj.cpp" />
     <ClCompile Include="include\gameObj\GameObj.cpp" />
-    <ClCompile Include="include\gameObj\Projectile.cpp" />
+    <ClCompile Include="include\gameObj\ProjectileObj.cpp" />
     <ClCompile Include="include\gameObj\projectiles\BusterStdProjectile.cpp" />
     <ClCompile Include="include\gameObj\TileObj.cpp" />
     <ClCompile Include="include\gameObj\tiles\StdTileObj.cpp" />
@@ -218,7 +218,7 @@
     <ClInclude Include="include\gameObj\actors\player\PlayerState.hpp" />
     <ClInclude Include="include\gameObj\actors\RinoObj.hpp" />
     <ClInclude Include="include\gameObj\GameObj.hpp" />
-    <ClInclude Include="include\gameObj\Projectile.hpp" />
+    <ClInclude Include="include\gameObj\ProjectileObj.hpp" />
     <ClInclude Include="include\gameObj\projectiles\BusterStdProjectile.hpp" />
     <ClInclude Include="include\gameObj\TileObj.hpp" />
     <ClInclude Include="include\gameObj\tiles\StdTileObj.hpp" />

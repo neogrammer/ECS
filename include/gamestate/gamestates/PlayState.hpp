@@ -4,13 +4,14 @@
 #include <string>
 #include "../../core/Config.hpp"
 #include "../../level/Tilemap.hpp"
+#include <gameObj/actors/PlayerObj.hpp>
 class Player;
 
 class PlayState : public GameState
 {
+	PlayerObj player;
+
 public:
-
-
 	PlayState(Game& l_game, ActionMap<int>& l_actionMap);
 	~PlayState() override final;
 	void init() override final;
