@@ -27,7 +27,7 @@ public:
 
 	TileObj& tile(int l_index);
 	void render(sf::RenderWindow& l_wnd);
-
+	std::vector<std::shared_ptr<TileObj>>& getTiles();
 	
 
 };

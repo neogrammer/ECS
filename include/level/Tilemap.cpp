@@ -76,11 +76,16 @@ TileObj& Tilemap::tile(int l_index)
 	return *tiles[l_index];
 }
 
+std::vector<std::shared_ptr<TileObj>>& Tilemap::getTiles()
+{
+	return tiles;
+}
+
 void Tilemap::render(sf::RenderWindow& l_wnd)
 {
 	for (auto& t : tiles)
 	{
-		l_wnd.draw(t->getSprite());
+		t->render(l_wnd);
 	}
 }
 
