@@ -25,8 +25,8 @@ public:
 
 	GameObj(const GameObj& o);
 	GameObj& operator=(const GameObj& o);
-	GameObj(GameObj&& o);
-	GameObj& operator=(GameObj&& o);
+	GameObj(GameObj&& o) noexcept;
+	GameObj& operator=(GameObj&& o) noexcept;
 	bool operator==(const GameObj& b);
 
 	static int getNumObjects();

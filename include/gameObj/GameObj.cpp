@@ -183,7 +183,7 @@ GameObj& GameObj::operator=(const GameObj& o)
 	return *this;
 }
 
-GameObj::GameObj(GameObj&& o)
+GameObj::GameObj(GameObj&& o) noexcept
 {
 	const sf::Texture* tex = o.m_spr.getTexture();
 	this->m_spr = std::move(o.m_spr);
@@ -193,7 +193,7 @@ GameObj::GameObj(GameObj&& o)
 	this->m_tag = std::move(o.m_tag);
 }
 
-GameObj& GameObj::operator=(GameObj&& o)
+GameObj& GameObj::operator=(GameObj&& o) noexcept
 {
 	const sf::Texture* tex = o.m_spr.getTexture();
 	this->m_spr = std::move(o.m_spr);

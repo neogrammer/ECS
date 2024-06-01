@@ -20,6 +20,7 @@ public:
 	Physics() = delete;
 
 	static bool PointVsRect(const Vec2& p, const rect& r);
+	static bool RectVsRect(const rect& r1, const rect& r2);
 };
 
 
