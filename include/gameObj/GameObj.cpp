@@ -15,6 +15,11 @@ bool GameObj::operator==(const GameObj& b)
 	}
 }
 
+Vec2& GameObj::getVelocity()
+{
+	return m_velocity;
+}
+
 int GameObj::getNumObjects()
 {
 	return GameObj::numObjects();
@@ -112,6 +117,11 @@ BBox& GameObj::aabb()
 int GameObj::numObjects()
 {
 	return GameObj::m_numObjects;
+}
+
+Vec2 GameObj::vel()
+{
+	return m_velocity;
 }
 
 GameObj::GameObj(sf::Texture& l_tex,const std::string& l_tag, const sf::IntRect& l_texRect,const Vec2& l_aabbSize, const Vec2& l_pos)

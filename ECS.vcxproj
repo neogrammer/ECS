@@ -260,6 +260,7 @@
   <ItemGroup>
     <Image Include="assets\textures\crateria64.png" />
     <Image Include="assets\textures\player_atlas.png" />
+    <Image Include="assets\textures\player_atlas64x64.png" />
     <Image Include="assets\textures\player_atlas84x84.png" />
     <Image Include="assets\textures\select.png" />
     <Image Include="assets\textures\spear.png" />

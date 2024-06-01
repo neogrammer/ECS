@@ -383,6 +383,9 @@
     <Image Include="assets\textures\crateria64.png">
       <Filter>assets\textures</Filter>
     </Image>
+    <Image Include="assets\textures\player_atlas64x64.png">
+      <Filter>assets\textures</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\Fira.otf">

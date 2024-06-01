@@ -41,7 +41,7 @@ public:
 
 	Vec2& operator/(const Vec2& v);
 	Vec2& operator*(const Vec2& v);
-	Vec2& operator-(const Vec2& v);
+//	Vec2& operator-(const Vec2& v);
 	Vec2& operator+(const Vec2& v);
     Vec2& operator+=(const Vec2& v);
     Vec2& operator-=(const Vec2& v);
@@ -56,10 +56,24 @@ public:
         return Vec2(f + v.x, f + v.y);
     }
 
+    // Overload operator+ for float + Vec2
+    friend Vec2 operator+(const Vec2& v, const Vec2& v2) {
+        return Vec2(v.x + v2.x, v.y + v2.y);
+    }
+
     // Overload operator- for Vec2 - float
     friend Vec2 operator-(const Vec2& v, float f) {
         return Vec2(v.x - f, v.y - f);
     }
+    // Overload operator- for Vec2 - float
+    friend Vec2 operator-(Vec2 v, Vec2 v2) {
+        return Vec2(v.x - v2.x, v.y - v2.y);
+    }
+
+    //// Overload operator- for Vec2 - float
+    //friend Vec2 operator-(Vec2& v, const Vec2& v2) {
+    //    return Vec2(v.x - v2.x, v.y - v2.y);
+    //}
 
     // Overload operator- for float - Vec2
     friend Vec2 operator-(float f, const Vec2& v) {

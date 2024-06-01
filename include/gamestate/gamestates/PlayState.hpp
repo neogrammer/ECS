@@ -7,14 +7,22 @@
 #include "../../level/Tilemap.hpp"
 #include <gameObj/actors/PlayerObj.hpp>
 #include <level/Tilemap.hpp>
+#include <util/Physics.hpp>
 class Player;
 
 class PlayState : public GameState
 {
 	PlayerObj player;
 	std::unique_ptr<Tilemap> tmap;
+	std::vector<rect> vRects;
+	bool mouseLeftHeld{ false };
+	bool mouseLeftDown{ false };
+	bool mouseLeftClicked{ false };
+	bool mouseLeftUp{ true };
+	float m_dt;
 
 public:
+	Vec2 mpos{ 0.f,0.f };
 	PlayState(Game& l_game, ActionMap<int>& l_actionMap);
 	~PlayState() override final;
 	void init() override final;

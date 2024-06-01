@@ -7,18 +7,21 @@
 #include <string>
 class GameObj
 {
+
 	int m_id{ -1 };
 	std::string m_tag{ "" };
 	sf::Sprite m_spr{};
 	BBox m_aabb{ {2,2},{1,1} };
 	static int m_numAlive;
 	static int m_numObjects;
+	Vec2 m_velocity{ 0.f,0.f };
 protected:
 	int id();
 	std::string& tag();
 	sf::Sprite& spr();
 	BBox& aabb();
 	static int numObjects();
+	Vec2 vel();
 public:
 	GameObj(sf::Texture& l_tex, const std::string& l_tag,const sf::IntRect& l_texRect = sf::IntRect{ {0,0},{0,0} }, const Vec2& l_aabbSize = Vec2(0.f, 0.f), const Vec2& l_pos = Vec2(0.f, 0.f));
 	virtual ~GameObj();
@@ -29,6 +32,7 @@ public:
 	GameObj& operator=(GameObj&& o) noexcept;
 	bool operator==(const GameObj& b);
 
+	Vec2& getVelocity();
 	static int getNumObjects();
 	const sf::FloatRect getBBox();
 	Vec2 getCenter();

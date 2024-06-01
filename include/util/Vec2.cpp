@@ -177,14 +177,14 @@ Vec2& Vec2::operator*(const Vec2& v)
 	// TODO: insert return statement here
 }
 
-Vec2& Vec2::operator-(const Vec2& v)
-{
-	this->x -= v.x;
-	this->y -= v.y;
-	// TODO: insert return statement here
-	return *this;
-	// TODO: insert return statement here
-}
+//Vec2& Vec2::operator-(const Vec2& v)
+//{
+//	this->x -= v.x;
+//	this->y -= v.y;
+//	// TODO: insert return statement here
+//	return *this;
+//	// TODO: insert return statement here
+//}
 
 Vec2& Vec2::operator+(const Vec2& v)
 {
