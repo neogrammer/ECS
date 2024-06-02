@@ -5,6 +5,11 @@
 #include <vector>
 #include <memory>
 #include <utility>
+#include <algorithm>
+#include <functional>
+#include <array>
+#undef min
+#undef max
 
 struct rect
 {
@@ -12,6 +17,8 @@ struct rect
 	Vec2 size;
 
 	Vec2 vel;
+
+	std::array<rect*, 4> contact{ nullptr, };
 };
 
 struct ray
@@ -100,8 +107,15 @@ public:
 
 	static bool PointVsRect(const Vec2& p, const rect& r);
 	static bool RectVsRect(const rect& r1, const rect& r2);
-	static bool RayVsRect(const Vec2& ray_origin, const Vec2& ray_dir, const rect& target, float& t_hitDist, Vec2& cn, Vec2& cp);
-	static bool DynamicVsRect(rect& collider, const rect& target, float elapsedTime, float& t_hitDist, Vec2& cn, Vec2& cp);
+	//static bool RayVsRect(const Vec2& ray_origin, const Vec2& ray_dir, const rect& target, float& t_hitDist, Vec2& cn, Vec2& cp);
+	//static bool DynamicVsRect(rect& collider, const rect& target, float elapsedTime, float& t_hitDist, Vec2& cn, Vec2& cp);
+
+	static bool RayVsRect(const Vec2& ray_origin, const Vec2& ray_dir, const rect* target, Vec2& contact_point, Vec2& contact_normal, float& t_hit_near);
+	static bool DynamicRectVsRect(const rect* r_dynamic, const float fTimeStep, const rect& r_static,
+		Vec2& contact_point, Vec2& contact_normal, float& contact_time);
+
+	static bool ResolveDynamicRectVsRect(rect* r_dynamic, const float fTimeStep, rect* r_static);
+
 };
 
 

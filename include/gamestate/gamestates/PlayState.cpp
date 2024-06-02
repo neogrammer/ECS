@@ -190,7 +190,7 @@ void PlayState::render(sf::RenderWindow& l_wnd)
 	Vec2 cp, cn;
 	float t;
 
-	if (Physics::RayVsRect(ray_point, ray_direction, r, t, cn, cp) && t <= 1.0f)
+	if (Physics::RayVsRect(ray_point, ray_direction, &r, cp, cn, t) && t <= 1.0f)
 	{
 		arr[0].color = sf::Color::Red;
 		arr[1].color = sf::Color::Red;
@@ -208,34 +208,77 @@ void PlayState::render(sf::RenderWindow& l_wnd)
 	Vec2 old = vRects[0].pos;
 	Vec2 oldV = vRects[0].vel;
 	if (mouseLeftHeld)
-		vRects[0].vel += box_dir * 100.f * m_dt;
-	else
-		vRects[0].vel = { 0.f,0.f };
+		vRects[0].vel += (mpos - vRects[0].pos).normalized() * 100.0f * m_dt;
 
-	vRects[0].pos += vRects[0].vel * m_dt;
-
-	if (Physics::RectVsRect(vRects[0], vRects[1]))
+	float t2 = 0, min_t = INFINITY;
+	Vec2 cp2, cn2;
+	std::vector<std::pair<int, float>> z;
+	// Work out collision point, add it to vector along with rect ID
+	for (size_t i = 1; i < vRects.size(); i++)
 	{
-		vRects[0].pos = old;
-		while (Physics::RectVsRect(vRects[0], vRects[1]))
+		if (Physics::DynamicRectVsRect(&vRects[0], m_dt, vRects[i], cp2, cn2, t2))
 		{
-			vRects[0].pos += -1 * oldV * m_dt;
+			z.push_back({ i, t2 });
 		}
-		vRects[0].vel = vRects[0].vel * cn;
-
 	}
+
+	// Do the sort
+	std::sort(z.begin(), z.end(), [](const std::pair<int, float>& a, const std::pair<int, float>& b)
+		{
+			return a.second < b.second;
+		});
+
+	// Now resolve the collision in correct order 
+	for (auto j : z)
+		Physics::ResolveDynamicRectVsRect(&vRects[0], m_dt, &vRects[j.first]);
+
+	// Embellish the "in contact" rectangles in yellow
+	for (int i = 0; i < 4; i++)
+	{
+		if (vRects[0].contact[i])
+			std::cout << "Contact : " << vRects[0].contact[i]->pos.x << " , " << vRects[0].contact[i]->pos.y << std::endl;
+		vRects[0].contact[i] = nullptr;
+	}
+
+	// UPdate the player rectangles position, with its modified velocity
+	vRects[0].pos += vRects[0].vel * m_dt;
+		//vRects[0].pos -= vRects[0].vel * m_dt;
+		//vRects[0].vel = Vec2(0.f, 0.f);
+		//vRects[0].pos = old;
+		////while (Physics::RectVsRect(vRects[0], vRects[1]))
+		////{
+		//vRects[0].vel += cn * vRects[0].vel;
+		//if (cn.x < 0.f || cn.x > 0.f)
+		//{
+		//	vRects[0].vel.x = 0.f;
+		//}
+		//else if (cn.y  < 0.f || cn.y > 0.f)
+		//{
+		//	vRects[0].vel.y = 0.f;
+
+		//}
+		//else
+		//{
+
+		//}
+		//vRects[0].pos -= vRects[0].vel * m_dt;
+		//}
+		//vRects[0].vel = vRects[0].vel * cn;
+
+
+	//}
 	
 
-	for (int i = 1; i < vRects.size(); i++)
-	{
-		if (Physics::DynamicVsRect(vRects[0], vRects[i], m_dt, t, cn, cp))
-		{
+	//for (int i = 1; i < vRects.size(); i++)
+	//{
+		//if (Physics::DynamicVsRect(vRects[0], vRects[i], m_dt, t, cn, cp))
+		//{
 
-			vRects[0].vel = { 0.f,0.f };
+		//	vRects[0].vel = { 0.f,0.f };
 			
-		}
-	}
-	vRects[0].pos += vRects[0].vel * m_dt;
+	//	}
+//	}
+	//vRects[0].pos += vRects[0].vel * m_dt;
 
 	tmap->render(l_wnd);
 	player.render(l_wnd);
@@ -272,8 +315,8 @@ void PlayState::render(sf::RenderWindow& l_wnd)
 	sf::VertexArray lil(sf::PrimitiveType::Lines, 2);
 	lil[0].color = sf::Color::Green;
 	lil[1].color = sf::Color::Green;
-	lil[0].position = sf::Vector2f(box_origin.x,box_origin.y);
-	lil[1].position = sf::Vector2f(box_dir.x,box_dir.y);
+	lil[0].position = sf::Vector2f(shpVr1.getPosition().x, shpVr1.getPosition().y);
+	lil[1].position = sf::Vector2f(cp.x,cp.y);
 
 	/*(sf::Vector2f( vRects[1].pos.x - box_origin.x, vRects[1].pos.y - box_origin.y));
 	lil.setFillColor(sf::Color(0, 255, 0, 200));
