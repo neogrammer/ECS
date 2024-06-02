@@ -19,9 +19,13 @@ void CollisionSystem::update()
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// store the current frame player's position and velocity, then update those values based on physics
 	///////////////////////////////////////////////////////////////////////////////////////////////////
+	//g->player.getVelocity().y += 100.f * g->m_deltaTime.asSeconds();
+
 
 	rect r = { {g->player.getCenter().x - g->player.aabbHW(), g->player.getCenter().y - g->player.aabbHH()},{ g->player.getBBox().width, g->player.getBBox().height} };
 	r.vel = g->player.getVelocity();
+
+	//r.vel.y += 9.8f * g->m_deltaTime.asSeconds();
 	//// contact point, contact notmal, t2 - hit dist along ray to object colliding with, center point to collision point
 	float t2 = 0, min_t = INFINITY;
 	Vec2 cp2, cn2;

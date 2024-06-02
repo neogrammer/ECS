@@ -6,8 +6,10 @@
 
 class PlayerObj : public ActorObj, public ActionTarget<int>
 {
-	bool downPressed{ false }, leftPressed{ false }, rightPressed{ false };
+	bool downPressed{ false }, leftPressed{ false }, rightPressed{ false }, upPressed{ false };
 	bool m_hasCollidedWithGround{ false };
+	bool m_canJump{ false };
+	bool m_isJumping{ false }, m_isFalling{ true };
 
 public:
 
@@ -22,6 +24,7 @@ public:
 	virtual void render(sf::RenderWindow& l_wnd) override;
 
 	bool& collidedWithGround();
+	bool& canJump();
 };
 
 #endif

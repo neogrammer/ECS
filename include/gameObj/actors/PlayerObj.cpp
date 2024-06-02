@@ -11,6 +11,7 @@ PlayerObj::PlayerObj()
 	// action bindings
 	this->bind((int)Config::Inputs::Up, [this](const sf::Event&) {
 		//std::cout << "Pressed up seen by the player object" << std::endl;
+		upPressed = true;
 
 		});
 	this->bind((int)Config::Inputs::Down, [this](const sf::Event&) {
@@ -70,11 +71,45 @@ void PlayerObj::processInput()
 	downPressed = false;
 	leftPressed = false;
 	rightPressed = false;
+	upPressed = false;
+
 	ActionTarget<int>::processEvents();
 }
 
 void PlayerObj::update(sf::Time l_dt)
 {
+	if (upPressed)
+	{
+		if (m_canJump)
+		{
+			this->getVelocity().y = -1.f * 180.f;
+			m_canJump = false;
+			this->collidedWithGround() = false;
+			this->m_isJumping = true;
+			
+		}
+	}
+
+	if (this->m_isJumping || this->m_isFalling)
+	{
+		getVelocity().y += 60.f * l_dt.asSeconds();
+
+		if (getVelocity().y <= 0.f)
+		{
+			this->m_isJumping = true;
+		}
+		else if (getVelocity().y > 0.f)
+		{
+			this->m_isJumping = false;
+			this->m_isFalling = true;
+		}
+		if (this->m_isFalling && m_hasCollidedWithGround == true)
+		{
+			m_isFalling = false;
+			getVelocity().y -= getVelocity().y * 2;
+		}
+	}
+
 	if (!leftPressed && !rightPressed)
 	{
 		getVelocity().x *= 0.05f;
@@ -84,7 +119,16 @@ void PlayerObj::update(sf::Time l_dt)
 	if (m_hasCollidedWithGround == true)
 	{
 		getVelocity().y = 0.f;
+		m_canJump = true;
 	}
+	else
+	{
+		m_canJump = false;
+
+		
+	}
+
+
 this->spr().move(this->getVelocity().x * l_dt.asSeconds(), this->getVelocity().y * l_dt.asSeconds());
 }
 
@@ -96,4 +140,9 @@ void PlayerObj::render(sf::RenderWindow& l_wnd)
 bool& PlayerObj::collidedWithGround()
 {
 	return m_hasCollidedWithGround;
+}
+
+bool& PlayerObj::canJump()
+{
+	return m_canJump;
 }
