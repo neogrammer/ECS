@@ -6,7 +6,12 @@
 
 class PlayerObj : public ActorObj, public ActionTarget<int>
 {
+	bool downPressed{ false }, leftPressed{ false }, rightPressed{ false };
+	bool m_hasCollidedWithGround{ false };
+
 public:
+
+
 	PlayerObj();
 	~PlayerObj() override final;
 
@@ -15,6 +20,8 @@ public:
 	virtual void update(sf::Time l_dt) override;
 
 	virtual void render(sf::RenderWindow& l_wnd) override;
+
+	bool& collidedWithGround();
 };
 
 #endif

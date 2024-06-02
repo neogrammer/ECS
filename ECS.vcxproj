@@ -180,6 +180,8 @@
     <ClCompile Include="include\level\LevelManager.cpp" />
     <ClCompile Include="include\level\levels\IntroLevel.cpp" />
     <ClCompile Include="include\level\Tilemap.cpp" />
+    <ClCompile Include="include\system\System.cpp" />
+    <ClCompile Include="include\system\systems\CollisionSystem.cpp" />
     <ClCompile Include="include\thirdParty\ImGui-SFML\imgui-SFML.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\jlhar\Documents\SFML\ECS\ECS\include\thirdParty\ImGui-SFML;C:\Users\jlhar\Documents\SFML\ECS\ECS\include\thirdParty\ImGui;C:\sdks\SFML-2.5.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -229,6 +231,8 @@
     <ClInclude Include="include\level\LevelManager.hpp" />
     <ClInclude Include="include\level\levels\IntroLevel.hpp" />
     <ClInclude Include="include\level\Tilemap.hpp" />
+    <ClInclude Include="include\system\System.hpp" />
+    <ClInclude Include="include\system\systems\CollisionSystem.hpp" />
     <ClInclude Include="include\thirdParty\ImGui-SFML\imgui-SFML.h" />
     <ClInclude Include="include\thirdParty\ImGui-SFML\imgui-SFML_export.h" />
     <ClInclude Include="include\thirdParty\ImGui\imconfig.h" />

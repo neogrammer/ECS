@@ -90,7 +90,7 @@ void GameObj::setTag(const std::string& l_tag)
 
 sf::Sprite& GameObj::getSprite()
 {
-	return spr();
+	return m_spr;
 }
 
 int GameObj::id()

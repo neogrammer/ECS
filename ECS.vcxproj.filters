@@ -78,6 +78,12 @@
     <Filter Include="Source Files\thirdParty\ImGui">
       <UniqueIdentifier>{b43dd548-8fa2-418f-8e37-332817aadf7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\system">
+      <UniqueIdentifier>{66766679-65b3-4ee7-91e7-d0171ed9cde2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\system\systems">
+      <UniqueIdentifier>{33cbe171-32bd-4f5f-8620-1687b3884411}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -202,6 +208,12 @@
     </ClCompile>
     <ClCompile Include="include\core\Input.cpp">
       <Filter>Header Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="include\system\systems\CollisionSystem.cpp">
+      <Filter>Header Files\system\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="include\system\System.cpp">
+      <Filter>Header Files\system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -348,6 +360,12 @@
     </ClInclude>
     <ClInclude Include="include\core\Input.hpp">
       <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\system\System.hpp">
+      <Filter>Header Files\system</Filter>
+    </ClInclude>
+    <ClInclude Include="include\system\systems\CollisionSystem.hpp">
+      <Filter>Header Files\system\systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

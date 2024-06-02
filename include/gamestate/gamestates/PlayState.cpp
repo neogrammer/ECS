@@ -6,6 +6,7 @@
 #include "../../core/Input.hpp"
 #include <util/Physics.hpp>
 #include "../GameState.hpp"
+#include <system/systems/CollisionSystem.hpp>
 
 #include <fstream>
 #include <iostream>
@@ -15,20 +16,22 @@ PlayState::PlayState(Game& l_game, ActionMap<int>& l_actionMap)
 	, tmap{}
 	, player{}
 	, vRects{}
+	, colSys{}
+	, m_deltaTime{ sf::Time::Zero }
 {
+
 	// action bindings
-	this->bind((int)Config::Inputs::Up, [this](const sf::Event&) {
-		std::cout << "Pressed up seen by the state" << std::endl;
+	this->bind((int)Config::Inputs::Up, [this](const sf::Event&) {\
 		});
 	this->bind((int)Config::Inputs::Down, [this](const sf::Event&) {
-		player.getVelocity().y += 100.0f * (float)m_dt;
+		
 		});
 	this->bind((int)Config::Inputs::Left, [this](const sf::Event&) {
-		player.getVelocity().x -= 100.0f * (float)m_dt;
+		
 		});
 
 	this->bind((int)Config::Inputs::Right, [this](const sf::Event&) {
-		player.getVelocity().x += 100.0f * (float)m_dt;
+		
 		});
 
 	this->bind((int)Config::Inputs::A, [this](const sf::Event&) {
@@ -62,6 +65,18 @@ PlayState::PlayState(Game& l_game, ActionMap<int>& l_actionMap)
 
 		});
 
+	init();
+
+	colSys = std::make_unique<CollisionSystem>(*this, l_game.wnd, m_deltaTime);
+}
+
+PlayState::~PlayState()
+{
+}
+
+void PlayState::init()
+{
+
 	std::vector<int> level = {
 			64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
 			64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
@@ -77,16 +92,47 @@ PlayState::PlayState(Game& l_game, ActionMap<int>& l_actionMap)
 	tmap = std::make_unique<Tilemap>(Config::textures.get((int)Config::Textures::Tileset1), level, 32, 64, 16);
 }
 
-PlayState::~PlayState()
+void PlayState::GetMouseClick()
 {
+
+	mouseLeftClicked = false;
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		if (mouseLeftDown)
+		{
+
+			mouseLeftHeld = true;
+
+		}
+		else
+		{
+			mouseLeftDown = true;
+
+		}
+		mouseLeftUp = false;
+	}
+	else
+	{
+		if (mouseLeftDown || mouseLeftHeld)
+		{
+			mouseLeftClicked = true;
+			mouseLeftDown = false;
+			mouseLeftHeld = false;
+			mouseLeftUp = true;
+		}
+		else
+		{
+			mouseLeftUp = true;
+		}
+
+	}
+
+	if (mouseLeftClicked)
+	{
+		std::cout << "CLicked" << std::endl;
+	}
 }
-
-void PlayState::init()
-{
-	
-}
-
-
 
 void PlayState::processInput()
 {
@@ -101,90 +147,38 @@ void PlayState::processEvents(std::vector<sf::Event>& l_evts)
 
 void PlayState::update(double l_dt)
 {
-	m_dt = (float)l_dt;
+	m_deltaTime = sf::seconds((float)l_dt);
+	GetMouseClick();
+    
+    // check collisions with the map and adjust velocity accordingly
+    colSys->update();
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-	{
-		if (mouseLeftDown)
-		{
-			
-			mouseLeftHeld = true;
-			std::cout << "HEld" << std::endl;
-		}
-		else
-		{
-			mouseLeftDown = true;
-			std::cout << "Down" << std::endl;
-		}
-		mouseLeftUp = false;
-	}
-	else
-	{
-		if (mouseLeftDown || mouseLeftHeld)
-		{
-			mouseLeftClicked = true;
-			std::cout << "CLicked" << std::endl;
-		}
-		else
-		{
-			mouseLeftClicked = false;
-		}
-		mouseLeftDown = false;
-		mouseLeftHeld = false;
-		mouseLeftUp = true;
+    //  Update the playerObject based on end of frame calculated velocity to finalize the physics for this state's frame
+    // returns the players state used in render
+	player.update(sf::seconds((float)l_dt));
 
-	}
+	// check the players state against the returned value by the playerObject's update method stored in this states update function
+		//  if it is not what the current animation of that entity is, then switch it to the returned state gotten at the end of the update function
+		// 
+		// playerAnimator.changeAnimation(m_currentPlayerState);
+		// if (not the same texture either)
+		//	||||||playerObj||||||player.setTexture(Comfig::textures.get((int)texnameLookup[playerAnimator.currentAnimation().texName]);
+		// 
+		// playerAnimator.update(l_dt);
+		//||||||playerObj|||||player.setTextureRect(playerAnimator.getCurrFrameRect());
 
-
-	 player.update(sf::seconds((float)l_dt));
-
-	 rect r = { {player.getCenter().x - player.aabbHW(),player.getCenter().y - player.aabbHH()},{player.getBBox().width, player.getBBox().height} };
-	 r.vel = player.getVelocity();
-	/* if (mouseLeftHeld)
-		r.vel += (mpos - r.pos).normalized() * 100.0f * (float)l_dt;*/
-
-	 float t2 = 0, min_t = INFINITY;
-	 Vec2 cp2, cn2;
-	 std::vector<std::pair<int, float>> z;
-	 // Work out collision point, add it to vector along with rect ID
-	
-	 auto& ts = tmap->getTiles();
-	 for (int i = 0; i < tmap->getTiles().size(); i++)
-	 {
-		 rect r2 = { {ts[i]->getCenter().x - ts[i]->aabbHW(), ts[i]->getCenter().y - ts[i]->aabbHH()},{ts[i]->getBBox().width,ts[i]->getBBox().height}};
-
-		 if (Physics::DynamicRectVsRect(&r, (float)l_dt, r2, cp2, cn2, t2))
-		 {
-			 z.push_back({ i, t2 });
-		 }
-	 }
-
-	 // Do the sort
-	 std::sort(z.begin(), z.end(), [](const std::pair<int, float>& a, const std::pair<int, float>& b)
-		 {
-			 return a.second < b.second;
-		 });
-
-	 // Now resolve the collision in correct order 
-	 for (auto j : z)
-	 {
-		 rect r2 = { {ts[j.first]->getCenter().x - ts[j.first]->aabbHW(), ts[j.first]->getCenter().y - ts[j.first]->aabbHH()},{ts[j.first]->getBBox().width,ts[j.first]->getBBox().height} };
-		 Physics::ResolveDynamicRectVsRect(&r, m_dt, &r2);
-		 
-	 }
-
-	 // UPdate the player rectangles position, with its modified velocity
-	 player.getVelocity() = r.vel;
-	 player.move(player.getVelocity() * m_dt);
-	
 }
 
 
 void PlayState::render(sf::RenderWindow& l_wnd)
 {
+	// update mouse coords
 	mpos = Vec2(sf::Mouse::getPosition(l_wnd).x, sf::Mouse::getPosition(l_wnd).y);
 
+	// render the tilemap
 	tmap->render(l_wnd);
+
+	//render the player at the right spot with the correct anumation
 	player.render(l_wnd);
 
 	sf::RectangleShape shp(sf::Vector2f((float)player.getTexRect().width, (float)player.getTexRect().height));

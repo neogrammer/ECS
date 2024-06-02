@@ -5,20 +5,26 @@ PlayerObj::PlayerObj()
 	: ActorObj(Config::textures.get((int)Config::Textures::Player), sf::IntRect(0,0,84,84),Vec2(84.f,84.f),Vec2(316.f,242.f))
 	, ActionTarget<int>(Config::inputs)
 {
+	getVelocity().y = 100.f;
+
 
 	// action bindings
 	this->bind((int)Config::Inputs::Up, [this](const sf::Event&) {
-		std::cout << "Pressed up seen by the player object" << std::endl;
+		//std::cout << "Pressed up seen by the player object" << std::endl;
 
 		});
 	this->bind((int)Config::Inputs::Down, [this](const sf::Event&) {
+		downPressed = true;
 		});
 	this->bind((int)Config::Inputs::Left, [this](const sf::Event&) {
-		
+		leftPressed = true;
+
+		getVelocity().x = -100.0f;
 		});
 
 	this->bind((int)Config::Inputs::Right, [this](const sf::Event&) {
-		
+		getVelocity().x = 100.0f;
+		rightPressed = true;
 		});
 
 	this->bind((int)Config::Inputs::A, [this](const sf::Event&) {
@@ -60,14 +66,34 @@ PlayerObj::~PlayerObj()
 
 void PlayerObj::processInput()
 {
+	m_hasCollidedWithGround = false;
+	downPressed = false;
+	leftPressed = false;
+	rightPressed = false;
 	ActionTarget<int>::processEvents();
 }
 
 void PlayerObj::update(sf::Time l_dt)
 {
+	if (!leftPressed && !rightPressed)
+	{
+		getVelocity().x *= 0.05f;
+		if (abs(getVelocity().x) < 0.1f)
+			getVelocity().x = 0.f;
+	}
+	if (m_hasCollidedWithGround == true)
+	{
+		getVelocity().y = 0.f;
+	}
+this->spr().move(this->getVelocity().x * l_dt.asSeconds(), this->getVelocity().y * l_dt.asSeconds());
 }
 
 void PlayerObj::render(sf::RenderWindow& l_wnd)
 {
 	l_wnd.draw(this->spr());
+}
+
+bool& PlayerObj::collidedWithGround()
+{
+	return m_hasCollidedWithGround;
 }

@@ -33,7 +33,7 @@ public:
 
 	bool facingLeft() const;
 	void setFacingLeft(bool l_facingLeft);
-	bool canJump();
+	bool canJump() const;
 	void setCanJump(bool l_canJump);
 	void setCurrState(PlayerInput l_newState);
 };

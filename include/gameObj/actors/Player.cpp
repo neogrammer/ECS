@@ -84,7 +84,7 @@ void Player::setFacingLeft(bool l_facingLeft)
 }
 
 
-bool Player::canJump()
+bool Player::canJump() const
 {
 	return m_canJump;
 }

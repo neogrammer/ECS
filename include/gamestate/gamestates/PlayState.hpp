@@ -9,9 +9,10 @@
 #include <level/Tilemap.hpp>
 #include <util/Physics.hpp>
 class Player;
-
+class CollisionSystem;
 class PlayState : public GameState
 {
+	friend class CollisionSystem;
 	PlayerObj player;
 	std::unique_ptr<Tilemap> tmap;
 	std::vector<rect> vRects;
@@ -19,7 +20,8 @@ class PlayState : public GameState
 	bool mouseLeftDown{ false };
 	bool mouseLeftClicked{ false };
 	bool mouseLeftUp{ true };
-	float m_dt;
+	sf::Time m_deltaTime;
+	std::unique_ptr<CollisionSystem> colSys;
 
 public:
 	Vec2 mpos{ 0.f,0.f };
@@ -30,6 +32,8 @@ public:
 	void processEvents(std::vector<sf::Event>& l_evts) override final;
 	void update(double l_dt) override final;
 	void render(sf::RenderWindow& l_wnd) override final;
+
+	void GetMouseClick();
 
 
 };
