@@ -21,13 +21,14 @@ PlayState::PlayState(Game& l_game, ActionMap<int>& l_actionMap)
 		std::cout << "Pressed up seen by the state" << std::endl;
 		});
 	this->bind((int)Config::Inputs::Down, [this](const sf::Event&) {
+		player.getVelocity().y += 100.0f * (float)m_dt;
 		});
 	this->bind((int)Config::Inputs::Left, [this](const sf::Event&) {
-
+		player.getVelocity().x -= 100.0f * (float)m_dt;
 		});
 
 	this->bind((int)Config::Inputs::Right, [this](const sf::Event&) {
-
+		player.getVelocity().x += 100.0f * (float)m_dt;
 		});
 
 	this->bind((int)Config::Inputs::A, [this](const sf::Event&) {
@@ -74,16 +75,6 @@ PlayState::PlayState(Game& l_game, ActionMap<int>& l_actionMap)
 	};
 
 	tmap = std::make_unique<Tilemap>(Config::textures.get((int)Config::Textures::Tileset1), level, 32, 64, 16);
-
-	vRects.push_back({ { 10.f ,10.f }, { 30.f,20.f }, { 0.f, 0.f} });
-	vRects.push_back({ { 100.f ,100.f }, { 80.f,50.f }, { 0.f, 0.f} });
-	//vRects.push_back({ { 0.f ,0.f }, { 0.f,0.f }, { 0.f, 0.f} });
-	//vRects.push_back({ { 0.f ,0.f }, { 0.f,0.f }, { 0.f, 0.f} });
-	//vRects.push_back({ { 0.f ,0.f }, { 0.f,0.f }, { 0.f, 0.f} });
-	//vRects.push_back({ { 0.f ,0.f }, { 0.f,0.f }, { 0.f, 0.f} });
-	//vRects.push_back({ { 0.f ,0.f }, { 0.f,0.f }, { 0.f, 0.f} });
-	//vRects.push_back({ { 0.f ,0.f }, { 0.f,0.f }, { 0.f, 0.f} });
-
 }
 
 PlayState::~PlayState()
@@ -92,10 +83,7 @@ PlayState::~PlayState()
 
 void PlayState::init()
 {
-	//	the_player = std::make_shared<Player>(eMgr().makeStartingEntities("play"));
-	//the_player->setCurrState(PlayerInput::JUMP);
-
-	//tmap = std::shared_ptr<Tilemap>(new Tilemap{ eMgr(), "intro" });
+	
 }
 
 
@@ -149,182 +137,61 @@ void PlayState::update(double l_dt)
 
 
 	 player.update(sf::seconds((float)l_dt));
+
+	 rect r = { {player.getCenter().x - player.aabbHW(),player.getCenter().y - player.aabbHH()},{player.getBBox().width, player.getBBox().height} };
+	 r.vel = player.getVelocity();
+	/* if (mouseLeftHeld)
+		r.vel += (mpos - r.pos).normalized() * 100.0f * (float)l_dt;*/
+
+	 float t2 = 0, min_t = INFINITY;
+	 Vec2 cp2, cn2;
+	 std::vector<std::pair<int, float>> z;
+	 // Work out collision point, add it to vector along with rect ID
+	
+	 auto& ts = tmap->getTiles();
+	 for (int i = 0; i < tmap->getTiles().size(); i++)
+	 {
+		 rect r2 = { {ts[i]->getCenter().x - ts[i]->aabbHW(), ts[i]->getCenter().y - ts[i]->aabbHH()},{ts[i]->getBBox().width,ts[i]->getBBox().height}};
+
+		 if (Physics::DynamicRectVsRect(&r, (float)l_dt, r2, cp2, cn2, t2))
+		 {
+			 z.push_back({ i, t2 });
+		 }
+	 }
+
+	 // Do the sort
+	 std::sort(z.begin(), z.end(), [](const std::pair<int, float>& a, const std::pair<int, float>& b)
+		 {
+			 return a.second < b.second;
+		 });
+
+	 // Now resolve the collision in correct order 
+	 for (auto j : z)
+	 {
+		 rect r2 = { {ts[j.first]->getCenter().x - ts[j.first]->aabbHW(), ts[j.first]->getCenter().y - ts[j.first]->aabbHH()},{ts[j.first]->getBBox().width,ts[j.first]->getBBox().height} };
+		 Physics::ResolveDynamicRectVsRect(&r, m_dt, &r2);
+		 
+	 }
+
+	 // UPdate the player rectangles position, with its modified velocity
+	 player.getVelocity() = r.vel;
+	 player.move(player.getVelocity() * m_dt);
+	
 }
 
 
 void PlayState::render(sf::RenderWindow& l_wnd)
 {
-
-	rect r = { {player.getPosition()}, {Vec2(player.getTexRect().width,player.getTexRect().height)}};
-
-	Vec2 ray_point = { 20,20 };
-	Vec2 ray_direction = mpos - ray_point;
-	sf::VertexArray arr(sf::PrimitiveType::Lines, 2);
-
-	arr[0].position = sf::Vector2f(ray_point.x,ray_point.y);
-	arr[1].position = sf::Vector2f(mpos.x, mpos.y);
-	arr[0].color = sf::Color::White;
-	arr[1].color = sf::Color::White;
-
-	rect s = { Vec2(mpos.x - 5.f, mpos.y - 20.f), {10.f, 40.0f} };
-
-	if (Physics::RectVsRect(s, r))
-	{
-		player.getSprite().setColor(sf::Color(255, 0, 0, 255));
-	}
-	else
-	{
-		player.getSprite().setColor(sf::Color(255, 255,255, 255));
-	}
-
-	for (auto& t : tmap->getTiles())
-	{
-		rect r2 = { {t->getPosition()}, {Vec2(t->getTexRect().width,t->getTexRect().height)} };
-		if (Physics::RectVsRect({ Vec2(mpos.x - 5.f, mpos.y - 20.f), {10.f, 40.0f} }, r2))
-		{
-			t->setCollided(true);
-		}
-		
-	}
-
-	Vec2 cp, cn;
-	float t;
-
-	if (Physics::RayVsRect(ray_point, ray_direction, &r, cp, cn, t) && t <= 1.0f)
-	{
-		arr[0].color = sf::Color::Red;
-		arr[1].color = sf::Color::Red;
-	}
-	else
-	{
-		arr[0].color = sf::Color::White;
-		arr[1].color = sf::Color::White;
-	}
-
-	Vec2 box_origin = vRects[0].pos;
-	Vec2 box_dir = mpos - box_origin;
-	box_dir.normalize();
-
-	Vec2 old = vRects[0].pos;
-	Vec2 oldV = vRects[0].vel;
-	if (mouseLeftHeld)
-		vRects[0].vel += (mpos - vRects[0].pos).normalized() * 100.0f * m_dt;
-
-	float t2 = 0, min_t = INFINITY;
-	Vec2 cp2, cn2;
-	std::vector<std::pair<int, float>> z;
-	// Work out collision point, add it to vector along with rect ID
-	for (size_t i = 1; i < vRects.size(); i++)
-	{
-		if (Physics::DynamicRectVsRect(&vRects[0], m_dt, vRects[i], cp2, cn2, t2))
-		{
-			z.push_back({ i, t2 });
-		}
-	}
-
-	// Do the sort
-	std::sort(z.begin(), z.end(), [](const std::pair<int, float>& a, const std::pair<int, float>& b)
-		{
-			return a.second < b.second;
-		});
-
-	// Now resolve the collision in correct order 
-	for (auto j : z)
-		Physics::ResolveDynamicRectVsRect(&vRects[0], m_dt, &vRects[j.first]);
-
-	// Embellish the "in contact" rectangles in yellow
-	for (int i = 0; i < 4; i++)
-	{
-		if (vRects[0].contact[i])
-			std::cout << "Contact : " << vRects[0].contact[i]->pos.x << " , " << vRects[0].contact[i]->pos.y << std::endl;
-		vRects[0].contact[i] = nullptr;
-	}
-
-	// UPdate the player rectangles position, with its modified velocity
-	vRects[0].pos += vRects[0].vel * m_dt;
-		//vRects[0].pos -= vRects[0].vel * m_dt;
-		//vRects[0].vel = Vec2(0.f, 0.f);
-		//vRects[0].pos = old;
-		////while (Physics::RectVsRect(vRects[0], vRects[1]))
-		////{
-		//vRects[0].vel += cn * vRects[0].vel;
-		//if (cn.x < 0.f || cn.x > 0.f)
-		//{
-		//	vRects[0].vel.x = 0.f;
-		//}
-		//else if (cn.y  < 0.f || cn.y > 0.f)
-		//{
-		//	vRects[0].vel.y = 0.f;
-
-		//}
-		//else
-		//{
-
-		//}
-		//vRects[0].pos -= vRects[0].vel * m_dt;
-		//}
-		//vRects[0].vel = vRects[0].vel * cn;
-
-
-	//}
-	
-
-	//for (int i = 1; i < vRects.size(); i++)
-	//{
-		//if (Physics::DynamicVsRect(vRects[0], vRects[i], m_dt, t, cn, cp))
-		//{
-
-		//	vRects[0].vel = { 0.f,0.f };
-			
-	//	}
-//	}
-	//vRects[0].pos += vRects[0].vel * m_dt;
+	mpos = Vec2(sf::Mouse::getPosition(l_wnd).x, sf::Mouse::getPosition(l_wnd).y);
 
 	tmap->render(l_wnd);
 	player.render(l_wnd);
+
 	sf::RectangleShape shp(sf::Vector2f((float)player.getTexRect().width, (float)player.getTexRect().height));
 	shp.setFillColor(sf::Color(0, 255, 185, 100));
 	shp.setOutlineColor(sf::Color::White);
 	shp.setOutlineThickness(2);
 	shp.setPosition(sf::Vector2f(player.getBBox().left, player.getBBox().top));
 	l_wnd.draw(shp);
-
-	sf::RectangleShape shp2(sf::Vector2f(s.size.x, s.size.y));
-	shp2.setFillColor(sf::Color(0, 0, 0, 100));
-	shp2.setOutlineColor(sf::Color::Black);
-	shp2.setOutlineThickness(1);
-	shp2.setPosition(sf::Vector2f(mpos.x - s.size.x / 2.f, mpos.y - s.size.y / 2.f));
-	l_wnd.draw(shp2);
-
-	l_wnd.draw(arr);
-
-	sf::RectangleShape shpVr1(sf::Vector2f(vRects[0].size.x, vRects[0].size.y));
-	shpVr1.setFillColor(sf::Color::Transparent);
-	shpVr1.setOutlineColor(sf::Color::White);
-	shpVr1.setOutlineThickness(2);
-	shpVr1.setPosition(sf::Vector2f(vRects[0].pos.x, vRects[0].pos.y));
-	l_wnd.draw(shpVr1);
-
-	sf::RectangleShape shpVr2(sf::Vector2f(vRects[1].size.x, vRects[1].size.y));
-	shpVr2.setFillColor(sf::Color::Transparent);
-	shpVr2.setOutlineColor(sf::Color::White);
-	shpVr2.setOutlineThickness(2);
-	shpVr2.setPosition(sf::Vector2f(vRects[1].pos.x, vRects[1].pos.y));
-	l_wnd.draw(shpVr2);
-
-	sf::VertexArray lil(sf::PrimitiveType::Lines, 2);
-	lil[0].color = sf::Color::Green;
-	lil[1].color = sf::Color::Green;
-	lil[0].position = sf::Vector2f(shpVr1.getPosition().x, shpVr1.getPosition().y);
-	lil[1].position = sf::Vector2f(cp.x,cp.y);
-
-	/*(sf::Vector2f( vRects[1].pos.x - box_origin.x, vRects[1].pos.y - box_origin.y));
-	lil.setFillColor(sf::Color(0, 255, 0, 200));
-	lil.setOutlineColor(sf::Color::Black);
-	lil.setOutlineThickness(1);
-	lil.setPosition(sf::Vector2f(box_origin.x, box_origin.y));*/
-	l_wnd.draw(lil);
-
-	mpos = Vec2(sf::Mouse::getPosition(l_wnd).x, sf::Mouse::getPosition(l_wnd).y);
 
 }
