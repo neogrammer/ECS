@@ -68,7 +68,7 @@ void Config::initTextures()
     textures.load((int)Textures::Selector, "assets/textures/select.png");
     textures.load((int)Textures::Spear, "assets/textures/spear.png");
     textures.load((int)Textures::Tileset1, "assets/textures/crateria64.png");
-
+    textures.load((int)Textures::BulletBusterStd, "assets/textures/projectiles/bullets/fire03.png");
 
 
 }
@@ -78,7 +78,8 @@ std::map<std::string, Config::Textures> Config::texNamelookup = {
     {"TitleBG", Textures::TitleBG},
     {"Selector", Textures::Selector},
     {"Spear", Textures::Spear},
-    {"Tileset1", Textures::Tileset1}
+    {"Tileset1", Textures::Tileset1},
+    {"BulletBusterStd", Textures::BulletBusterStd }
 };
 
 

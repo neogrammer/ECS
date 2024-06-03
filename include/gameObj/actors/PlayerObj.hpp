@@ -10,6 +10,7 @@ class PlayerObj : public ActorObj, public ActionTarget<int>
 	bool m_hasCollidedWithGround{ false };
 	bool m_canJump{ false };
 	bool m_isJumping{ false }, m_isFalling{ true };
+	bool m_isFacingLeft{ false };
 
 public:
 
@@ -25,6 +26,7 @@ public:
 
 	bool& collidedWithGround();
 	bool& canJump();
+	bool& facingLeft();
 };
 
 #endif

@@ -19,13 +19,14 @@ PlayerObj::PlayerObj()
 		});
 	this->bind((int)Config::Inputs::Left, [this](const sf::Event&) {
 		leftPressed = true;
-
+		m_isFacingLeft = true;
 		getVelocity().x = -100.0f;
 		});
 
 	this->bind((int)Config::Inputs::Right, [this](const sf::Event&) {
 		getVelocity().x = 100.0f;
 		rightPressed = true;
+		m_isFacingLeft = false;
 		});
 
 	this->bind((int)Config::Inputs::A, [this](const sf::Event&) {
@@ -145,4 +146,9 @@ bool& PlayerObj::collidedWithGround()
 bool& PlayerObj::canJump()
 {
 	return m_canJump;
+}
+
+bool& PlayerObj::facingLeft()
+{
+	return m_isFacingLeft;
 }

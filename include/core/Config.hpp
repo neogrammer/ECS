@@ -60,6 +60,7 @@ public:
         TitleBG,
         Selector,
         Tileset1,
+        BulletBusterStd,
         Count
     };
 

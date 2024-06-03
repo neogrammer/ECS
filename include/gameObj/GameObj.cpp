@@ -93,6 +93,11 @@ sf::Sprite& GameObj::getSprite()
 	return m_spr;
 }
 
+bool& GameObj::alive()
+{
+	return m_alive;
+}
+
 int GameObj::id()
 {
 	return m_id;
@@ -145,6 +150,11 @@ GameObj::GameObj(sf::Texture& l_tex,const std::string& l_tag, const sf::IntRect&
 		if (m_aabb.size == Vec2(0.f, 0.f))
 		{
 			m_aabb.size = Vec2(l_texRect.width, l_texRect.height);
+			m_aabb.halfSize = m_aabb.size / 2.f;
+		}
+		else
+		{
+			m_aabb.size = l_aabbSize;
 			m_aabb.halfSize = m_aabb.size / 2.f;
 		}
 	}

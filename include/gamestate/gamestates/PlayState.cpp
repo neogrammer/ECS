@@ -7,6 +7,7 @@
 #include <util/Physics.hpp>
 #include "../GameState.hpp"
 #include <system/systems/CollisionSystem.hpp>
+#include <gameObj/projectiles/BusterStdProjectile.hpp>
 
 #include <fstream>
 #include <iostream>
@@ -42,7 +43,7 @@ PlayState::PlayState(Game& l_game, ActionMap<int>& l_actionMap)
 		});
 
 	this->bind((int)Config::Inputs::A, [this](const sf::Event&) {
-		std::cout << "Fire a bullet" << std::endl;
+			fireABullet();
 		});
 	this->bind((int)Config::Inputs::AxisX, [this](const sf::Event&) {
 		sf::Joystick::update();
@@ -142,6 +143,35 @@ void PlayState::GetMouseClick()
 	}
 }
 
+void PlayState::fireABullet()
+{
+
+	if (canFireABullet)
+	{
+		canFireABullet = false;
+		projectiles.push_back(std::make_shared<BusterStdProjectile>((player.facingLeft()) ? player.getBBox().left + 14.f : player.getBBox().left + player.getBBox().width - 36.f, player.getBBox().top + 36.f, (int)((player.facingLeft()) ? ProjDir::East : ProjDir::West)));
+		startShootTimer();
+	}
+}
+
+void PlayState::startShootTimer()
+{
+	shootTimer.restart();
+	shootOnCooldown = true;
+}
+
+void PlayState::checkIfCanFireAgain()
+{
+	if (shootOnCooldown)
+	{
+		if (shootTimer.getElapsedTime().asSeconds() > shootDelay)
+		{
+			canFireABullet = true;
+			shootOnCooldown = false;
+		}
+	}
+}
+
 void PlayState::processInput()
 {
 	ActionTarget<int>::processEvents();
@@ -157,6 +187,36 @@ void PlayState::update(double l_dt)
 {
 	m_deltaTime = sf::seconds((float)l_dt);
 	GetMouseClick();
+	
+	checkIfCanFireAgain();
+
+	std::vector<int> is = { 0, };
+	is.clear();
+	int i = 0;
+
+
+	for (auto e = projectiles.begin(); e != projectiles.end(); e++)
+	{
+		if (*e != nullptr)
+		{
+			if (!dynamic_cast<GameObj*>((*e).get())->alive())
+			{
+				is.push_back(i);
+			}
+			else
+			{
+				(*e)->update(sf::seconds((float)l_dt));
+			}
+			
+		}
+		else
+		{
+			projectiles.erase(e);
+			projectiles.shrink_to_fit();
+		}
+		i++;
+	}
+
     
     // check collisions with the map and adjust velocity accordingly
     colSys->update();
@@ -174,6 +234,8 @@ void PlayState::update(double l_dt)
 		// 
 		// playerAnimator.update(l_dt);
 		//||||||playerObj|||||player.setTextureRect(playerAnimator.getCurrFrameRect());
+	
+
 
 }
 
@@ -189,6 +251,8 @@ void PlayState::render(sf::RenderWindow& l_wnd)
 	//render the player at the right spot with the correct anumation
 	player.render(l_wnd);
 
+
+
 	if (showCollisionBox) {
 		sf::RectangleShape shp(sf::Vector2f((float)player.getTexRect().width, (float)player.getTexRect().height));
 		shp.setFillColor(sf::Color(0, 255, 185, 100));
@@ -197,5 +261,12 @@ void PlayState::render(sf::RenderWindow& l_wnd)
 		shp.setPosition(sf::Vector2f(player.getBBox().left, player.getBBox().top));
 		l_wnd.draw(shp);
 	}
+
+	for (auto& p : projectiles)
+	{
+		p->render(l_wnd);
+	}
+
+
 
 }

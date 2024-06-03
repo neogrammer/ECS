@@ -15,7 +15,9 @@ class GameObj
 	static int m_numAlive;
 	static int m_numObjects;
 	Vec2 m_velocity{ 0.f,0.f };
+	bool m_alive{ true };
 protected:
+
 	int id();
 	std::string& tag();
 	sf::Sprite& spr();
@@ -23,6 +25,7 @@ protected:
 	static int numObjects();
 	Vec2 vel();
 public:
+	bool& alive();
 	GameObj(sf::Texture& l_tex, const std::string& l_tag,const sf::IntRect& l_texRect = sf::IntRect{ {0,0},{0,0} }, const Vec2& l_aabbSize = Vec2(0.f, 0.f), const Vec2& l_pos = Vec2(0.f, 0.f));
 	virtual ~GameObj();
 
