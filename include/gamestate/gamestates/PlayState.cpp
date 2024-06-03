@@ -26,6 +26,13 @@ PlayState::PlayState(Game& l_game, ActionMap<int>& l_actionMap)
 	this->bind((int)Config::Inputs::Down, [this](const sf::Event&) {
 		
 		});
+
+	this->bind((int)Config::Inputs::Start, [this](const sf::Event&) {
+		showCollisionBox = false;
+		});
+	this->bind((int)Config::Inputs::Select, [this](const sf::Event&) {
+		showCollisionBox = true;
+		});
 	this->bind((int)Config::Inputs::Left, [this](const sf::Event&) {
 		
 		});
@@ -35,6 +42,7 @@ PlayState::PlayState(Game& l_game, ActionMap<int>& l_actionMap)
 		});
 
 	this->bind((int)Config::Inputs::A, [this](const sf::Event&) {
+		std::cout << "Fire a bullet" << std::endl;
 		});
 	this->bind((int)Config::Inputs::AxisX, [this](const sf::Event&) {
 		sf::Joystick::update();
@@ -181,11 +189,13 @@ void PlayState::render(sf::RenderWindow& l_wnd)
 	//render the player at the right spot with the correct anumation
 	player.render(l_wnd);
 
-	sf::RectangleShape shp(sf::Vector2f((float)player.getTexRect().width, (float)player.getTexRect().height));
-	shp.setFillColor(sf::Color(0, 255, 185, 100));
-	shp.setOutlineColor(sf::Color::White);
-	shp.setOutlineThickness(2);
-	shp.setPosition(sf::Vector2f(player.getBBox().left, player.getBBox().top));
-	l_wnd.draw(shp);
+	if (showCollisionBox) {
+		sf::RectangleShape shp(sf::Vector2f((float)player.getTexRect().width, (float)player.getTexRect().height));
+		shp.setFillColor(sf::Color(0, 255, 185, 100));
+		shp.setOutlineColor(sf::Color::White);
+		shp.setOutlineThickness(2);
+		shp.setPosition(sf::Vector2f(player.getBBox().left, player.getBBox().top));
+		l_wnd.draw(shp);
+	}
 
 }

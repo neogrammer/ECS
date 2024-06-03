@@ -84,6 +84,18 @@
     <Filter Include="Header Files\system\systems">
       <UniqueIdentifier>{33cbe171-32bd-4f5f-8620-1687b3884411}</UniqueIdentifier>
     </Filter>
+    <Filter Include="assets\textures\levels">
+      <UniqueIdentifier>{5b9acc9b-4bc6-4278-b3e2-ad32bd486dce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\textures\projectiles">
+      <UniqueIdentifier>{1cc40288-117d-44c8-a94a-427137237b12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\textures\projectiles\bullets">
+      <UniqueIdentifier>{32fe3a1b-2208-4e19-9f69-9581f4121151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\textures\enemies">
+      <UniqueIdentifier>{56b779f5-657b-4c17-9e33-8ee962198a83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -403,6 +415,18 @@
     </Image>
     <Image Include="assets\textures\player_atlas64x64.png">
       <Filter>assets\textures</Filter>
+    </Image>
+    <Image Include="assets\textures\levels\introLevelSheet.png">
+      <Filter>assets\textures\levels</Filter>
+    </Image>
+    <Image Include="assets\textures\projectiles\bullets\fire03.png">
+      <Filter>assets\textures\projectiles\bullets</Filter>
+    </Image>
+    <Image Include="assets\textures\enemies\enemy1.png">
+      <Filter>assets\textures\enemies</Filter>
+    </Image>
+    <Image Include="assets\textures\enemies\enemy2.png">
+      <Filter>assets\textures\enemies</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

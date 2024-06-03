@@ -22,6 +22,7 @@ class PlayState : public GameState
 	bool mouseLeftUp{ true };
 	sf::Time m_deltaTime;
 	std::unique_ptr<CollisionSystem> colSys;
+	bool showCollisionBox{ false };
 
 public:
 	Vec2 mpos{ 0.f,0.f };
